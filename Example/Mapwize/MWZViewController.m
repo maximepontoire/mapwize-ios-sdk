@@ -32,7 +32,7 @@ MWZMapView* map;
     //    options.floor = @(2);
     
     map.delegate = self;
-    [map loadMapWithOptions:(MWZMapOptions *) options];
+    [map loadMapWithOptions: options];
     
     //[map access:@"YOUR_ACCESS_KEY"];
     [map fitBounds:[[MWZLatLonBounds alloc] initWithNorthEast:[[MWZLatLon alloc] initWithLatitude:50.634002069243123856 longitude:3.0215620994567871094] southWest:[[MWZLatLon alloc] initWithLatitude:50.632362036014932016 longitude:3.0191266536712646484]]];

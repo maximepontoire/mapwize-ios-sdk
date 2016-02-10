@@ -3,7 +3,7 @@
 #import "MWZMapDelegate.h"
 #import "MWZMapOptions.h"
 
-#define SERVER_URL @"http://localhost:3000"
+#define SERVER_URL @"https://www.mapwize.io"
 
 @implementation MWZMapView {
     WKWebView* _webview;
