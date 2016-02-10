@@ -31,10 +31,10 @@ Pod::Spec.new do |s|
 
   s.source_files = 'Pod/Classes/**/*'
   s.resource_bundles = {
-    'Mapwize' => ['Pod/Assets/*.png']
+    'Mapwize' => ['Pod/Assets/**/*']
   }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
+  s.public_header_files = 'Pod/Classes/**/*.h'
+  s.frameworks = 'UIKit', 'WebKit', 'CoreLocation'
   # s.dependency 'AFNetworking', '~> 2.3'
 end

@@ -7,7 +7,8 @@
 //
 
 @import UIKit;
+@import Mapwize;
 
-@interface MWZViewController : UIViewController
+@interface MWZViewController : UIViewController <MWZMapDelegate>
 
 @end
