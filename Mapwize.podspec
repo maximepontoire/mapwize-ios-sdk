@@ -8,23 +8,18 @@
 
 Pod::Spec.new do |s|
   s.name             = "Mapwize"
-  s.version          = "0.1.0"
-  s.summary          = "A short description of Mapwize."
+  s.version          = "1.0.0"
+  s.summary          = "Mapwize: The Indoor Mapping Platform"
 
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!  
   s.description      = <<-DESC
+        Mapwize: The Indoor Mapping Platform.
+        This SDK allows you to display and interact with venue maps.
                        DESC
 
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/Mapwize"
-  # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
+  s.homepage         = "https://www.mapwize.io"
   s.license          = 'MIT'
-  s.author           = { "Mathieu Gerard" => "mathieu@contexeo.com" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/Mapwize.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.author           = { "Mapwize" => "contact@mapwize.io" }
+  s.source           = { :git => "https://github.com/Mapwize/mapwize-ios-sdk.git", :tag => s.version.to_s }
 
   s.platform     = :ios, '7.0'
   s.requires_arc = true
@@ -36,5 +31,4 @@ Pod::Spec.new do |s|
 
   s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'UIKit', 'WebKit', 'CoreLocation'
-  # s.dependency 'AFNetworking', '~> 2.3'
 end

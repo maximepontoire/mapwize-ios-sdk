@@ -8,7 +8,6 @@
 
 - (instancetype)initWithNorthEast:(MWZLatLon*)northEast southWest:(MWZLatLon*)southWest;;
 
-- (instancetype)initFromLeaflet:(NSString*)json;
 - (NSArray*) toArray;
 
 @end

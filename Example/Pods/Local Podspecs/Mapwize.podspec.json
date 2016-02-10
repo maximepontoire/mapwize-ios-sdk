@@ -1,15 +1,15 @@
 {
   "name": "Mapwize",
   "version": "0.1.0",
-  "summary": "A short description of Mapwize.",
-  "description": "",
-  "homepage": "https://github.com/<GITHUB_USERNAME>/Mapwize",
+  "summary": "Mapwize: The Indoor Mapping Platform",
+  "description": "Mapwize: The Indoor Mapping Platform.\nThis SDK allows you to display and interact with venue maps.",
+  "homepage": "https://www.mapwize.io",
   "license": "MIT",
   "authors": {
-    "Mathieu Gerard": "mathieu@contexeo.com"
+    "Mapwize": "contact@mapwize.io"
   },
   "source": {
-    "git": "https://github.com/<GITHUB_USERNAME>/Mapwize.git",
+    "git": "https://github.com/Mapwize/mapwize-ios-sdk",
     "tag": "0.1.0"
   },
   "platforms": {
