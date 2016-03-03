@@ -1,6 +1,6 @@
 {
   "name": "Mapwize",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "summary": "Mapwize: The Indoor Mapping Platform",
   "description": "Mapwize: The Indoor Mapping Platform.\nThis SDK allows you to display and interact with venue maps.",
   "homepage": "https://www.mapwize.io",
@@ -9,8 +9,8 @@
     "Mapwize": "contact@mapwize.io"
   },
   "source": {
-    "git": "https://github.com/Mapwize/mapwize-ios-sdk",
-    "tag": "0.1.0"
+    "git": "https://github.com/Mapwize/mapwize-ios-sdk.git",
+    "tag": "1.0.1"
   },
   "platforms": {
     "ios": "7.0"

@@ -2,10 +2,10 @@
 
 @interface MWZLatLon : NSObject
 
-@property double latitude;
-@property double longitude;
+@property NSNumber* latitude;
+@property NSNumber* longitude;
 
-- (instancetype)initWithLatitude:(double)latitude longitude:(double)longitude;
+- (instancetype)initWithLatitude:(NSNumber*)latitude longitude:(NSNumber*)longitude;
 - (instancetype)initFromDictionnary:(NSDictionary*)dic;
 - (instancetype)initFromArray:(NSArray*)array;
 - (instancetype)initFromLeaflet:(NSString*)json;

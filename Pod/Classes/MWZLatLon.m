@@ -2,7 +2,7 @@
 
 @implementation MWZLatLon
 
-- (instancetype)initWithLatitude:(double)latitude longitude:(double)longitude{
+- (instancetype)initWithLatitude:(NSNumber*)latitude longitude:(NSNumber*)longitude{
     self = [super init];
     _latitude = latitude;
     _longitude = longitude;
@@ -11,15 +11,15 @@
 
 - (instancetype)initFromDictionnary:(NSDictionary*)dic {
     self = [super init];
-    _latitude = [[dic objectForKey:@"lat"] doubleValue];
-    _longitude = [[dic objectForKey:@"lng"] doubleValue];
+    _latitude = [dic objectForKey:@"lat"];
+    _longitude = [dic objectForKey:@"lng"];
     return self;
 }
 
 - (instancetype)initFromArray:(NSArray*)array {
     self = [super init];
-    _latitude = [[array objectAtIndex:0] doubleValue];
-    _longitude = [[array objectAtIndex:1] doubleValue];
+    _latitude = [array objectAtIndex:0];
+    _longitude = [array objectAtIndex:1];
     return self;
 }
 
@@ -35,8 +35,12 @@
 }
 
 - (NSArray*) toArray {
-    NSMutableArray* array = [[NSMutableArray alloc] initWithObjects: @(_latitude), @(_longitude), nil];
+    NSMutableArray* array = [[NSMutableArray alloc] initWithObjects: _latitude, _longitude, nil];
     return array;
+}
+
+- (NSString *)description {
+    return [NSString stringWithFormat: @"MWZLatLon: Latitude=%@ Longitude=%@", _latitude, _longitude];
 }
 
 

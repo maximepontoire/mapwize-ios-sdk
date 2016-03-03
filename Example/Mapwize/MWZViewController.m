@@ -1,12 +1,5 @@
-//
-//  MWZViewController.m
-//  Mapwize
-//
-//  Created by Mathieu Gerard on 02/05/2016.
-//  Copyright (c) 2016 Mathieu Gerard. All rights reserved.
-//
-
 #import "MWZViewController.h"
+#import "SWRevealViewController.h"
 @import Mapwize;
 
 @interface MWZViewController ()
@@ -16,36 +9,61 @@
 @implementation MWZViewController
 
 MWZMapView* map;
+CLLocationManager* locationManager;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    map = (MWZMapView*)[self view];
     
+    locationManager = [[CLLocationManager alloc] init];
+    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+
+    if (status == kCLAuthorizationStatusAuthorizedAlways || status ==kCLAuthorizationStatusAuthorizedWhenInUse) {
+        NSLog(@"Location Authorization granted");
+    } else {
+        NSLog(@"Requesting Location Authorization");
+        [locationManager requestWhenInUseAuthorization];
+    }
+
+    //Gets a pointer to the MWZMapView
+    map = (MWZMapView*)[self myMapView];
+    
+    //Defines the map options
     MWZMapOptions* options = [[MWZMapOptions alloc] init];
     options.apiKey = @"1f04d780dc30b774c0c10f53e3c7d4ea"; // PASTE YOU API KEY HERE !!! This is a demo key. It is not allowed to use it for production. The key might change at any time without notice.
     
-    // You can also use the following options
-    //    options.maxBounds = [[MWZLatLonBounds alloc] initWithNorthEast:[[MWZLatLon alloc] initWithLatitude:50.68079714532166 longitude:-4.74609375] southWest:[[MWZLatLon alloc] initWithLatitude:42.16340342422401 longitude:8.61328125]];
-    //    options.center = [[MWZLatLon alloc] initWithLatitude:50.63313102137516 longitude:3.020006418228149];
-    //    options.zoom = @(19);
-    //    options.floor = @(2);
-    
+    //Sets the delegate to receive events
     map.delegate = self;
+    
+    //Loads the map
     [map loadMapWithOptions: options];
     
-    //[map access:@"YOUR_ACCESS_KEY"];
-    [map fitBounds:[[MWZLatLonBounds alloc] initWithNorthEast:[[MWZLatLon alloc] initWithLatitude:50.634002069243123856 longitude:3.0215620994567871094] southWest:[[MWZLatLon alloc] initWithLatitude:50.632362036014932016 longitude:3.0191266536712646484]]];
-    [map setFloor:@(2)];
+    //Fits bounds on demo building
+    [map fitBounds:[[MWZLatLonBounds alloc] initWithNorthEast:[[MWZLatLon alloc] initWithLatitude:@49.742313935073504183 longitude:@4.5989323407411575317] southWest:[[MWZLatLon alloc] initWithLatitude:@49.742851692813445652 longitude:@4.5997658371925345122]]];
 
+    //Update view and show menu
+    SWRevealViewController *revealViewController = self.revealViewController;
+    if ( revealViewController )
+    {
+        [self.navigationButton setTarget: self.revealViewController];
+        [self.navigationButton setAction: @selector( revealToggle: )];
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    }
+    
 }
 
+
+//Listering to delegate events
 - (void) map:(MWZMapView*) map didClick:(MWZLatLon*) latlon {
     NSLog(@"didClick %@", latlon);
 }
 
-- (void) map:(MWZMapView*) map didClickOnPlace:(NSDictionary*) place {
+- (void) map:(MWZMapView*) map didClickOnPlace:(MWZPlace*) place {
     NSLog(@"didClickOnPlace %@", place);
+}
+
+- (void) map:(MWZMapView*) map didClickOnVenue:(MWZVenue*) venue {
+    NSLog(@"didClickOnVenue %@", venue);
 }
 
 - (void) map:(MWZMapView*) map didChangeFloor:(NSNumber*) floor {
@@ -59,6 +77,32 @@ MWZMapView* map;
 - (void) map:(MWZMapView*) map didFailWithError: (NSError *)error {
     NSLog(@"didFailWithError %@", error);
 }
+
+- (void) map:(MWZMapView*) map didChangeFollowUserMode:(BOOL)followUserMode {
+    NSLog(@"didChangeFollowUserMode %@", (followUserMode?@"YES":@"NO"));
+}
+
+- (void) map:(MWZMapView*) map didChangeUserPosition:(MWZMeasurement *)userPosition {
+    NSLog(@"didChangeUserPosition %@", userPosition);
+}
+
+- (void )map:(MWZMapView*) map didChangeZoom: (NSNumber*) zoom {
+    NSLog(@"didChangeZoom %@", zoom);
+}
+
+- (void )map:(MWZMapView*) map didClickLong: (MWZLatLon*) latlon {
+    NSLog(@"didClickLong %@", latlon);
+}
+
+- (void) map:(MWZMapView*) map didStartDirections: (NSString*) infos {
+    NSLog(@"didStartDirections %@", infos);
+}
+
+- (void )map:(MWZMapView*) map didStopDirections: (NSString*) infos {
+    NSLog(@"didStopDirections %@", infos);
+}
+
+
 
 - (void)didReceiveMemoryWarning
 {

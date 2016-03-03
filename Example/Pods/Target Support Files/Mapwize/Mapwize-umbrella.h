@@ -5,6 +5,9 @@
 #import "MWZMapDelegate.h"
 #import "MWZMapOptions.h"
 #import "MWZMapView.h"
+#import "MWZPlace.h"
+#import "MWZPosition.h"
+#import "MWZVenue.h"
 
 FOUNDATION_EXPORT double MapwizeVersionNumber;
 FOUNDATION_EXPORT const unsigned char MapwizeVersionString[];

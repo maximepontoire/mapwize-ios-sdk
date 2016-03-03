@@ -1,14 +1,9 @@
-//
-//  MWZViewController.h
-//  Mapwize
-//
-//  Created by Mathieu Gerard on 02/05/2016.
-//  Copyright (c) 2016 Mathieu Gerard. All rights reserved.
-//
-
 @import UIKit;
 @import Mapwize;
+#import "CoreLocation/CoreLocation.h"
 
 @interface MWZViewController : UIViewController <MWZMapDelegate>
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *navigationButton;
+@property (weak, nonatomic) IBOutlet MWZMapView *myMapView;
 
 @end

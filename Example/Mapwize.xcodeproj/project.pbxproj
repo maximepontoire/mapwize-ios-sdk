@@ -22,6 +22,10 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		8F72AE141C80B4980040FE82 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F72AE131C80B4980040FE82 /* Launch Screen.storyboard */; };
+		8F72AE561C8445210040FE82 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F72AE551C8445210040FE82 /* SWRevealViewController.m */; };
+		8FB3E5581C7C534C00D312CE /* MWZMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FB3E5571C7C534C00D312CE /* MWZMainViewController.m */; };
+		8FB3E55B1C7C536600D312CE /* MWZLeftMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FB3E55A1C7C536600D312CE /* MWZLeftMenuController.m */; };
 		E0D4319A1C69F57500EF11B4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0D431991C69F57500EF11B4 /* CoreLocation.framework */; };
 		E0DB752802652010C110C775 /* Pods_Mapwize_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA84AE2BEB21D25153055715 /* Pods_Mapwize_Example.framework */; };
 /* End PBXBuildFile section */
@@ -61,6 +65,13 @@
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		83869F56A22D0ED545FB72BA /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		8F72AE131C80B4980040FE82 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		8F72AE541C8445210040FE82 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		8F72AE551C8445210040FE82 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		8FB3E5561C7C534C00D312CE /* MWZMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZMainViewController.h; sourceTree = "<group>"; };
+		8FB3E5571C7C534C00D312CE /* MWZMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZMainViewController.m; sourceTree = "<group>"; };
+		8FB3E5591C7C536600D312CE /* MWZLeftMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZLeftMenuController.h; sourceTree = "<group>"; };
+		8FB3E55A1C7C536600D312CE /* MWZLeftMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZLeftMenuController.m; sourceTree = "<group>"; };
 		9363DB4F10F224C7B3AB9856 /* Pods-Mapwize_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mapwize_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mapwize_Tests/Pods-Mapwize_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		93BD132B7BFF3EA7AEF945AE /* Pods-Mapwize_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mapwize_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mapwize_Example/Pods-Mapwize_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		C15E228052F3DD98A620D0A4 /* Pods-Mapwize_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mapwize_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mapwize_Example/Pods-Mapwize_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -134,6 +145,12 @@
 		6003F593195388D20070C39A /* Example for Mapwize */ = {
 			isa = PBXGroup;
 			children = (
+				8F72AE541C8445210040FE82 /* SWRevealViewController.h */,
+				8F72AE551C8445210040FE82 /* SWRevealViewController.m */,
+				8FB3E5591C7C536600D312CE /* MWZLeftMenuController.h */,
+				8FB3E55A1C7C536600D312CE /* MWZLeftMenuController.m */,
+				8FB3E5561C7C534C00D312CE /* MWZMainViewController.h */,
+				8FB3E5571C7C534C00D312CE /* MWZMainViewController.m */,
 				6003F59C195388D20070C39A /* MWZAppDelegate.h */,
 				6003F59D195388D20070C39A /* MWZAppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
@@ -141,6 +158,7 @@
 				6003F5A6195388D20070C39A /* MWZViewController.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
+				8F72AE131C80B4980040FE82 /* Launch Screen.storyboard */,
 			);
 			name = "Example for Mapwize";
 			path = Mapwize;
@@ -251,6 +269,13 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Mathieu Gerard";
 				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
+					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
 					};
@@ -282,6 +307,7 @@
 			files = (
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				8F72AE141C80B4980040FE82 /* Launch Screen.storyboard in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -394,9 +420,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FB3E5581C7C534C00D312CE /* MWZMainViewController.m in Sources */,
 				6003F59E195388D20070C39A /* MWZAppDelegate.m in Sources */,
+				8FB3E55B1C7C536600D312CE /* MWZLeftMenuController.m in Sources */,
 				6003F5A7195388D20070C39A /* MWZViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				8F72AE561C8445210040FE82 /* SWRevealViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

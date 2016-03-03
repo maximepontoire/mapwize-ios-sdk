@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '5C3935AD186206CB397BF9CA'
+               BlueprintIdentifier = 'B70457A1E03DB145F2B23054'
                BlueprintName = 'Mapwize'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'Mapwize.framework'>
