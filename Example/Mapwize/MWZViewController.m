@@ -74,6 +74,10 @@ CLLocationManager* locationManager;
     NSLog(@"didChangeFloors %@", floors);
 }
 
+- (void) map:(MWZMapView *)map didMove:(MWZLatLon *)center {
+    NSLog(@"didMove %@", center);
+}
+
 - (void) map:(MWZMapView*) map didFailWithError: (NSError *)error {
     NSLog(@"didFailWithError %@", error);
 }

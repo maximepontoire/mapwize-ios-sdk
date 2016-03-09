@@ -24,6 +24,7 @@
 - (NSArray*) getFloors;
 - (void) setZoom: (NSNumber*) zoom;
 - (NSNumber*) getZoom;
+- (MWZLatLon*) getCenter;
 
 - (void) centerOnVenue: (MWZVenue*) venue;
 - (void) centerOnVenueById: (NSString*) venueId;

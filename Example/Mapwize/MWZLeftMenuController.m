@@ -12,7 +12,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _menuItems = @[@"accessKey", @"setZoom", @"centerOnCoordinates", @"centerOnCoordinatesWithFloor", @"setFloor", @"centerOnVenue", @"centerOnPlace", @"centerOnUser", @"loadUrl", @"addMarker", @"addMarkerOnPlace", @"removeMarkers", @"setFollowUserModeOn", @"setFollowUserModeOff", @"setUserPosition", @"setUserPositionWithFloor", @"unlockUserPosition", @"showDirections",
-                   @"getZoom", @"getFloor", @"getUserPosition"];
+                   @"getZoom", @"getFloor", @"getUserPosition", @"getCenter"];
     
     UINavigationController *navController =(UINavigationController*)self.revealViewController.frontViewController;
     MWZViewController *mainViewController = [navController childViewControllers].firstObject;
@@ -129,6 +129,16 @@
     MWZMeasurement* up = [_mapController getUserPosition];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"User Position"
                                                     message:[NSString stringWithFormat:@"%@", up]
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+- (void) getCenter {
+    MWZLatLon* latlng = [_mapController getCenter];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Center"
+                                                    message:[NSString stringWithFormat:@"%@", latlng]
                                                    delegate:nil
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];

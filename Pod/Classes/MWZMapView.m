@@ -14,6 +14,7 @@
     BOOL _isWebviewLoaded;
     MWZMeasurement* _userPosition;
     NSMutableArray* _jsQueue;
+    MWZLatLon* _center;
     MWZMapOptions* _options;
 }
 
@@ -87,6 +88,8 @@
     [self executeJS:@"map.on('floorChange', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, floor:this._floor});});"];
     [self executeJS:@"map.on('placeClick', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, place:e.place});});"];
     [self executeJS:@"map.on('venueClick', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, venue:e.venue});});"];
+    [self executeJS:@"map.on('markerClick', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, lat:e.latlng.lat, lon:e.latlng.lng});});"];
+    [self executeJS:@"map.on('moveend', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, center:map.getCenter()});});"];
     [self executeJS:@"map.on('userPositionChange', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, userPosition:e.userPosition});});"];
     [self executeJS:@"map.on('followUserModeChange', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, followUserMode:e.active});});"];
     [self executeJS:@"map.on('directionsStart', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, info:'Directions have been loaded'});});"];
@@ -174,6 +177,19 @@
             [self.delegate map:self didClickOnVenue:[[MWZVenue alloc] initFromDictionnary:body[@"venue"]]];
         }
     }
+    if ([body[@"type"] isEqualToString:@"markerClick"]) {
+        NSLog(@"Marker click : %@", body);
+        /*if (self.delegate != nil) {
+            [self.delegate map:self didClickOnVenue:[[MWZVenue alloc] initFromDictionnary:body[@"venue"]]];
+        }*/
+    }
+    if ([body[@"type"] isEqualToString:@"moveend"]) {
+        NSDictionary* latlng = body[@"center"];
+        NSNumber* lat = latlng[@"lat"];
+        NSNumber* lng = latlng[@"lng"];
+        _center = [[MWZLatLon alloc] initWithLatitude:lat longitude:lng];
+        [self.delegate map:self didMove:_center];
+    }
     if ([body[@"type"] isEqualToString:@"userPositionChange"]) {
         MWZMeasurement* userPosition = [[MWZMeasurement alloc] initFromDictionnary:body[@"userPosition"]];
         _userPosition = userPosition;
@@ -245,6 +261,10 @@
 - (NSNumber*) getZoom {
     return _zoom;
 }
+
+- (MWZLatLon*) getCenter {
+    return _center;
+};
 
 - (void) centerOnVenueById: (NSString*) venueId {
     [self executeJS:[NSString stringWithFormat:@"map.centerOnVenue('%@')", venueId ]];
