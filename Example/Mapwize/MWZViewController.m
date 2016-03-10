@@ -66,6 +66,10 @@ CLLocationManager* locationManager;
     NSLog(@"didClickOnVenue %@", venue);
 }
 
+- (void) map:(MWZMapView*) map didClickOnMarker:(MWZPosition *)marker {
+    NSLog(@"didClickOnMarker %@", marker);
+}
+
 - (void) map:(MWZMapView*) map didChangeFloor:(NSNumber*) floor {
     NSLog(@"didChangeFloor %@", floor);
 }

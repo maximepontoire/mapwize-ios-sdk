@@ -43,7 +43,7 @@
     _webview.navigationDelegate = self;
     [self addSubview:_webview];
 
-    [_webview loadRequest:[NSURLRequest requestWithURL: [NSURL URLWithString:[NSString stringWithFormat:@"%@/sdk/mapwize-ios-sdk/1.2.x/map.html", SERVER_URL]]]];
+    [_webview loadRequest:[NSURLRequest requestWithURL: [NSURL URLWithString:[NSString stringWithFormat:@"%@/sdk/mapwize-ios-sdk/1.3.x/map.html", SERVER_URL]]]];
     [_webview setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addWebViewConstraints];
     [self executeJS:[NSString stringWithFormat:@"Mapwize.config.SERVER = '%@'", SERVER_URL]];
@@ -88,7 +88,7 @@
     [self executeJS:@"map.on('floorChange', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, floor:this._floor});});"];
     [self executeJS:@"map.on('placeClick', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, place:e.place});});"];
     [self executeJS:@"map.on('venueClick', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, venue:e.venue});});"];
-    [self executeJS:@"map.on('markerClick', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, lat:e.latlng.lat, lon:e.latlng.lng});});"];
+    [self executeJS:@"map.on('markerClick', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, lat:e.latlng.lat, lon:e.latlng.lng, floor:e.floor});});"];
     [self executeJS:@"map.on('moveend', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, center:map.getCenter()});});"];
     [self executeJS:@"map.on('userPositionChange', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, userPosition:e.userPosition});});"];
     [self executeJS:@"map.on('followUserModeChange', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, followUserMode:e.active});});"];
@@ -178,10 +178,10 @@
         }
     }
     if ([body[@"type"] isEqualToString:@"markerClick"]) {
-        NSLog(@"Marker click : %@", body);
-        /*if (self.delegate != nil) {
-            [self.delegate map:self didClickOnVenue:[[MWZVenue alloc] initFromDictionnary:body[@"venue"]]];
-        }*/
+        MWZPosition* position = [[MWZPosition alloc] initWithLatitude:body[@"lat"] longitude:body[@"lon"] floor:body[@"floor"]];
+        if (self.delegate != nil) {
+            [self.delegate map:self didClickOnMarker:position];
+        }
     }
     if ([body[@"type"] isEqualToString:@"moveend"]) {
         NSDictionary* latlng = body[@"center"];
@@ -371,6 +371,11 @@
 /* Access */
 - (void) access: (NSString*) accessKey {
     [self executeJS:[NSString stringWithFormat:@"map.access('%@', function(){});", accessKey ]];
+}
+
+- (void) setStyle: (MWZPlaceStyle*) style forPlaceById: (NSString*) placeId {
+    NSLog(@"%@", [NSString stringWithFormat:@"map.setPlaceStyle('%@', %@);", placeId, [style toStringJSON]]);
+    [self executeJS:[NSString stringWithFormat:@"map.setPlaceStyle('%@', %@);", placeId, [style toStringJSON]]];
 }
 
 - (void) updateMonitoring: (NSArray*) uuids {

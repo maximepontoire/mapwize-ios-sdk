@@ -8,6 +8,7 @@
 #import "MWZVenue.h"
 #import "MWZPosition.h"
 #import "MWZMeasurement.h"
+#import "MWZPlaceStyle.h"
 
 @interface MWZMapView : UIView  <WKNavigationDelegate, WKScriptMessageHandler, CLLocationManagerDelegate>
 
@@ -49,6 +50,8 @@
 - (void) showDirectionsFrom: (MWZPosition*) from to: (MWZPosition*) to;
 
 - (void) access: (NSString*) accessKey;
+
+- (void) setStyle: (MWZPlaceStyle*) style forPlaceById: (NSString*) placeId;
 
 - (void) executeJS:(NSString*) js;
 

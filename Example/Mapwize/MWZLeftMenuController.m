@@ -12,7 +12,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _menuItems = @[@"accessKey", @"setZoom", @"centerOnCoordinates", @"centerOnCoordinatesWithFloor", @"setFloor", @"centerOnVenue", @"centerOnPlace", @"centerOnUser", @"loadUrl", @"addMarker", @"addMarkerOnPlace", @"removeMarkers", @"setFollowUserModeOn", @"setFollowUserModeOff", @"setUserPosition", @"setUserPositionWithFloor", @"unlockUserPosition", @"showDirections",
-                   @"getZoom", @"getFloor", @"getUserPosition", @"getCenter"];
+                   @"getZoom", @"getFloor", @"getUserPosition", @"getCenter", @"setStyle"];
     
     UINavigationController *navController =(UINavigationController*)self.revealViewController.frontViewController;
     MWZViewController *mainViewController = [navController childViewControllers].firstObject;
@@ -108,6 +108,10 @@
     MWZPosition* from = [[MWZPosition alloc] initWithPlaceId:@"56c3426202275a0b00fb00b9"];
     MWZPosition* to = [[MWZPosition alloc] initWithPlaceId:@"56c3504102275a0b00fb00fa"];
     [_mapController showDirectionsFrom:from to:to];
+}
+- (void) setStyle {
+    MWZPlaceStyle* style = [[MWZPlaceStyle alloc] initWithStrokeColor:[UIColor redColor] strokeWidth:@1 fillColor:[UIColor blueColor] labelBackgroundColor:[UIColor greenColor] markerUrl:@"https://cdn4.iconfinder.com/data/icons/medical-soft-1/512/map_marker_pin_pointer_navigation_location_point_position-128.png"];
+    [_mapController setStyle:style forPlaceById:@"56c3426202275a0b00fb00b9"];
 }
 - (void) getZoom {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Zoom level"

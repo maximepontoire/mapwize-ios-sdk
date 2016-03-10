@@ -110,6 +110,10 @@
 		8F72AE5B1C86DF720040FE82 /* MWZMeasurement.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F72AE571C86DF720040FE82 /* MWZMeasurement.h */; };
 		8F72AE5C1C86DF720040FE82 /* MWZMeasurement.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F72AE581C86DF720040FE82 /* MWZMeasurement.m */; };
 		8F7F97795035B6E2CAA10D10FB1F9E11 /* MWZMapView.h in Headers */ = {isa = PBXBuildFile; fileRef = 97A92230A509D979BC614534E8BBB551 /* MWZMapView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8FE3CB3D1C92D3A10021FE99 /* MWZPlaceStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FE3CB3B1C92D3A10021FE99 /* MWZPlaceStyle.h */; };
+		8FE3CB3E1C92D3A10021FE99 /* MWZPlaceStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3CB3C1C92D3A10021FE99 /* MWZPlaceStyle.m */; };
+		8FE3CB3F1C92D3E30021FE99 /* MWZPlaceStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FE3CB3B1C92D3A10021FE99 /* MWZPlaceStyle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8FE3CB401C92D9C50021FE99 /* MWZPlaceStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3CB3C1C92D3A10021FE99 /* MWZPlaceStyle.m */; };
 		908F38A5DBE7098FDCF641BB3045DDDD /* MWZMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7B9B66CCA8AB3FBDAC6218B9FE0A12 /* MWZMapView.m */; };
 		90F6ECF812F8833A417B942C33616CAB /* XCTestCase+Specta.h in Headers */ = {isa = PBXBuildFile; fileRef = 7085F5CB16BF96F625D6465A4DA29F6F /* XCTestCase+Specta.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		918E06480F28F27361B19D19432F8538 /* EXPMatchers+endWith.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EF2072991CBA5987025178150BD49F6 /* EXPMatchers+endWith.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -344,6 +348,8 @@
 		8F63B0FF272D1EB750D82F3EADA2D2CA /* EXPExpect.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EXPExpect.h; path = Expecta/EXPExpect.h; sourceTree = "<group>"; };
 		8F72AE571C86DF720040FE82 /* MWZMeasurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZMeasurement.h; sourceTree = "<group>"; };
 		8F72AE581C86DF720040FE82 /* MWZMeasurement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZMeasurement.m; sourceTree = "<group>"; };
+		8FE3CB3B1C92D3A10021FE99 /* MWZPlaceStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZPlaceStyle.h; sourceTree = "<group>"; };
+		8FE3CB3C1C92D3A10021FE99 /* MWZPlaceStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZPlaceStyle.m; sourceTree = "<group>"; };
 		91453F85BD953E023DC76351FFEA1D94 /* EXPMatchers+beginWith.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "EXPMatchers+beginWith.m"; path = "Expecta/Matchers/EXPMatchers+beginWith.m"; sourceTree = "<group>"; };
 		91A0A6B440D869B92BBB08167B30B857 /* Pods_Mapwize_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mapwize_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		91EC2AD8B04A0D0F0EC345F2B7070A95 /* EXPDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EXPDefines.h; path = Expecta/EXPDefines.h; sourceTree = "<group>"; };
@@ -841,6 +847,8 @@
 		E5365BCB5FF0319D6B99DFCBD0C05520 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				8FE3CB3B1C92D3A10021FE99 /* MWZPlaceStyle.h */,
+				8FE3CB3C1C92D3A10021FE99 /* MWZPlaceStyle.m */,
 				1F1AA42E92DA3492A70A1DB3FE6ABA7D /* MWZPosition.h */,
 				2E6C99687E2EB2C7BA3504D8377D9F37 /* MWZPosition.m */,
 				8F72AE571C86DF720040FE82 /* MWZMeasurement.h */,
@@ -916,6 +924,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50B536213110358A8183FC8177E69DC4 /* Mapwize-umbrella.h in Headers */,
+				8FE3CB3F1C92D3E30021FE99 /* MWZPlaceStyle.h in Headers */,
 				3EAC9438A1032440F185B3D108BCEB62 /* MWZLatLon.h in Headers */,
 				4E81D0EEDB982021DE50B73B4457F64E /* MWZLatLonBounds.h in Headers */,
 				41542190F41C86AA1A626FF91C6DE21F /* MWZMapDelegate.h in Headers */,
@@ -983,6 +992,7 @@
 				0F94F5B0ABB3252B9275B7C129EC7A26 /* EXPMatchers+equal.h in Headers */,
 				F75CB2A727F678C9A848A3A11EA7979B /* EXPMatchers+haveCountOf.h in Headers */,
 				2916A0606136A9DC67F2463AB230868B /* EXPMatchers+match.h in Headers */,
+				8FE3CB3D1C92D3A10021FE99 /* MWZPlaceStyle.h in Headers */,
 				9B2E761A064459F77EA9870BEF03ACC3 /* EXPMatchers+postNotification.h in Headers */,
 				46137F5CC368BF38BAF0D0AF81DD8FFE /* EXPMatchers+raise.h in Headers */,
 				11C1AEB289C1EB80089349B71F09D04B /* EXPMatchers+raiseWithReason.h in Headers */,
@@ -1277,6 +1287,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FE3CB401C92D9C50021FE99 /* MWZPlaceStyle.m in Sources */,
 				0D0009CF5D50694ACBB51EDE008D743A /* Mapwize-dummy.m in Sources */,
 				BDDB879696F6941C712CA373096E6B4F /* MWZLatLon.m in Sources */,
 				ED54819EFF358341CF7C00A111F8B64B /* MWZLatLonBounds.m in Sources */,
@@ -1352,6 +1363,7 @@
 				DB30F82FB1BE083D9471B965FB500CA2 /* EXPMatchers+conformTo.m in Sources */,
 				FC20596ABFE14A61F171A29FD03275E7 /* EXPMatchers+contain.m in Sources */,
 				918E06480F28F27361B19D19432F8538 /* EXPMatchers+endWith.m in Sources */,
+				8FE3CB3E1C92D3A10021FE99 /* MWZPlaceStyle.m in Sources */,
 				1AB3304B6884F626BC54150AC7565E18 /* EXPMatchers+equal.m in Sources */,
 				403292D82DA62291204BF59524BC4EDB /* EXPMatchers+haveCountOf.m in Sources */,
 				FC45858927D3B6A0F922C4B697B04A38 /* EXPMatchers+match.m in Sources */,
