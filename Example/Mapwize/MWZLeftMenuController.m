@@ -11,8 +11,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _menuItems = @[@"accessKey", @"setZoom", @"centerOnCoordinates", @"centerOnCoordinatesWithFloor", @"setFloor", @"centerOnVenue", @"centerOnPlace", @"centerOnUser", @"loadUrl", @"addMarker", @"addMarkerOnPlace", @"removeMarkers", @"setFollowUserModeOn", @"setFollowUserModeOff", @"setUserPosition", @"setUserPositionWithFloor", @"unlockUserPosition", @"showDirections",
-                   @"getZoom", @"getFloor", @"getUserPosition", @"getCenter", @"setStyle"];
+    _menuItems = @[@"accessKey", @"setZoom", @"centerOnCoordinates", @"centerOnCoordinatesWithFloor", @"setFloor", @"centerOnVenue", @"centerOnPlace", @"centerOnUser", @"loadUrl", @"addMarker", @"addMarkerOnPlace", @"removeMarkers", @"setFollowUserModeOn", @"setFollowUserModeOff", @"setUserPosition", @"setUserPositionWithFloor", @"unlockUserPosition", @"showDirections", @"stopDirections",
+                   @"getZoom", @"getFloor", @"getUserPosition", @"getCenter", @"setStyle", @"fitBounds"];
     
     UINavigationController *navController =(UINavigationController*)self.revealViewController.frontViewController;
     MWZViewController *mainViewController = [navController childViewControllers].firstObject;
@@ -109,6 +109,9 @@
     MWZPosition* to = [[MWZPosition alloc] initWithPlaceId:@"56c3504102275a0b00fb00fa"];
     [_mapController showDirectionsFrom:from to:to];
 }
+- (void) stopDirections {
+    [_mapController stopDirections];
+}
 - (void) setStyle {
     MWZPlaceStyle* style = [[MWZPlaceStyle alloc] initWithStrokeColor:[UIColor redColor] strokeWidth:@1 fillColor:[UIColor blueColor] labelBackgroundColor:[UIColor greenColor] markerUrl:@"https://cdn4.iconfinder.com/data/icons/medical-soft-1/512/map_marker_pin_pointer_navigation_location_point_position-128.png"];
     [_mapController setStyle:style forPlaceById:@"56c3426202275a0b00fb00b9"];
@@ -149,6 +152,10 @@
     [alert show];
 }
 
+- (void) fitBounds {
+    MWZLatLonBounds* bounds = [[MWZLatLonBounds alloc] initWithNorthEast:[[MWZLatLon alloc] initWithLatitude:@49.74252973220731 longitude:@4.599119424819946] southWest:[[MWZLatLon alloc] initWithLatitude:@49.74252973220731 longitude:@4.599119424819946]];
+    [_mapController fitBounds:bounds];
+}
 /*
 #pragma mark - Navigation
 

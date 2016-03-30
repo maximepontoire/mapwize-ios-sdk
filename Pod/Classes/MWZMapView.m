@@ -43,7 +43,7 @@
     _webview.navigationDelegate = self;
     [self addSubview:_webview];
 
-    [_webview loadRequest:[NSURLRequest requestWithURL: [NSURL URLWithString:[NSString stringWithFormat:@"%@/sdk/mapwize-ios-sdk/1.3.x/map.html", SERVER_URL]]]];
+    [_webview loadRequest:[NSURLRequest requestWithURL: [NSURL URLWithString:[NSString stringWithFormat:@"%@/sdk/mapwize-ios-sdk/1.4.x/map.html", SERVER_URL]]]];
     [_webview setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addWebViewConstraints];
     [self executeJS:[NSString stringWithFormat:@"Mapwize.config.SERVER = '%@'", SERVER_URL]];
@@ -364,9 +364,13 @@
 /* Directions */
 
 - (void) showDirectionsFrom: (MWZPosition*) from to: (MWZPosition*) to {
-    
     [self executeJS:[NSString stringWithFormat:@"map.showDirections(%@,%@,null,function(){})", [from toStringJSON], [to toStringJSON]]];
 }
+
+- (void) stopDirections {
+    [self executeJS:[NSString stringWithFormat:@"map.stopDirections()"]];
+}
+
 
 /* Access */
 - (void) access: (NSString*) accessKey {

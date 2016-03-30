@@ -48,6 +48,7 @@
 - (void) removeMarkers;
 
 - (void) showDirectionsFrom: (MWZPosition*) from to: (MWZPosition*) to;
+- (void) stopDirections;
 
 - (void) access: (NSString*) accessKey;
 
