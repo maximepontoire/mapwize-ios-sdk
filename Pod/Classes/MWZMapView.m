@@ -320,6 +320,26 @@
     [self executeJS:[NSString stringWithFormat:@"map.setUserPosition(%@)", userPositionString ]];
 }
 
+- (void) setUserPositionWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor accuracy:(NSNumber*) accuracy {
+    NSMutableDictionary* positionDic = [[NSMutableDictionary alloc] init];
+    if (latitude != nil) {
+        [positionDic setObject:latitude forKey:@"latitude"];
+    }
+    if (longitude != nil) {
+        [positionDic setObject:longitude forKey:@"longitude"];
+    }
+    if (floor != nil) {
+        [positionDic setObject:floor forKey:@"floor"];
+    }
+    if (accuracy != nil) {
+        [positionDic setObject:accuracy forKey:@"accuracy"];
+    }
+    NSData *userPositionJSON = [NSJSONSerialization dataWithJSONObject:positionDic options:(NSJSONWritingOptions) 0 error:nil];
+    NSString* userPositionString = [[NSString alloc] initWithData:userPositionJSON encoding:NSUTF8StringEncoding];
+    [self executeJS:[NSString stringWithFormat:@"map.setUserPosition(%@)", userPositionString ]];
+
+}
+
 - (void) unlockUserPosition {
     [self executeJS:[NSString stringWithFormat:@"map.unlockUserPosition()"]];
 

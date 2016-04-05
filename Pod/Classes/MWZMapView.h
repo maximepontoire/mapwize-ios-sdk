@@ -38,6 +38,7 @@
 - (void) centerOnUser: (NSNumber*) zoom;
 - (MWZMeasurement*) getUserPosition;
 - (void) setUserPositionWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor;
+- (void) setUserPositionWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor accuracy:(NSNumber*) accuracy;
 - (void) newUserPositionMeasurement: (MWZMeasurement*) measurement;
 - (void) unlockUserPosition;
 
