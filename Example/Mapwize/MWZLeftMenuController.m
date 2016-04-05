@@ -12,7 +12,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _menuItems = @[@"accessKey", @"setZoom", @"centerOnCoordinates", @"centerOnCoordinatesWithFloor", @"setFloor", @"centerOnVenue", @"centerOnPlace", @"centerOnUser", @"loadUrl", @"addMarker", @"addMarkerOnPlace", @"removeMarkers", @"setFollowUserModeOn", @"setFollowUserModeOff", @"setUserPosition", @"setUserPositionWithFloor", @"unlockUserPosition", @"showDirections", @"stopDirections",
-                   @"getZoom", @"getFloor", @"getUserPosition", @"getCenter", @"setStyle", @"fitBounds"];
+                   @"getZoom", @"getFloor", @"getUserPosition", @"getCenter", @"setStyle", @"fitBounds", @"setBottomMargin", @"setTopMargin", @"resetMargin"];
     
     UINavigationController *navController =(UINavigationController*)self.revealViewController.frontViewController;
     MWZViewController *mainViewController = [navController childViewControllers].firstObject;
@@ -155,6 +155,19 @@
 - (void) fitBounds {
     MWZLatLonBounds* bounds = [[MWZLatLonBounds alloc] initWithNorthEast:[[MWZLatLon alloc] initWithLatitude:@49.74252973220731 longitude:@4.599119424819946] southWest:[[MWZLatLon alloc] initWithLatitude:@49.74252973220731 longitude:@4.599119424819946]];
     [_mapController fitBounds:bounds];
+}
+
+- (void) setBottomMargin {
+    [_mapController setBottomMargin:@60];
+}
+
+- (void) setTopMargin {
+    [_mapController setTopMargin:@60];
+}
+
+- (void) resetMargin {
+    [_mapController setBottomMargin:@0];
+    [_mapController setTopMargin:@0];
 }
 /*
 #pragma mark - Navigation

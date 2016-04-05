@@ -397,6 +397,14 @@
     [self executeJS:[NSString stringWithFormat:@"map.access('%@', function(){});", accessKey ]];
 }
 
+- (void) setBottomMargin: (NSNumber*) margin {
+    [self executeJS:[NSString stringWithFormat:@"map.setBottomMargin(%@);", margin ]];
+}
+
+- (void) setTopMargin: (NSNumber*) margin {
+    [self executeJS:[NSString stringWithFormat:@"map.setTopMargin(%@);", margin ]];
+}
+
 - (void) setStyle: (MWZPlaceStyle*) style forPlaceById: (NSString*) placeId {
     NSLog(@"%@", [NSString stringWithFormat:@"map.setPlaceStyle('%@', %@);", placeId, [style toStringJSON]]);
     [self executeJS:[NSString stringWithFormat:@"map.setPlaceStyle('%@', %@);", placeId, [style toStringJSON]]];

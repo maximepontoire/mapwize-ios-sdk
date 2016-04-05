@@ -55,6 +55,9 @@
 
 - (void) setStyle: (MWZPlaceStyle*) style forPlaceById: (NSString*) placeId;
 
+- (void) setBottomMargin: (NSNumber*) margin;
+- (void) setTopMargin: (NSNumber*) margin;
+
 - (void) executeJS:(NSString*) js;
 
 @end
