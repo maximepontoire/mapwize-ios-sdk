@@ -4,6 +4,7 @@
 #import "MWZMapOptions.h"
 
 #define SERVER_URL @"https://www.mapwize.io"
+#define SDK_VERSION @"1.4.x"
 
 @implementation MWZMapView {
     WKWebView* _webview;
@@ -43,7 +44,7 @@
     _webview.navigationDelegate = self;
     [self addSubview:_webview];
 
-    [_webview loadRequest:[NSURLRequest requestWithURL: [NSURL URLWithString:[NSString stringWithFormat:@"%@/sdk/mapwize-ios-sdk/1.4.x/map.html", SERVER_URL]]]];
+    [_webview loadRequest:[NSURLRequest requestWithURL: [NSURL URLWithString:[NSString stringWithFormat:@"%@/sdk/mapwize-ios-sdk/%@/map.html", SERVER_URL, SDK_VERSION]]]];
     [_webview setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addWebViewConstraints];
     [self executeJS:[NSString stringWithFormat:@"Mapwize.config.SERVER = '%@'", SERVER_URL]];
@@ -301,6 +302,10 @@
 
 - (void) newUserPositionMeasurement: (MWZMeasurement*) measurement {
     [self executeJS:[NSString stringWithFormat:@"map.newUserPositionMeasurement(%@)", [measurement toStringJSON] ]];
+}
+
+- (void) setUserHeading: (NSNumber*) heading {
+    [self executeJS:[NSString stringWithFormat:@"map.setUserHeading(%@)", heading!=nil?heading:@"null" ]];
 }
 
 - (void) setUserPositionWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor {

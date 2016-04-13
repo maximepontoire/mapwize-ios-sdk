@@ -12,7 +12,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _menuItems = @[@"accessKey", @"setZoom", @"centerOnCoordinates", @"centerOnCoordinatesWithFloor", @"setFloor", @"centerOnVenue", @"centerOnPlace", @"centerOnUser", @"loadUrl", @"addMarker", @"addMarkerOnPlace", @"removeMarkers", @"setFollowUserModeOn", @"setFollowUserModeOff", @"setUserPosition", @"setUserPositionWithFloor", @"unlockUserPosition", @"showDirections", @"stopDirections",
-                   @"getZoom", @"getFloor", @"getUserPosition", @"getCenter", @"setStyle", @"fitBounds", @"setBottomMargin", @"setTopMargin", @"resetMargin"];
+                   @"getZoom", @"getFloor", @"getUserPosition", @"getCenter", @"setStyle", @"fitBounds", @"setBottomMargin", @"setTopMargin", @"resetMargin", @"setUserHeading", @"removeHeading"];
     
     UINavigationController *navController =(UINavigationController*)self.revealViewController.frontViewController;
     MWZViewController *mainViewController = [navController childViewControllers].firstObject;
@@ -169,6 +169,19 @@
     [_mapController setBottomMargin:@0];
     [_mapController setTopMargin:@0];
 }
+
+- (void) setUserHeading {
+    _manager = [[CLLocationManager alloc] init];
+    _manager.delegate = self;
+    _manager.headingFilter = 5;
+    [_manager requestWhenInUseAuthorization];
+    [_manager startUpdatingHeading];
+}
+
+- (void) removeHeading {
+    [_manager stopUpdatingHeading];
+    [_mapController setUserHeading:nil];
+}
 /*
 #pragma mark - Navigation
 
@@ -178,5 +191,17 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+
+- (BOOL)locationManagerShouldDisplayHeadingCalibration:(CLLocationManager*)manager
+{
+    return YES;
+}
+
+- (void)locationManager:(CLLocationManager*)manager
+       didUpdateHeading:(CLHeading*)heading
+{
+    [_mapController setUserHeading:@(heading.magneticHeading)];
+}
 
 @end
