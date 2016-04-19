@@ -5,6 +5,8 @@
 
 #define SERVER_URL @"https://www.mapwize.io"
 #define SDK_VERSION @"1.4.x"
+#define IOS_SDK_VERSION @"1.4.2"
+#define IOS_SDK_NAME @"IOS SDK"
 
 @implementation MWZMapView {
     WKWebView* _webview;
@@ -46,8 +48,10 @@
 
     [_webview loadRequest:[NSURLRequest requestWithURL: [NSURL URLWithString:[NSString stringWithFormat:@"%@/sdk/mapwize-ios-sdk/%@/map.html", SERVER_URL, SDK_VERSION]]]];
     [_webview setTranslatesAutoresizingMaskIntoConstraints:NO];
+    _webview.scrollView.bounces = NO;
     [self addWebViewConstraints];
-    [self executeJS:[NSString stringWithFormat:@"Mapwize.config.SERVER = '%@'", SERVER_URL]];
+    [self executeJS:[NSString stringWithFormat:@"Mapwize.config.SERVER = '%@'; Mapwize.config.SDK_NAME = '%@'; Mapwize.config.SDK_VERSION = '%@'; Mapwize.config.CLIENT_APP_NAME = '%@'; ",
+                     SERVER_URL, IOS_SDK_NAME, IOS_SDK_NAME, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"]]];
     
     /*
      * Handles the options
