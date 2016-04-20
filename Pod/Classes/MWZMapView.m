@@ -19,11 +19,13 @@
     NSMutableArray* _jsQueue;
     MWZLatLon* _center;
     MWZMapOptions* _options;
+    NSMutableDictionary* callbackMemory;
 }
 
 - (void) loadMapWithOptions: (MWZMapOptions*) options {
     _isWebviewLoaded = NO;
     _jsQueue = [[NSMutableArray alloc] init];
+    callbackMemory = [[NSMutableDictionary alloc] init];
 
     
     /*
@@ -100,14 +102,21 @@
     [self executeJS:@"map.on('directionsStart', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, info:'Directions have been loaded'});});"];
     [self executeJS:@"map.on('directionsStop', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, info:'Directions have stopped'});});"];
     [self executeJS:@"map.on('monitoredUuidsChange', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, uuids:e.uuids});});"];
-
+    [self executeJS:@"map.on('apiResponse', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, returnedType: e.returnedType, hash:e.hash, response:e.response});});"];
 
 }
 
 - (void) executeJS:(NSString*) js {
     
     if (_isWebviewLoaded) {
-        [_webview evaluateJavaScript:js completionHandler:nil];
+        [_webview evaluateJavaScript:js completionHandler:^(id result, NSError *error) {
+            if (error != nil) {
+                if (error.code != 5 && self.delegate != nil) {
+                    NSError* err = [[NSError alloc] initWithDomain:@"MWZErrorDomain" code:1936 userInfo:nil];
+                    [self.delegate map:self didFailWithError:err];
+                }
+            }
+        }];
     } else {
         [_jsQueue addObject:js];
     }
@@ -120,17 +129,36 @@
 - (void)webView:(WKWebView *)_webView didFinishNavigation:(WKNavigation *)navigation {
     
     while ([_jsQueue count] > 0) {
-        
         NSString* js = [_jsQueue objectAtIndex:0];
         [_jsQueue removeObjectAtIndex:0];
-        
-        [_webview evaluateJavaScript:js completionHandler:nil];
+        [_webview evaluateJavaScript:js completionHandler:^(id result, NSError *error) {
+            if (error != nil) {
+                if (error.code != 5 && self.delegate != nil) {
+                    NSError* err = [[NSError alloc] initWithDomain:@"MWZErrorDomain" code:1936 userInfo:nil];
+                    [self.delegate map:self didFailWithError:err];
+                }
+            }
+        }];
         
     }
     
     _isWebviewLoaded = YES;
     
 }
+
+
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error{
+    if (self.delegate != nil) {
+        [self.delegate map:self didFailWithError:error];
+    }
+}
+
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    if (self.delegate != nil) {
+        [self.delegate map:self didFailWithError:error];
+    }
+}
+
 
 /*
  * Handle the events sent by the js sdk
@@ -144,7 +172,7 @@
             [self.delegate map:self didChangeZoom:_zoom];
         }
     }
-    if ([body[@"type"] isEqualToString:@"click"]) {
+    else if ([body[@"type"] isEqualToString:@"click"]) {
         if (self.delegate != nil) {
             NSDictionary* latlng = body[@"latlng"];
             NSNumber* lat = latlng[@"lat"];
@@ -152,7 +180,7 @@
             [self.delegate map:self didClick:[[MWZLatLon alloc] initWithLatitude:lat longitude:lng]];
         }
     }
-    if ([body[@"type"] isEqualToString:@"contextmenu"]) {
+    else if ([body[@"type"] isEqualToString:@"contextmenu"]) {
         if (self.delegate != nil) {
             NSDictionary* latlng = body[@"latlng"];
             NSNumber* lat = latlng[@"lat"];
@@ -160,69 +188,99 @@
             [self.delegate map:self didClickLong:[[MWZLatLon alloc] initWithLatitude:lat longitude:lng]];
         }
     }
-    if ([body[@"type"] isEqualToString:@"floorsChange"]) {
+    else if ([body[@"type"] isEqualToString:@"floorsChange"]) {
         _floors = body[@"floors"];
         if (self.delegate != nil) {
             [self.delegate map:self didChangeFloors:_floors];
         }
     }
-    if ([body[@"type"] isEqualToString:@"floorChange"]) {
+    else if ([body[@"type"] isEqualToString:@"floorChange"]) {
         _floor = body[@"floor"];
         if (self.delegate != nil) {
             [self.delegate map:self didChangeFloor:_floor];
         }
     }
-    if ([body[@"type"] isEqualToString:@"placeClick"]) {
+    else if ([body[@"type"] isEqualToString:@"placeClick"]) {
         if (self.delegate != nil) {
             [self.delegate map:self didClickOnPlace:[[MWZPlace alloc] initFromDictionnary:body[@"place"]]];
         }
     }
-    if ([body[@"type"] isEqualToString:@"venueClick"]) {
+    else if ([body[@"type"] isEqualToString:@"venueClick"]) {
         if (self.delegate != nil) {
             [self.delegate map:self didClickOnVenue:[[MWZVenue alloc] initFromDictionnary:body[@"venue"]]];
         }
     }
-    if ([body[@"type"] isEqualToString:@"markerClick"]) {
+    else if ([body[@"type"] isEqualToString:@"markerClick"]) {
         MWZPosition* position = [[MWZPosition alloc] initWithLatitude:body[@"lat"] longitude:body[@"lon"] floor:body[@"floor"]];
         if (self.delegate != nil) {
             [self.delegate map:self didClickOnMarker:position];
         }
     }
-    if ([body[@"type"] isEqualToString:@"moveend"]) {
+    else if ([body[@"type"] isEqualToString:@"moveend"]) {
         NSDictionary* latlng = body[@"center"];
         NSNumber* lat = latlng[@"lat"];
         NSNumber* lng = latlng[@"lng"];
         _center = [[MWZLatLon alloc] initWithLatitude:lat longitude:lng];
         [self.delegate map:self didMove:_center];
     }
-    if ([body[@"type"] isEqualToString:@"userPositionChange"]) {
+    else if ([body[@"type"] isEqualToString:@"userPositionChange"]) {
         MWZMeasurement* userPosition = [[MWZMeasurement alloc] initFromDictionnary:body[@"userPosition"]];
         _userPosition = userPosition;
         if (self.delegate != nil) {
             [self.delegate map:self didChangeUserPosition:userPosition];
         }
     }
-    if ([body[@"type"] isEqualToString:@"followUserModeChange"]) {
+    else if ([body[@"type"] isEqualToString:@"followUserModeChange"]) {
         _followUserModeON = [body[@"followUserMode"] boolValue];;
         if (self.delegate != nil) {
             [self.delegate map:self didChangeFollowUserMode:_followUserModeON];
         }
     }
-    if ([body[@"type"] isEqualToString:@"directionsStart"]) {
+    else if ([body[@"type"] isEqualToString:@"directionsStart"]) {
         if (self.delegate != nil) {
             NSString* info = body[@"info"];
             [self.delegate map:self didStartDirections:info];
         }
     }
-    if ([body[@"type"] isEqualToString:@"directionsStop"]) {
+    else if ([body[@"type"] isEqualToString:@"directionsStop"]) {
         if (self.delegate != nil) {
             NSString* info = body[@"info"];
             [self.delegate map:self didStopDirections:info];
         }
     }
-    if ([body[@"type"] isEqualToString:@"monitoredUuidsChange"]) {
+    else if ([body[@"type"] isEqualToString:@"monitoredUuidsChange"]) {
         NSArray* uuids = body[@"uuids"];
         [ self updateMonitoring: uuids ];
+    }
+    else if ([body[@"type"] isEqualToString:@"apiResponse"]) {
+        NSString* hash = body[@"hash"];
+        NSString* returnedType = body[@"returnedType"];
+        NSDictionary* response = body[@"response"];
+        
+        if ([returnedType isEqualToString:@"place"]) {
+            void(^_handler)(MWZPlace*);
+            _handler = callbackMemory[hash];
+            if (response[@"_id"] != nil){
+                MWZPlace* place = [[MWZPlace alloc] initFromDictionnary:body[@"response"]];
+                _handler(place);
+            }
+            else {
+                _handler(nil);
+            }
+        }
+        else if ([returnedType isEqualToString:@"venue"]) {
+            void(^_handler)(MWZVenue*);
+            _handler = callbackMemory[hash];
+            if (response[@"_id"] != nil){
+                MWZVenue* venue = [[MWZVenue alloc] initFromDictionnary:body[@"response"]];
+                _handler(venue);
+            }
+            else {
+                _handler(nil);
+            }
+        }
+        [callbackMemory removeObjectForKey:hash];
+        [callbackMemory allKeys];
     }
     
 }
@@ -419,6 +477,87 @@
     [self executeJS:[NSString stringWithFormat:@"map.setPlaceStyle('%@', %@);", placeId, [style toStringJSON]]];
 }
 
+/* API Request */
+
+NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+-(NSString *) randomStringWithLength: (int) len {
+    
+    NSMutableString *randomString = [NSMutableString stringWithCapacity: len];
+    
+    for (int i=0; i<len; i++) {
+        [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random_uniform([letters length])]];
+    }
+    
+    return randomString;
+}
+
+-(NSString*) generateHash {
+    return [self randomStringWithLength:16];
+}
+
+- (void) getPlaceWithId: (NSString*) placeId completionHandler:(void(^)(MWZPlace*)) handler {
+    
+    NSString* hash = [self generateHash];
+    void(^_handler)(MWZPlace*);
+    _handler = [handler copy];
+    [callbackMemory setValue:_handler forKey:hash];
+    
+    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getPlace('%@', function(err, place){map.fire('apiResponse', {returnedType:'place', hash:'%@', response:err||place});});", placeId, hash ]];
+    
+}
+
+- (void) getPlaceWithAlias: (NSString*) placeAlias inVenue: (NSString*) venueId completionHandler:(void(^)(MWZPlace*)) handler {
+    NSString* hash = [self generateHash];
+    void(^_handler)(MWZPlace*);
+    _handler = [handler copy];
+    [callbackMemory setValue:_handler forKey:hash];
+    
+    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getPlace({alias:'%@', venueId:'%@'}, function(err, place){map.fire('apiResponse', {returnedType:'place', hash:'%@', response:err||place});});", placeAlias, venueId, hash ]];
+}
+
+- (void) getPlaceWithName: (NSString*) placeName inVenue: (NSString*) venueId completionHandler:(void(^)(MWZPlace*)) handler {
+    NSString* hash = [self generateHash];
+    void(^_handler)(MWZPlace*);
+    _handler = [handler copy];
+    [callbackMemory setValue:_handler forKey:hash];
+    
+    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getPlace({name:'%@', venueId:'%@'}, function(err, place){map.fire('apiResponse', {returnedType:'place', hash:'%@', response:err||place});});", placeName, venueId, hash ]];
+}
+
+- (void) getVenueWithId: (NSString*) venueId completionHandler:(void(^)(MWZVenue*)) handler {
+    NSString* hash = [self generateHash];
+    void(^_handler)(MWZVenue*);
+    _handler = [handler copy];
+    [callbackMemory setValue:_handler forKey:hash];
+
+    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getVenue('%@', function(err, venue){map.fire('apiResponse', {returnedType:'venue', hash:'%@', response:err||venue});});", venueId, hash ]];
+}
+
+- (void) getVenueWithName: (NSString*) venueName completionHandler:(void(^)(MWZVenue*)) handler {
+    NSString* hash = [self generateHash];
+    void(^_handler)(MWZVenue*);
+    _handler = [handler copy];
+    [callbackMemory setValue:_handler forKey:hash];
+    
+    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getVenue({venueName:'%@'}, function(err, venue){map.fire('apiResponse', {returnedType:'venue', hash:'%@', response:err||venue});});", venueName, hash ]];
+}
+
+- (void) getVenueWithAlias: (NSString*) venueAlias completionHandler:(void(^)(MWZVenue*)) handler {
+    NSString* hash = [self generateHash];
+    void(^_handler)(MWZVenue*);
+    _handler = [handler copy];
+    [callbackMemory setValue:_handler forKey:hash];
+    
+    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getVenue({venueAlias:'%@'}, function(err, venue){map.fire('apiResponse', {returnedType:'venue', hash:'%@', response:err||venue});});", venueAlias, hash ]];
+}
+
+- (void) refresh {
+    [self executeJS:[NSString stringWithFormat:@"map.refresh()"]];
+}
+
+
+/* location manager methods */
 - (void) updateMonitoring: (NSArray*) uuids {
     
     NSArray* rangedRegion = [[_locationManager rangedRegions] copy];

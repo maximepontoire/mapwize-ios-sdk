@@ -12,7 +12,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _menuItems = @[@"accessKey", @"setZoom", @"centerOnCoordinates", @"centerOnCoordinatesWithFloor", @"setFloor", @"centerOnVenue", @"centerOnPlace", @"centerOnUser", @"loadUrl", @"addMarker", @"addMarkerOnPlace", @"removeMarkers", @"setFollowUserModeOn", @"setFollowUserModeOff", @"setUserPosition", @"setUserPositionWithFloor", @"unlockUserPosition", @"showDirections", @"stopDirections",
-                   @"getZoom", @"getFloor", @"getUserPosition", @"getCenter", @"setStyle", @"fitBounds", @"setBottomMargin", @"setTopMargin", @"resetMargin", @"setUserHeading", @"removeHeading"];
+                   @"getZoom", @"getFloor", @"getUserPosition", @"getCenter", @"setStyle", @"fitBounds", @"setBottomMargin", @"setTopMargin", @"resetMargin", @"setUserHeading", @"removeHeading", @"getPlaceWithName", @"getPlaceWithAlias", @"getPlaceWithId", @"getVenueWithName", @"getVenueWithAlias", @"getVenueWithId", @"refresh"];
     
     UINavigationController *navController =(UINavigationController*)self.revealViewController.frontViewController;
     MWZViewController *mainViewController = [navController childViewControllers].firstObject;
@@ -182,6 +182,85 @@
     [_manager stopUpdatingHeading];
     [_mapController setUserHeading:nil];
 }
+
+- (void) getPlaceWithName {
+    [_mapController getPlaceWithName:@"Bakery" inVenue: @"56c2ea3402275a0b00fb00ac" completionHandler:^(MWZPlace* place){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get place by name"
+                                                        message:[NSString stringWithFormat:@"%@", place]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+
+    }];
+}
+
+- (void) getPlaceWithAlias {
+    [_mapController getPlaceWithAlias:@"bakery" inVenue: @"56c2ea3402275a0b00fb00ac" completionHandler:^(MWZPlace* place){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get place by alias"
+                                                        message:[NSString stringWithFormat:@"%@", place]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+    }];
+}
+
+- (void) getPlaceWithId {
+    [_mapController getPlaceWithId:@"56c3426202275a0b00fb00b9" completionHandler:^(MWZPlace* place){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get place by id"
+                                                        message:[NSString stringWithFormat:@"%@", place]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+    }];
+}
+
+- (void) getVenueWithId {
+    [_mapController getVenueWithId:@"56c2ea3402275a0b00fb00ac" completionHandler:^(MWZVenue* venue){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get venue by id"
+                                                        message:[NSString stringWithFormat:@"%@", venue]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+    }];
+}
+
+- (void) getVenueWithName {
+    [_mapController getVenueWithName:@"Demo" completionHandler:^(MWZVenue* venue){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get venue by name"
+                                                        message:[NSString stringWithFormat:@"%@", venue]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+    }];
+}
+
+- (void) getVenueWithAlias {
+    [_mapController getVenueWithAlias:@"demo" completionHandler:^(MWZVenue* venue){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get venue by alias"
+                                                        message:[NSString stringWithFormat:@"%@", venue]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+    }];
+}
+
+
+
+- (void) refresh {
+    [_mapController refresh];
+}
+
 /*
 #pragma mark - Navigation
 

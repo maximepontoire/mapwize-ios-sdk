@@ -59,6 +59,16 @@
 - (void) setBottomMargin: (NSNumber*) margin;
 - (void) setTopMargin: (NSNumber*) margin;
 
+- (void) getPlaceWithId: (NSString*) placeId completionHandler:(void(^)(MWZPlace*)) handler;
+- (void) getPlaceWithAlias: (NSString*) placeAlias inVenue: (NSString*) venueId completionHandler:(void(^)(MWZPlace*)) handler;
+- (void) getPlaceWithName: (NSString*) placeName inVenue: (NSString*) venueId completionHandler:(void(^)(MWZPlace*)) handler;
+
+- (void) getVenueWithId: (NSString*) venueId completionHandler:(void(^)(MWZVenue*)) handler;
+- (void) getVenueWithName: (NSString*) venueName completionHandler:(void(^)(MWZVenue*)) handler;
+- (void) getVenueWithAlias: (NSString*) venueAlias completionHandler:(void(^)(MWZVenue*)) handler;
+
+- (void) refresh;
+
 - (void) executeJS:(NSString*) js;
 
 @end
