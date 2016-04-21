@@ -5,7 +5,7 @@
 
 #define SERVER_URL @"https://www.mapwize.io"
 #define SDK_VERSION @"1.4.x"
-#define IOS_SDK_VERSION @"1.4.2"
+#define IOS_SDK_VERSION @"1.4.0"
 #define IOS_SDK_NAME @"IOS SDK"
 
 @implementation MWZMapView {
