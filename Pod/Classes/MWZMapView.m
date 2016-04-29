@@ -28,12 +28,6 @@
     callbackMemory = [[NSMutableDictionary alloc] init];
 
     
-    /*
-     * Configures Location manager (authorizations need to be requested outside the SDK)
-     */
-    _locationManager = [[CLLocationManager alloc] init];    
-    _locationManager.delegate = self;
-    [_locationManager startUpdatingLocation];
     
     /*
      * Loads the webview
@@ -46,12 +40,11 @@
     [self setBackgroundColor:[UIColor greenColor]];
     _webview = [[WKWebView alloc] initWithFrame:[self frame] configuration:configuration];
     _webview.navigationDelegate = self;
+    _webview.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self addSubview:_webview];
 
     [_webview loadRequest:[NSURLRequest requestWithURL: [NSURL URLWithString:[NSString stringWithFormat:@"%@/sdk/mapwize-ios-sdk/%@/map.html", SERVER_URL, SDK_VERSION]]]];
-    [_webview setTranslatesAutoresizingMaskIntoConstraints:NO];
     _webview.scrollView.bounces = NO;
-    [self addWebViewConstraints];
     [self executeJS:[NSString stringWithFormat:@"Mapwize.config.SERVER = '%@'; Mapwize.config.SDK_NAME = '%@'; Mapwize.config.SDK_VERSION = '%@'; Mapwize.config.CLIENT_APP_NAME = '%@'; ",
                      SERVER_URL, IOS_SDK_NAME, IOS_SDK_NAME, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"]]];
     
@@ -101,9 +94,19 @@
     [self executeJS:@"map.on('followUserModeChange', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, followUserMode:e.active});});"];
     [self executeJS:@"map.on('directionsStart', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, info:'Directions have been loaded'});});"];
     [self executeJS:@"map.on('directionsStop', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, info:'Directions have stopped'});});"];
-    [self executeJS:@"map.on('monitoredUuidsChange', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, uuids:e.uuids});});"];
     [self executeJS:@"map.on('apiResponse', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, returnedType: e.returnedType, hash:e.hash, response:e.response});});"];
 
+    /*
+     * Configures Location manager (authorizations need to be requested outside the SDK)
+     */
+    _locationManager = [[CLLocationManager alloc] init];
+    _locationManager.delegate = self;
+    if (options.beaconsEnabled) {
+        [self executeJS:@"map.on('monitoredUuidsChange', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, uuids:e.uuids});});"];
+    }
+    if (options.locationEnabled) {
+        [_locationManager startUpdatingLocation];
+    }
 }
 
 - (void) executeJS:(NSString*) js {
@@ -608,44 +611,5 @@
     NSString* beaconsString = [[NSString alloc] initWithData:beaconsJSON encoding:NSUTF8StringEncoding];
     [self executeJS:[NSString stringWithFormat:@"map.addRangedIBeacons(%@)", beaconsString]];
 }
-
-/*
-    View constraints
-*/
-- (void)addWebViewConstraints
-{
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:_webview
-                                                          attribute:NSLayoutAttributeTop
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self
-                                                          attribute:NSLayoutAttributeTop
-                                                         multiplier:1.0
-                                                           constant:0.0]];
-    
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:_webview
-                                                          attribute:NSLayoutAttributeLeading
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self
-                                                          attribute:NSLayoutAttributeLeading
-                                                         multiplier:1.0
-                                                           constant:0.0]];
-    
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:_webview
-                                                          attribute:NSLayoutAttributeBottom
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self
-                                                          attribute:NSLayoutAttributeBottom
-                                                         multiplier:1.0
-                                                           constant:0.0]];
-    
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:_webview
-                                                          attribute:NSLayoutAttributeTrailing
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self
-                                                          attribute:NSLayoutAttributeTrailing
-                                                         multiplier:1.0
-                                                           constant:0.0]];
-}
-
 
 @end

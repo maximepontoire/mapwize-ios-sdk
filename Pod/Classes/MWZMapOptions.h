@@ -9,5 +9,10 @@
 @property MWZLatLon* center;
 @property NSNumber* zoom;
 @property NSNumber* floor;
+@property BOOL locationEnabled;
+@property BOOL beaconsEnabled;
+
+
+- (instancetype) init;
 
 @end
