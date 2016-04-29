@@ -224,10 +224,16 @@
         [self.delegate map:self didMove:_center];
     }
     else if ([body[@"type"] isEqualToString:@"userPositionChange"]) {
-        MWZMeasurement* userPosition = [[MWZMeasurement alloc] initFromDictionnary:body[@"userPosition"]];
-        _userPosition = userPosition;
+        NSObject* s = body[@"userPosition"];
+        if (s.class != NSNull.class) {
+            MWZMeasurement* userPosition = [[MWZMeasurement alloc] initFromDictionnary:body[@"userPosition"]];
+            _userPosition = userPosition;
+        }
+        else {
+            _userPosition = nil;
+        }
         if (self.delegate != nil) {
-            [self.delegate map:self didChangeUserPosition:userPosition];
+            [self.delegate map:self didChangeUserPosition:_userPosition];
         }
     }
     else if ([body[@"type"] isEqualToString:@"followUserModeChange"]) {
@@ -370,6 +376,10 @@
     [self executeJS:[NSString stringWithFormat:@"map.setUserHeading(%@)", heading!=nil?heading:@"null" ]];
 }
 
+- (void) removeUserPosition {
+    [self executeJS:[NSString stringWithFormat:@"map.setUserPosition(null)"]];
+}
+
 - (void) setUserPositionWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor {
     NSMutableDictionary* positionDic = [[NSMutableDictionary alloc] init];
     if (latitude != nil) {
@@ -381,10 +391,17 @@
     if (floor != nil) {
         [positionDic setObject:floor forKey:@"floor"];
     }
-    [positionDic setObject:@0 forKey:@"accuracy"];
-    NSData *userPositionJSON = [NSJSONSerialization dataWithJSONObject:positionDic options:(NSJSONWritingOptions) 0 error:nil];
-    NSString* userPositionString = [[NSString alloc] initWithData:userPositionJSON encoding:NSUTF8StringEncoding];
-    [self executeJS:[NSString stringWithFormat:@"map.setUserPosition(%@)", userPositionString ]];
+    
+    if (positionDic.count > 0) {
+        [positionDic setObject:@0 forKey:@"accuracy"];
+        NSData *userPositionJSON = [NSJSONSerialization dataWithJSONObject:positionDic options:(NSJSONWritingOptions) 0 error:nil];
+        NSString* userPositionString = [[NSString alloc] initWithData:userPositionJSON encoding:NSUTF8StringEncoding];
+        [self executeJS:[NSString stringWithFormat:@"map.setUserPosition(%@)", userPositionString ]];
+    }
+    else {
+        [self executeJS:[NSString stringWithFormat:@"map.setUserPosition(null)" ]];
+    }
+    
 }
 
 - (void) setUserPositionWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor accuracy:(NSNumber*) accuracy {
@@ -401,10 +418,15 @@
     if (accuracy != nil) {
         [positionDic setObject:accuracy forKey:@"accuracy"];
     }
-    NSData *userPositionJSON = [NSJSONSerialization dataWithJSONObject:positionDic options:(NSJSONWritingOptions) 0 error:nil];
-    NSString* userPositionString = [[NSString alloc] initWithData:userPositionJSON encoding:NSUTF8StringEncoding];
-    [self executeJS:[NSString stringWithFormat:@"map.setUserPosition(%@)", userPositionString ]];
-
+    if (positionDic.count > 0) {
+        [positionDic setObject:@0 forKey:@"accuracy"];
+        NSData *userPositionJSON = [NSJSONSerialization dataWithJSONObject:positionDic options:(NSJSONWritingOptions) 0 error:nil];
+        NSString* userPositionString = [[NSString alloc] initWithData:userPositionJSON encoding:NSUTF8StringEncoding];
+        [self executeJS:[NSString stringWithFormat:@"map.setUserPosition(%@)", userPositionString ]];
+    }
+    else {
+        [self executeJS:[NSString stringWithFormat:@"map.setUserPosition(null)" ]];
+    }
 }
 
 - (void) unlockUserPosition {
