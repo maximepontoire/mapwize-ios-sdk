@@ -110,6 +110,8 @@
 		8F72AE5B1C86DF720040FE82 /* MWZMeasurement.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F72AE571C86DF720040FE82 /* MWZMeasurement.h */; };
 		8F72AE5C1C86DF720040FE82 /* MWZMeasurement.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F72AE581C86DF720040FE82 /* MWZMeasurement.m */; };
 		8F7F97795035B6E2CAA10D10FB1F9E11 /* MWZMapView.h in Headers */ = {isa = PBXBuildFile; fileRef = 97A92230A509D979BC614534E8BBB551 /* MWZMapView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8FC3B7311CD75A3600998F3A /* MWZPlaceList.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FC3B72F1CD75A3600998F3A /* MWZPlaceList.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8FC3B7321CD75A3600998F3A /* MWZPlaceList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC3B7301CD75A3600998F3A /* MWZPlaceList.m */; };
 		8FE3CB3D1C92D3A10021FE99 /* MWZPlaceStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FE3CB3B1C92D3A10021FE99 /* MWZPlaceStyle.h */; };
 		8FE3CB3E1C92D3A10021FE99 /* MWZPlaceStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3CB3C1C92D3A10021FE99 /* MWZPlaceStyle.m */; };
 		8FE3CB3F1C92D3E30021FE99 /* MWZPlaceStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FE3CB3B1C92D3A10021FE99 /* MWZPlaceStyle.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -348,6 +350,8 @@
 		8F63B0FF272D1EB750D82F3EADA2D2CA /* EXPExpect.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EXPExpect.h; path = Expecta/EXPExpect.h; sourceTree = "<group>"; };
 		8F72AE571C86DF720040FE82 /* MWZMeasurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZMeasurement.h; sourceTree = "<group>"; };
 		8F72AE581C86DF720040FE82 /* MWZMeasurement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZMeasurement.m; sourceTree = "<group>"; };
+		8FC3B72F1CD75A3600998F3A /* MWZPlaceList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZPlaceList.h; sourceTree = "<group>"; };
+		8FC3B7301CD75A3600998F3A /* MWZPlaceList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZPlaceList.m; sourceTree = "<group>"; };
 		8FE3CB3B1C92D3A10021FE99 /* MWZPlaceStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZPlaceStyle.h; sourceTree = "<group>"; };
 		8FE3CB3C1C92D3A10021FE99 /* MWZPlaceStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZPlaceStyle.m; sourceTree = "<group>"; };
 		91453F85BD953E023DC76351FFEA1D94 /* EXPMatchers+beginWith.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "EXPMatchers+beginWith.m"; path = "Expecta/Matchers/EXPMatchers+beginWith.m"; sourceTree = "<group>"; };
@@ -866,6 +870,8 @@
 				FEF29FB22EB5CA9727C4EEC12DA2FF7A /* MWZPlace.m */,
 				23DCFB32F3473C6940F325E194F35DF4 /* MWZVenue.h */,
 				727A580317847D8DC79795823480D0D1 /* MWZVenue.m */,
+				8FC3B72F1CD75A3600998F3A /* MWZPlaceList.h */,
+				8FC3B7301CD75A3600998F3A /* MWZPlaceList.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -929,6 +935,7 @@
 				4E81D0EEDB982021DE50B73B4457F64E /* MWZLatLonBounds.h in Headers */,
 				41542190F41C86AA1A626FF91C6DE21F /* MWZMapDelegate.h in Headers */,
 				10D491153BD968042DC0ED0326D16D07 /* MWZMapOptions.h in Headers */,
+				8FC3B7311CD75A3600998F3A /* MWZPlaceList.h in Headers */,
 				8F7F97795035B6E2CAA10D10FB1F9E11 /* MWZMapView.h in Headers */,
 				589BF43C928A4C9D6B0BA2FC4B13C872 /* MWZPlace.h in Headers */,
 				4930A39D6E7CA88495F7825C7A225B2C /* MWZPosition.h in Headers */,
@@ -1287,6 +1294,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FC3B7321CD75A3600998F3A /* MWZPlaceList.m in Sources */,
 				8FE3CB401C92D9C50021FE99 /* MWZPlaceStyle.m in Sources */,
 				0D0009CF5D50694ACBB51EDE008D743A /* Mapwize-dummy.m in Sources */,
 				BDDB879696F6941C712CA373096E6B4F /* MWZLatLon.m in Sources */,

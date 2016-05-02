@@ -7,11 +7,19 @@
     _placeId = placeId;
     return self;
 }
+
 - (instancetype) initWithVenueId: (NSString*) venueId {
     self = [super init];
     _venueId = venueId;
     return self;
 }
+
+- (instancetype) initWithPlaceListId: (NSString*) placeListId {
+    self = [super init];
+    _placeListId = placeListId;
+    return self;
+}
+
 
 
 - (instancetype) initWithLatitude: (NSNumber*) latitude longitude: (NSNumber*) longitude floor:(NSNumber*) floor {
@@ -29,6 +37,7 @@
     _floor = [dic objectForKey:@"floor"];
     _placeId = [dic objectForKey:@"placeId"];
     _venueId = [dic objectForKey:@"venueId"];
+    _placeListId =[dic objectForKey:@"placeListId"];
     return self;
 }
 
@@ -39,6 +48,9 @@
     }
     if (_venueId != nil) {
         [positionDic setObject:[self venueId] forKey:@"venueId"];
+    }
+    if (_placeListId != nil) {
+        [positionDic setObject:[self placeListId] forKey:@"placeListId"];
     }
     if (_floor != nil) {
         [positionDic setObject:[self floor] forKey:@"floor"];
@@ -56,7 +68,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat: @"MWZPosition: Latitude=%@ Longitude=%@ Floor=%@ PlaceId=%@ VenueId=%@", _latitude, _longitude, _floor, _placeId, _venueId];
+    return [NSString stringWithFormat: @"MWZPosition: Latitude=%@ Longitude=%@ Floor=%@ PlaceId=%@ VenueId=%@ PlaceListId=%@", _latitude, _longitude, _floor, _placeId, _venueId, _placeListId];
 }
 
 @end

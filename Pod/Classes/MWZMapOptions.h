@@ -12,7 +12,6 @@
 @property BOOL locationEnabled;
 @property BOOL beaconsEnabled;
 
-
 - (instancetype) init;
 
 @end

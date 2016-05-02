@@ -30,4 +30,4 @@
 
 @end
 
-#endif /* MWZMapDelegate_h */
+#endif

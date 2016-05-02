@@ -9,6 +9,7 @@
 #import "MWZPosition.h"
 #import "MWZMeasurement.h"
 #import "MWZPlaceStyle.h"
+#import "MWZPlaceList.h"
 
 @interface MWZMapView : UIView  <WKNavigationDelegate, WKScriptMessageHandler, CLLocationManagerDelegate>
 
@@ -67,6 +68,12 @@
 - (void) getVenueWithId: (NSString*) venueId completionHandler:(void(^)(MWZVenue*)) handler;
 - (void) getVenueWithName: (NSString*) venueName completionHandler:(void(^)(MWZVenue*)) handler;
 - (void) getVenueWithAlias: (NSString*) venueAlias completionHandler:(void(^)(MWZVenue*)) handler;
+
+- (void) getPlaceListWithId: (NSString*) placeListId completionHandler:(void(^)(MWZPlaceList*)) handler;
+- (void) getPlaceListWithName: (NSString*) placeListId inVenue:(NSString*) venueId completionHandler:(void(^)(MWZPlaceList*)) handler;
+- (void) getPlaceListWithAlias: (NSString*) placeListId inVenue:(NSString*) venueId completionHandler:(void(^)(MWZPlaceList*)) handler;
+- (void) getPlaceListsForVenue: (NSString*) venueId completionHandler:(void(^)(NSArray*)) handler;
+- (void) getPlacesWithPlaceListId: (NSString*) placeListId completionHandler:(void(^)(NSArray*)) handler;
 
 - (void) refresh;
 

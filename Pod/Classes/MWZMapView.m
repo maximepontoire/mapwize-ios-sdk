@@ -4,8 +4,8 @@
 #import "MWZMapOptions.h"
 
 #define SERVER_URL @"https://www.mapwize.io"
-#define SDK_VERSION @"1.4.x"
-#define IOS_SDK_VERSION @"1.4.0"
+#define SDK_VERSION @"1.5.x"
+#define IOS_SDK_VERSION @"1.5.0"
 #define IOS_SDK_NAME @"IOS SDK"
 
 @implementation MWZMapView {
@@ -94,7 +94,7 @@
     [self executeJS:@"map.on('followUserModeChange', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, followUserMode:e.active});});"];
     [self executeJS:@"map.on('directionsStart', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, info:'Directions have been loaded'});});"];
     [self executeJS:@"map.on('directionsStop', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, info:'Directions have stopped'});});"];
-    [self executeJS:@"map.on('apiResponse', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, returnedType: e.returnedType, hash:e.hash, response:e.response});});"];
+    [self executeJS:@"map.on('apiResponse', function(e){console.log(e.response);window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, returnedType: e.returnedType, hash:e.hash, response:e.response});});"];
 
     /*
      * Configures Location manager (authorizations need to be requested outside the SDK)
@@ -264,9 +264,9 @@
     else if ([body[@"type"] isEqualToString:@"apiResponse"]) {
         NSString* hash = body[@"hash"];
         NSString* returnedType = body[@"returnedType"];
-        NSDictionary* response = body[@"response"];
         
         if ([returnedType isEqualToString:@"place"]) {
+            NSDictionary* response = body[@"response"];
             void(^_handler)(MWZPlace*);
             _handler = callbackMemory[hash];
             if (response[@"_id"] != nil){
@@ -277,12 +277,58 @@
                 _handler(nil);
             }
         }
+        else if ([returnedType isEqualToString:@"places"]) {
+            NSMutableArray* places = [[NSMutableArray alloc] init];
+            NSArray* response = body[@"response"];
+            void(^_handler)(NSArray*);
+            _handler = callbackMemory[hash];
+            if (response.count > 0){
+                for (NSDictionary* dic in response) {
+                    MWZPlace* place = [[MWZPlace alloc] initFromDictionnary:dic];
+                    [places addObject:place];
+                }
+                _handler([[NSArray alloc] initWithArray:places]);
+            }
+            else {
+                _handler(nil);
+            }
+        }
         else if ([returnedType isEqualToString:@"venue"]) {
+            NSDictionary* response = body[@"response"];
             void(^_handler)(MWZVenue*);
             _handler = callbackMemory[hash];
             if (response[@"_id"] != nil){
                 MWZVenue* venue = [[MWZVenue alloc] initFromDictionnary:body[@"response"]];
                 _handler(venue);
+            }
+            else {
+                _handler(nil);
+            }
+        }
+        else if ([returnedType isEqualToString:@"placeList"]) {
+            NSLog(@"%@", body[@"response"]);
+            NSDictionary* response = body[@"response"];
+            void(^_handler)(MWZPlaceList*);
+            _handler = callbackMemory[hash];
+            if (response[@"_id"] != nil){
+                MWZPlaceList* placeList = [[MWZPlaceList alloc] initFromDictionnary:body[@"response"]];
+                _handler(placeList);
+            }
+            else {
+                _handler(nil);
+            }
+        }
+        else if ([returnedType isEqualToString:@"placeLists"]) {
+            NSMutableArray* placeLists = [[NSMutableArray alloc] init];
+            NSArray* response = body[@"response"];
+            void(^_handler)(NSArray*);
+            _handler = callbackMemory[hash];
+            if (response.count > 0){
+                for (NSDictionary* dic in response) {
+                    MWZPlaceList* placeList = [[MWZPlaceList alloc] initFromDictionnary:dic];
+                    [placeLists addObject:placeList];
+                }
+                _handler([[NSArray alloc] initWithArray:placeLists]);
             }
             else {
                 _handler(nil);
@@ -514,7 +560,7 @@
     _handler = [handler copy];
     [callbackMemory setValue:_handler forKey:hash];
     
-    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getPlace('%@', function(err, place){map.fire('apiResponse', {returnedType:'place', hash:'%@', response:err||place});});", placeId, hash ]];
+    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getPlace('%@', function(err, place){map.fire('apiResponse', {returnedType:'place', hash:'%@', response:place});});", placeId, hash ]];
     
 }
 
@@ -524,7 +570,7 @@
     _handler = [handler copy];
     [callbackMemory setValue:_handler forKey:hash];
     
-    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getPlace({alias:'%@', venueId:'%@'}, function(err, place){map.fire('apiResponse', {returnedType:'place', hash:'%@', response:err||place});});", placeAlias, venueId, hash ]];
+    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getPlace({alias:'%@', venueId:'%@'}, function(err, place){map.fire('apiResponse', {returnedType:'place', hash:'%@', response:place});});", placeAlias, venueId, hash ]];
 }
 
 - (void) getPlaceWithName: (NSString*) placeName inVenue: (NSString*) venueId completionHandler:(void(^)(MWZPlace*)) handler {
@@ -533,7 +579,7 @@
     _handler = [handler copy];
     [callbackMemory setValue:_handler forKey:hash];
     
-    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getPlace({name:'%@', venueId:'%@'}, function(err, place){map.fire('apiResponse', {returnedType:'place', hash:'%@', response:err||place});});", placeName, venueId, hash ]];
+    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getPlace({name:'%@', venueId:'%@'}, function(err, place){map.fire('apiResponse', {returnedType:'place', hash:'%@', response:place});});", placeName, venueId, hash ]];
 }
 
 - (void) getVenueWithId: (NSString*) venueId completionHandler:(void(^)(MWZVenue*)) handler {
@@ -542,7 +588,7 @@
     _handler = [handler copy];
     [callbackMemory setValue:_handler forKey:hash];
 
-    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getVenue('%@', function(err, venue){map.fire('apiResponse', {returnedType:'venue', hash:'%@', response:err||venue});});", venueId, hash ]];
+    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getVenue('%@', function(err, venue){map.fire('apiResponse', {returnedType:'venue', hash:'%@', response:venue});});", venueId, hash ]];
 }
 
 - (void) getVenueWithName: (NSString*) venueName completionHandler:(void(^)(MWZVenue*)) handler {
@@ -551,7 +597,7 @@
     _handler = [handler copy];
     [callbackMemory setValue:_handler forKey:hash];
     
-    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getVenue({venueName:'%@'}, function(err, venue){map.fire('apiResponse', {returnedType:'venue', hash:'%@', response:err||venue});});", venueName, hash ]];
+    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getVenue({venueName:'%@'}, function(err, venue){map.fire('apiResponse', {returnedType:'venue', hash:'%@', response:venue});});", venueName, hash ]];
 }
 
 - (void) getVenueWithAlias: (NSString*) venueAlias completionHandler:(void(^)(MWZVenue*)) handler {
@@ -560,7 +606,52 @@
     _handler = [handler copy];
     [callbackMemory setValue:_handler forKey:hash];
     
-    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getVenue({venueAlias:'%@'}, function(err, venue){map.fire('apiResponse', {returnedType:'venue', hash:'%@', response:err||venue});});", venueAlias, hash ]];
+    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getVenue({venueAlias:'%@'}, function(err, venue){map.fire('apiResponse', {returnedType:'venue', hash:'%@', response:venue});});", venueAlias, hash ]];
+}
+
+- (void) getPlaceListWithId: (NSString*) placeListId completionHandler:(void(^)(MWZPlaceList*)) handler {
+    NSString* hash = [self generateHash];
+    void(^_handler)(MWZPlaceList*);
+    _handler = [handler copy];
+    [callbackMemory setValue:_handler forKey:hash];
+    
+    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getPlaceList('%@', function(err, placeList){map.fire('apiResponse', {returnedType:'placeList', hash:'%@', response:placeList});});", placeListId, hash ]];
+}
+
+- (void) getPlaceListWithName: (NSString*) placeListName inVenue:(NSString*) venueId completionHandler:(void(^)(MWZPlaceList*)) handler {
+    NSString* hash = [self generateHash];
+    void(^_handler)(MWZPlaceList*);
+    _handler = [handler copy];
+    [callbackMemory setValue:_handler forKey:hash];
+    
+    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getPlaceList({name:'%@', venueId:'%@'}, function(err, placeList){map.fire('apiResponse', {returnedType:'placeList', hash:'%@', response:placeList});});", placeListName, venueId, hash ]];
+}
+
+- (void) getPlaceListWithAlias: (NSString*) placeListAlias inVenue:(NSString*) venueId completionHandler:(void(^)(MWZPlaceList*)) handler {
+    NSString* hash = [self generateHash];
+    void(^_handler)(MWZPlaceList*);
+    _handler = [handler copy];
+    [callbackMemory setValue:_handler forKey:hash];
+    
+    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getPlaceList({alias:'%@', venueId:'%@'}, function(err, placeList){map.fire('apiResponse', {returnedType:'placeList', hash:'%@', response:placeList});});", placeListAlias, venueId, hash ]];
+}
+
+- (void) getPlaceListsForVenue:(NSString *)venueId completionHandler:(void (^)(NSArray *))handler {
+    NSString* hash = [self generateHash];
+    void(^_handler)(NSArray*);
+    _handler = [handler copy];
+    [callbackMemory setValue:_handler forKey:hash];
+    
+    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getPlaceLists('%@', function(err, placeLists){map.fire('apiResponse', {returnedType:'placeLists', hash:'%@', response:placeLists});});", venueId, hash ]];
+}
+
+- (void) getPlacesWithPlaceListId:(NSString *)placeListId completionHandler:(void (^)(NSArray *))handler {
+    NSString* hash = [self generateHash];
+    void(^_handler)(NSArray*);
+    _handler = [handler copy];
+    [callbackMemory setValue:_handler forKey:hash];
+    
+    [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getPlaces({placeListId:'%@'}, function(err, places){map.fire('apiResponse', {returnedType:'places', hash:'%@', response:places});});", placeListId, hash ]];
 }
 
 - (void) refresh {

@@ -2,8 +2,6 @@
 #import "SWRevealViewController.h"
 #import "MWZViewController.h"
 
-
-
 @interface MWZLeftMenuController ()
     @end
 
@@ -11,8 +9,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _menuItems = @[@"accessKey", @"setZoom", @"centerOnCoordinates", @"centerOnCoordinatesWithFloor", @"setFloor", @"centerOnVenue", @"centerOnPlace", @"centerOnUser", @"loadUrl", @"addMarker", @"addMarkerOnPlace", @"removeMarkers", @"setFollowUserModeOn", @"setFollowUserModeOff", @"setUserPosition", @"setUserPositionWithFloor", @"unlockUserPosition", @"removeUserPosition", @"showDirections", @"stopDirections",
-                   @"getZoom", @"getFloor", @"getUserPosition", @"getCenter", @"setStyle", @"fitBounds", @"setBottomMargin", @"setTopMargin", @"resetMargin", @"setUserHeading", @"removeHeading", @"getPlaceWithName", @"getPlaceWithAlias", @"getPlaceWithId", @"getVenueWithName", @"getVenueWithAlias", @"getVenueWithId", @"refresh"];
+    _menuItems = @[@"accessKey", @"setZoom", @"centerOnCoordinates", @"centerOnCoordinatesWithFloor", @"setFloor", @"centerOnVenue", @"centerOnPlace", @"centerOnUser", @"loadUrl", @"addMarker", @"addMarkerOnPlace", @"removeMarkers", @"setFollowUserModeOn", @"setFollowUserModeOff", @"setUserPosition", @"setUserPositionWithFloor", @"unlockUserPosition", @"removeUserPosition", @"showDirections", @"showDirectionsToAList", @"stopDirections",@"getZoom", @"getFloor", @"getUserPosition", @"getCenter", @"setStyle", @"fitBounds", @"setBottomMargin", @"setTopMargin", @"resetMargin", @"setUserHeading", @"removeHeading", @"getPlaceWithName", @"getPlaceWithAlias", @"getPlaceWithId", @"getVenueWithName", @"getVenueWithAlias", @"getVenueWithId", @"getPlaceListWithId", @"getPlaceListWithName", @"getPlaceListWithAlias", @"getPlaceListsForVenue", @"getPlacesWithPlaceListId", @"refresh"];
     
     UINavigationController *navController =(UINavigationController*)self.revealViewController.frontViewController;
     MWZViewController *mainViewController = [navController childViewControllers].firstObject;
@@ -112,6 +109,16 @@
     MWZPosition* to = [[MWZPosition alloc] initWithPlaceId:@"56c3504102275a0b00fb00fa"];
     [_mapController showDirectionsFrom:from to:to];
 }
+
+- (void) showDirectionsToAList {
+    MWZPosition* from = [[MWZPosition alloc] init];
+    from.placeId = @"56c3429c02275a0b00fb00bb";
+    MWZPosition* to = [[MWZPosition alloc] init];
+    to.placeListId = @"5728a351a3a26c0b0027d5cf";
+    [_mapController showDirectionsFrom:from to:to];
+}
+
+
 - (void) stopDirections {
     [_mapController stopDirections];
 }
@@ -258,23 +265,73 @@
     }];
 }
 
+- (void) getPlaceListWithId {
+    [_mapController getPlaceListWithId:@"5728a351a3a26c0b0027d5cf" completionHandler:^(MWZPlaceList* placeList){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get placeList by id"
+                                                        message:[NSString stringWithFormat:@"%@", placeList]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+    }];
+}
+
+- (void) getPlaceListWithName {
+    [_mapController getPlaceListWithName:@"Toilets" inVenue: @"56c2ea3402275a0b00fb00ac" completionHandler:^(MWZPlaceList* placeList){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get placeList by name"
+                                                        message:[NSString stringWithFormat:@"%@", placeList]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+    }];
+}
+
+- (void) getPlaceListWithAlias {
+    [_mapController getPlaceListWithAlias:@"toilets" inVenue: @"56c2ea3402275a0b00fb00ac" completionHandler:^(MWZPlaceList* placeList){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get placeList by alias"
+                                                        message:[NSString stringWithFormat:@"%@", placeList]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+    }];
+}
+
+- (void) getPlaceListsForVenue {
+    [_mapController getPlaceListsForVenue:@"56c2ea3402275a0b00fb00ac" completionHandler:^(NSArray* placeLists){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get placeLists for venue"
+                                                        message:[NSString stringWithFormat:@"%lu", (unsigned long)placeLists.count]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+    }];
+}
+
+- (void) getPlacesWithPlaceListId {
+    [_mapController getPlacesWithPlaceListId:@"5728a351a3a26c0b0027d5cf" completionHandler:^(NSArray* places){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get places for placeList"
+                                                        message:[NSString stringWithFormat:@"%lu", (unsigned long)places.count]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+    }];
+}
+
 
 
 - (void) refresh {
     [_mapController refresh];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-
+#pragma mark location manager delagate
 - (BOOL)locationManagerShouldDisplayHeadingCalibration:(CLLocationManager*)manager
 {
     return YES;
