@@ -13,7 +13,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat: @"MWZPlaceList: Identifier=%@ Name=%@ Alias=%@ VenueId=%@ PlaceIds=%lu", _identifier, _name, _alias, _venueId, _placeIds.count];
+    return [NSString stringWithFormat: @"MWZPlaceList: Identifier=%@ Name=%@ Alias=%@ VenueId=%@ PlaceIds=%lu", _identifier, _name, _alias, _venueId, (unsigned long) _placeIds.count];
 }
 
 @end
