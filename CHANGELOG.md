@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version 1.5.0
+
+- Added locationEnabled and beaconsEnables in MapOptions
+- Added placeList support with api methods and directions to a list
+
 ## Version 1.4.0
 
 - Added method to stop showing directions.
