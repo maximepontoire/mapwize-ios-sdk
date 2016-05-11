@@ -3,43 +3,40 @@
 @import Mapwize;
 
 @interface MWZViewController ()
+@property (nonatomic, strong) CLLocationManager * locationManager;
 
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView * activityView;
 @end
 
 @implementation MWZViewController
-
-MWZMapView* map;
-CLLocationManager* locationManager;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    locationManager = [[CLLocationManager alloc] init];
+    _locationManager = [[CLLocationManager alloc] init];
     CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
 
     if (status == kCLAuthorizationStatusAuthorizedAlways || status ==kCLAuthorizationStatusAuthorizedWhenInUse) {
         NSLog(@"Location Authorization granted");
     } else {
         NSLog(@"Requesting Location Authorization");
-        [locationManager requestWhenInUseAuthorization];
+        [_locationManager requestWhenInUseAuthorization];
     }
 
-    //Gets a pointer to the MWZMapView
-    map = (MWZMapView*)[self myMapView];
     
     //Defines the map options
     MWZMapOptions* options = [[MWZMapOptions alloc] init];
     options.apiKey = @"1f04d780dc30b774c0c10f53e3c7d4ea"; // PASTE YOU API KEY HERE !!! This is a demo key. It is not allowed to use it for production. The key might change at any time without notice.
     
     //Sets the delegate to receive events
-    map.delegate = self;
+    _myMapView.delegate = self;
     
     //Loads the map
-    [map loadMapWithOptions: options];
+    [_myMapView loadMapWithOptions: options];
     
     //Fits bounds on demo building
-    [map fitBounds:[[MWZLatLonBounds alloc] initWithNorthEast:[[MWZLatLon alloc] initWithLatitude:@49.742313935073504183 longitude:@4.5989323407411575317] southWest:[[MWZLatLon alloc] initWithLatitude:@49.742851692813445652 longitude:@4.5997658371925345122]]];
+    [_myMapView fitBounds:[[MWZLatLonBounds alloc] initWithNorthEast:[[MWZLatLon alloc] initWithLatitude:@49.742313935073504183 longitude:@4.5989323407411575317] southWest:[[MWZLatLon alloc] initWithLatitude:@49.742851692813445652 longitude:@4.5997658371925345122]]];
 
     //Update view and show menu
     SWRevealViewController *revealViewController = self.revealViewController;
@@ -111,6 +108,11 @@ CLLocationManager* locationManager;
     NSLog(@"didStopDirections %@", infos);
 }
 
+
+- (void )map:(MWZMapView*) map webViewDidFinishLoad:(WKWebView *)webView {
+    NSLog(@"webViewDidFinishLoad %@", webView);
+    [self.activityView stopAnimating];
+}
 
 #pragma mark - Memory managment
 

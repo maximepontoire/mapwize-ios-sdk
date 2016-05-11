@@ -147,6 +147,9 @@
     
     _isWebviewLoaded = YES;
     
+    if ([self.delegate respondsToSelector:@selector(map:webViewDidFinishLoad:)]) {
+        [self.delegate map:self webViewDidFinishLoad:_webView];
+    }
 }
 
 
