@@ -114,7 +114,7 @@
     if (_isWebviewLoaded) {
         [_webview evaluateJavaScript:js completionHandler:^(id result, NSError *error) {
             if (error != nil) {
-                if (error.code != 5 && self.delegate != nil) {
+                if (error.code != 5 && [self.delegate respondsToSelector:@selector(map:didFailWithError:)]) {
                     NSError* err = [[NSError alloc] initWithDomain:@"MWZErrorDomain" code:1936 userInfo:nil];
                     [self.delegate map:self didFailWithError:err];
                 }
@@ -136,7 +136,7 @@
         [_jsQueue removeObjectAtIndex:0];
         [_webview evaluateJavaScript:js completionHandler:^(id result, NSError *error) {
             if (error != nil) {
-                if (error.code != 5 && self.delegate != nil) {
+                if (error.code != 5 && [self.delegate respondsToSelector:@selector(map:didFailWithError:)]) {
                     NSError* err = [[NSError alloc] initWithDomain:@"MWZErrorDomain" code:1936 userInfo:nil];
                     [self.delegate map:self didFailWithError:err];
                 }
@@ -151,13 +151,13 @@
 
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error{
-    if (self.delegate != nil) {
+    if ([self.delegate respondsToSelector:@selector(map:didFailWithError:)]) {
         [self.delegate map:self didFailWithError:error];
     }
 }
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
-    if (self.delegate != nil) {
+    if ([self.delegate respondsToSelector:@selector(map:didFailWithError:)]) {
         [self.delegate map:self didFailWithError:error];
     }
 }
@@ -171,12 +171,12 @@
     NSDictionary* body = message.body;
     if ([body[@"type"] isEqualToString:@"zoomend"]) {
         _zoom = body[@"zoom"];
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didChangeZoom:)]) {
             [self.delegate map:self didChangeZoom:_zoom];
         }
     }
     else if ([body[@"type"] isEqualToString:@"click"]) {
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didClick:)]) {
             NSDictionary* latlng = body[@"latlng"];
             NSNumber* lat = latlng[@"lat"];
             NSNumber* lng = latlng[@"lng"];
@@ -184,7 +184,7 @@
         }
     }
     else if ([body[@"type"] isEqualToString:@"contextmenu"]) {
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didClickLong:)]) {
             NSDictionary* latlng = body[@"latlng"];
             NSNumber* lat = latlng[@"lat"];
             NSNumber* lng = latlng[@"lng"];
@@ -193,29 +193,29 @@
     }
     else if ([body[@"type"] isEqualToString:@"floorsChange"]) {
         _floors = body[@"floors"];
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didChangeFloors:)]) {
             [self.delegate map:self didChangeFloors:_floors];
         }
     }
     else if ([body[@"type"] isEqualToString:@"floorChange"]) {
         _floor = body[@"floor"];
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didChangeFloor:)]) {
             [self.delegate map:self didChangeFloor:_floor];
         }
     }
     else if ([body[@"type"] isEqualToString:@"placeClick"]) {
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didClickOnPlace:)]) {
             [self.delegate map:self didClickOnPlace:[[MWZPlace alloc] initFromDictionnary:body[@"place"]]];
         }
     }
     else if ([body[@"type"] isEqualToString:@"venueClick"]) {
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didClickOnVenue:)]) {
             [self.delegate map:self didClickOnVenue:[[MWZVenue alloc] initFromDictionnary:body[@"venue"]]];
         }
     }
     else if ([body[@"type"] isEqualToString:@"markerClick"]) {
         MWZPosition* position = [[MWZPosition alloc] initWithLatitude:body[@"lat"] longitude:body[@"lon"] floor:body[@"floor"]];
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didClickOnMarker:)]) {
             [self.delegate map:self didClickOnMarker:position];
         }
     }
@@ -224,7 +224,9 @@
         NSNumber* lat = latlng[@"lat"];
         NSNumber* lng = latlng[@"lng"];
         _center = [[MWZLatLon alloc] initWithLatitude:lat longitude:lng];
-        [self.delegate map:self didMove:_center];
+        if ([self.delegate respondsToSelector:@selector(map:didMove:)]) {
+            [self.delegate map:self didMove:_center];
+        }
     }
     else if ([body[@"type"] isEqualToString:@"userPositionChange"]) {
         NSObject* s = body[@"userPosition"];
@@ -235,24 +237,24 @@
         else {
             _userPosition = nil;
         }
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didChangeUserPosition:)]) {
             [self.delegate map:self didChangeUserPosition:_userPosition];
         }
     }
     else if ([body[@"type"] isEqualToString:@"followUserModeChange"]) {
         _followUserModeON = [body[@"followUserMode"] boolValue];;
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didChangeFollowUserMode:)]) {
             [self.delegate map:self didChangeFollowUserMode:_followUserModeON];
         }
     }
     else if ([body[@"type"] isEqualToString:@"directionsStart"]) {
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didStartDirections:)]) {
             NSString* info = body[@"info"];
             [self.delegate map:self didStartDirections:info];
         }
     }
     else if ([body[@"type"] isEqualToString:@"directionsStop"]) {
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didStopDirections:)]) {
             NSString* info = body[@"info"];
             [self.delegate map:self didStopDirections:info];
         }

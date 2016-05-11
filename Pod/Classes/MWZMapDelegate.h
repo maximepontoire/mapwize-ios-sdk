@@ -8,7 +8,7 @@
 @class MWZPlace;
 @class MWZVenue;
 
-@protocol MWZMapDelegate
+@protocol MWZMapDelegate <NSObject>
 
 @optional
 

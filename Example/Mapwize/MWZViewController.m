@@ -52,6 +52,7 @@ CLLocationManager* locationManager;
     
 }
 
+#pragma mark - <MWZMapDelegate>
 
 //Listering to delegate events
 - (void) map:(MWZMapView*) map didClick:(MWZLatLon*) latlon {
@@ -111,6 +112,7 @@ CLLocationManager* locationManager;
 }
 
 
+#pragma mark - Memory managment
 
 - (void)didReceiveMemoryWarning
 {
