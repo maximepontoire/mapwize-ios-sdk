@@ -26,7 +26,7 @@
     _isWebviewLoaded = NO;
     _jsQueue = [[NSMutableArray alloc] init];
     callbackMemory = [[NSMutableDictionary alloc] init];
-
+    
     
     
     /*
@@ -37,12 +37,14 @@
     
     WKWebViewConfiguration* configuration = [[WKWebViewConfiguration alloc] init];
     [configuration setUserContentController: userContentController];
+#if DEBUG
     [self setBackgroundColor:[UIColor greenColor]];
-    _webview = [[WKWebView alloc] initWithFrame:[self frame] configuration:configuration];
+#endif
+    _webview = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height) configuration:configuration];
     _webview.navigationDelegate = self;
     _webview.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self addSubview:_webview];
-
+    
     [_webview loadRequest:[NSURLRequest requestWithURL: [NSURL URLWithString:[NSString stringWithFormat:@"%@/sdk/mapwize-ios-sdk/%@/map.html", SERVER_URL, SDK_VERSION]]]];
     _webview.scrollView.bounces = NO;
     [self executeJS:[NSString stringWithFormat:@"Mapwize.config.SERVER = '%@'; Mapwize.config.SDK_NAME = '%@'; Mapwize.config.SDK_VERSION = '%@'; Mapwize.config.CLIENT_APP_NAME = '%@'; ",
@@ -77,7 +79,7 @@
      * Set up the map with the options
      */
     [self executeJS:[NSString stringWithFormat:@"var map = Mapwize.map('map',%@);",optionsString]];
-
+    
     /*
      * Register the event handlers
      */
@@ -95,7 +97,7 @@
     [self executeJS:@"map.on('directionsStart', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, info:'Directions have been loaded'});});"];
     [self executeJS:@"map.on('directionsStop', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, info:'Directions have stopped'});});"];
     [self executeJS:@"map.on('apiResponse', function(e){console.log(e.response);window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, returnedType: e.returnedType, hash:e.hash, response:e.response});});"];
-
+    
     /*
      * Configures Location manager (authorizations need to be requested outside the SDK)
      */
@@ -170,7 +172,7 @@
  * Handle the events sent by the js sdk
  */
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
-
+    
     NSDictionary* body = message.body;
     if ([body[@"type"] isEqualToString:@"zoomend"]) {
         _zoom = body[@"zoom"];
@@ -485,7 +487,7 @@
 
 - (void) unlockUserPosition {
     [self executeJS:[NSString stringWithFormat:@"map.unlockUserPosition()"]];
-
+    
 }
 
 /* URL */
@@ -592,7 +594,7 @@
     void(^_handler)(MWZVenue*);
     _handler = [handler copy];
     [callbackMemory setValue:_handler forKey:hash];
-
+    
     [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getVenue('%@', function(err, venue){map.fire('apiResponse', {returnedType:'venue', hash:'%@', response:venue});});", venueId, hash ]];
 }
 
