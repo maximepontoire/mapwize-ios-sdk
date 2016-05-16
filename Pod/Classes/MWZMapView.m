@@ -37,7 +37,9 @@
     
     WKWebViewConfiguration* configuration = [[WKWebViewConfiguration alloc] init];
     [configuration setUserContentController: userContentController];
+#if DEBUG
     [self setBackgroundColor:[UIColor greenColor]];
+#endif
     _webview = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height) configuration:configuration];
     _webview.navigationDelegate = self;
     _webview.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
