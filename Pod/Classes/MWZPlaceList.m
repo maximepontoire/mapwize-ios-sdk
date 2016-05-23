@@ -9,6 +9,7 @@
     _alias = [dic objectForKey:@"alias"];
     _venueId = [dic objectForKey:@"venueId"];
     _placeIds = [dic objectForKey:@"placeIds"];
+    _data = [dic objectForKey:@"data"];
     return self;
 }
 

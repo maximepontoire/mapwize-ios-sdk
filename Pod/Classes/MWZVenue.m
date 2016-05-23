@@ -7,6 +7,7 @@
     _identifier = [dic objectForKey:@"_id"];
     _name = [dic objectForKey:@"name"];
     _alias = [dic objectForKey:@"alias"];
+    _data = [dic objectForKey:@"data"];
     return self;
 }
 

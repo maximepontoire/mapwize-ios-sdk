@@ -9,7 +9,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _menuItems = @[@"accessKey", @"setZoom", @"centerOnCoordinates", @"centerOnCoordinatesWithFloor", @"setFloor", @"centerOnVenue", @"centerOnPlace", @"centerOnUser", @"loadUrl", @"addMarker", @"addMarkerOnPlace", @"removeMarkers", @"setFollowUserModeOn", @"setFollowUserModeOff", @"setUserPosition", @"setUserPositionWithFloor", @"unlockUserPosition", @"removeUserPosition", @"showDirections", @"showDirectionsToAList", @"stopDirections",@"getZoom", @"getFloor", @"getUserPosition", @"getCenter", @"setStyle", @"fitBounds", @"setBottomMargin", @"setTopMargin", @"resetMargin", @"setUserHeading", @"removeHeading", @"getPlaceWithName", @"getPlaceWithAlias", @"getPlaceWithId", @"getVenueWithName", @"getVenueWithAlias", @"getVenueWithId", @"getPlaceListWithId", @"getPlaceListWithName", @"getPlaceListWithAlias", @"getPlaceListsForVenue", @"getPlacesWithPlaceListId", @"refresh"];
+    _menuItems = @[@"accessKey", @"setPreferredLanguageFR", @"setPreferredLanguageEN", @"setZoom", @"centerOnCoordinates", @"centerOnCoordinatesWithFloor", @"setFloor", @"centerOnVenue", @"centerOnPlace", @"centerOnUser", @"loadUrl", @"addMarker", @"addMarkerOnPlace", @"removeMarkers", @"setFollowUserModeOn", @"setFollowUserModeOff", @"setUserPosition", @"setUserPositionWithFloor", @"unlockUserPosition", @"removeUserPosition", @"showDirections", @"showDirectionsToAList", @"stopDirections",@"getZoom", @"getFloor", @"getUserPosition", @"getCenter", @"setStyle", @"fitBounds", @"setBottomMargin", @"setTopMargin", @"resetMargin", @"setUserHeading", @"removeHeading", @"getPlaceWithName", @"getPlaceWithAlias", @"getPlaceWithId", @"getVenueWithName", @"getVenueWithAlias", @"getVenueWithId", @"getPlaceListWithId", @"getPlaceListWithName", @"getPlaceListWithAlias", @"getPlaceListsForVenue", @"getPlacesWithPlaceListId", @"refresh"];
     
     UINavigationController *navController =(UINavigationController*)self.revealViewController.frontViewController;
     MWZViewController *mainViewController = [navController childViewControllers].firstObject;
@@ -51,7 +51,20 @@
  Tests methods
 */
 - (void) accessKey {
-    [_mapController access: @"YOUR ACCESS KEY HERE"];
+    [_mapController access: @"demo" completionHandler:^(BOOL isValid) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Access"
+                                                        message:[NSString stringWithFormat:@"%@", (isValid?@"Valid":@"Not valid")]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }];
+}
+- (void) setPreferredLanguageFR {
+    [_mapController setPreferredLanguage:@"fr"];
+}
+- (void) setPreferredLanguageEN {
+    [_mapController setPreferredLanguage:@"en"];
 }
 - (void) setZoom {
     [_mapController setZoom:@12];
@@ -75,7 +88,16 @@
     [_mapController centerOnUser:@19];
 }
 - (void) loadUrl {
-    [_mapController loadURL:@"http://mwz.io/aaa"];
+    [_mapController loadURL:@"http://mwz.io/aaa" completionHandler:^(NSError* error){
+        if (error != nil) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Load url"
+                                                            message:[NSString stringWithFormat:@"Error:%@", error]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    }];
 }
 - (void) addMarker {
     [_mapController addMarkerWithLatitude:@49.74278626088478 longitude:@4.598293304443359 floor:nil];
@@ -107,7 +129,16 @@
 - (void) showDirections {
     MWZPosition* from = [[MWZPosition alloc] initWithPlaceId:@"56c3426202275a0b00fb00b9"];
     MWZPosition* to = [[MWZPosition alloc] initWithPlaceId:@"56c3504102275a0b00fb00fa"];
-    [_mapController showDirectionsFrom:from to:to];
+    [_mapController showDirectionsFrom:from to:to completionHandler:^(NSError* error){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Show directions"
+                                                        message:[NSString stringWithFormat:@"Error:%@", error]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+    }];
+
 }
 
 - (void) showDirectionsToAList {
@@ -115,7 +146,16 @@
     from.placeId = @"56c3429c02275a0b00fb00bb";
     MWZPosition* to = [[MWZPosition alloc] init];
     to.placeListId = @"5728a351a3a26c0b0027d5cf";
-    [_mapController showDirectionsFrom:from to:to];
+    [_mapController showDirectionsFrom:from to:to completionHandler:^(NSError* error){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Show directions to a list"
+                                                        message:[NSString stringWithFormat:@"Error:%@", error]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+    }];
+
 }
 
 
@@ -194,135 +234,234 @@
 }
 
 - (void) getPlaceWithName {
-    [_mapController getPlaceWithName:@"Bakery" inVenue: @"56c2ea3402275a0b00fb00ac" completionHandler:^(MWZPlace* place){
-        NSLog(@"%@", place.translations);
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get place by name"
-                                                        message:[NSString stringWithFormat:@"%@", place]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-
+    [_mapController getPlaceWithName:@"Bakery" inVenue: @"56c2ea3402275a0b00fb00ac" completionHandler:^(MWZPlace* place, NSError* error){
+        if (error != nil) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get place by name (error)"
+                                                            message:[NSString stringWithFormat:@"%@", error]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get place by name (success)"
+                                                            message:[NSString stringWithFormat:@"%@", place]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
     }];
 }
 
 - (void) getPlaceWithAlias {
-    [_mapController getPlaceWithAlias:@"bakery" inVenue: @"56c2ea3402275a0b00fb00ac" completionHandler:^(MWZPlace* place){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get place by alias"
-                                                        message:[NSString stringWithFormat:@"%@", place]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+    [_mapController getPlaceWithAlias:@"bakery" inVenue: @"56c2ea3402275a0b00fb00ac" completionHandler:^(MWZPlace* place, NSError* error){
+        if (error != nil) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get place by alias (error)"
+                                                            message:[NSString stringWithFormat:@"%@", error]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get place by alias (success)"
+                                                            message:[NSString stringWithFormat:@"%@", place]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
         
     }];
 }
 
 - (void) getPlaceWithId {
-    [_mapController getPlaceWithId:@"56c3426202275a0b00fb00b9" completionHandler:^(MWZPlace* place){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get place by id"
-                                                        message:[NSString stringWithFormat:@"%@", place]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        
+    [_mapController getPlaceWithId:@"56f1c77625565f0b00eda15d" completionHandler:^(MWZPlace* place, NSError* error){
+        if (error != nil) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get place by id (error)"
+                                                            message:[NSString stringWithFormat:@"%@", error]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get place by id (success)"
+                                                            message:[NSString stringWithFormat:@"%@", place]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
     }];
 }
 
 - (void) getVenueWithId {
-    [_mapController getVenueWithId:@"56c2ea3402275a0b00fb00ac" completionHandler:^(MWZVenue* venue){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get venue by id"
-                                                        message:[NSString stringWithFormat:@"%@", venue]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        
+    [_mapController getVenueWithId:@"56c2ea3402275a0b00fb00ac" completionHandler:^(MWZVenue* venue, NSError* error){
+        if (error != nil) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get venue by id (error)"
+                                                            message:[NSString stringWithFormat:@"%@", error]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get venue by id (success)"
+                                                            message:[NSString stringWithFormat:@"%@", venue]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
     }];
 }
 
 - (void) getVenueWithName {
-    [_mapController getVenueWithName:@"Demo" completionHandler:^(MWZVenue* venue){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get venue by name"
-                                                        message:[NSString stringWithFormat:@"%@", venue]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        
+    [_mapController getVenueWithName:@"Demo" completionHandler:^(MWZVenue* venue, NSError* error){
+        if (error != nil) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get venue by name (error)"
+                                                            message:[NSString stringWithFormat:@"%@", error]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get venue by name (success)"
+                                                            message:[NSString stringWithFormat:@"%@", venue]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
     }];
 }
 
 - (void) getVenueWithAlias {
-    [_mapController getVenueWithAlias:@"demo" completionHandler:^(MWZVenue* venue){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get venue by alias"
-                                                        message:[NSString stringWithFormat:@"%@", venue]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        
+    [_mapController getVenueWithAlias:@"demo" completionHandler:^(MWZVenue* venue, NSError* error){
+        if (error != nil) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get venue by alias (error)"
+                                                            message:[NSString stringWithFormat:@"%@", error]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get venue by alias (success)"
+                                                            message:[NSString stringWithFormat:@"%@", venue]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
     }];
 }
 
 - (void) getPlaceListWithId {
-    [_mapController getPlaceListWithId:@"5728a351a3a26c0b0027d5cf" completionHandler:^(MWZPlaceList* placeList){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get placeList by id"
-                                                        message:[NSString stringWithFormat:@"%@", placeList]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        
+    [_mapController getPlaceListWithId:@"5728a351a3a26c0b0027d5cf" completionHandler:^(MWZPlaceList* placeList, NSError* error){
+        if (error != nil) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get placeList by id (error)"
+                                                            message:[NSString stringWithFormat:@"%@", error]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get placeList by id (success)"
+                                                            message:[NSString stringWithFormat:@"%@", placeList]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
     }];
 }
 
 - (void) getPlaceListWithName {
-    [_mapController getPlaceListWithName:@"Toilets" inVenue: @"56c2ea3402275a0b00fb00ac" completionHandler:^(MWZPlaceList* placeList){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get placeList by name"
-                                                        message:[NSString stringWithFormat:@"%@", placeList]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        
+    [_mapController getPlaceListWithName:@"Toilets" inVenue: @"56c2ea3402275a0b00fb00ac" completionHandler:^(MWZPlaceList* placeList, NSError* error){
+        if (error != nil) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get placeList by name (error)"
+                                                            message:[NSString stringWithFormat:@"%@", error]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get placeList by name (success)"
+                                                            message:[NSString stringWithFormat:@"%@", placeList]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
     }];
 }
 
 - (void) getPlaceListWithAlias {
-    [_mapController getPlaceListWithAlias:@"toilets" inVenue: @"56c2ea3402275a0b00fb00ac" completionHandler:^(MWZPlaceList* placeList){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get placeList by alias"
-                                                        message:[NSString stringWithFormat:@"%@", placeList]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        
+    [_mapController getPlaceListWithAlias:@"toilets" inVenue: @"56c2ea3402275a0b00fb00ac" completionHandler:^(MWZPlaceList* placeList, NSError* error){
+        if (error != nil) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get placeList by alias (error)"
+                                                            message:[NSString stringWithFormat:@"%@", error]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get placeList by alias (success)"
+                                                            message:[NSString stringWithFormat:@"%@", placeList]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
     }];
 }
 
 - (void) getPlaceListsForVenue {
-    [_mapController getPlaceListsForVenue:@"56c2ea3402275a0b00fb00ac" completionHandler:^(NSArray* placeLists){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get placeLists for venue"
-                                                        message:[NSString stringWithFormat:@"%lu", (unsigned long)placeLists.count]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        
+    [_mapController getPlaceListsForVenue:@"56c2ea3402275a0b00fb00ac" completionHandler:^(NSArray* placeLists, NSError* error){
+        if (error != nil) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get placeList for venue (error)"
+                                                            message:[NSString stringWithFormat:@"%@", error]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get placeList for venue (success)"
+                                                            message:[NSString stringWithFormat:@"%lu", (unsigned long)placeLists.count]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
     }];
 }
 
 - (void) getPlacesWithPlaceListId {
-    [_mapController getPlacesWithPlaceListId:@"5728a351a3a26c0b0027d5cf" completionHandler:^(NSArray* places){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get places for placeList"
-                                                        message:[NSString stringWithFormat:@"%lu", (unsigned long)places.count]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        
+    [_mapController getPlacesWithPlaceListId:@"5728a351a3a26c0b0027d5cf" completionHandler:^(NSArray* places, NSError* error){
+        if (error != nil) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get places for placeList (error)"
+                                                            message:[NSString stringWithFormat:@"%@", error]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get places for placeList (success)"
+                                                            message:[NSString stringWithFormat:@"%lu", (unsigned long)places.count]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
     }];
 }
 

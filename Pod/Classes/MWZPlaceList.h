@@ -7,6 +7,7 @@
 @property NSString* alias;
 @property NSString* venueId;
 @property NSArray* placeIds;
+@property NSDictionary* data;
 
 - (instancetype)initFromDictionnary:(NSDictionary*)dic;
 

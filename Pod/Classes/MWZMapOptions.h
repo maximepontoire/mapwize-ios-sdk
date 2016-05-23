@@ -11,6 +11,8 @@
 @property NSNumber* floor;
 @property BOOL locationEnabled;
 @property BOOL beaconsEnabled;
+@property NSString* accessKey;
+@property NSString* language;
 
 - (instancetype) init;
 

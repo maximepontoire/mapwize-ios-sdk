@@ -8,6 +8,7 @@
 @property NSString* alias;
 @property NSString* venueId;
 @property NSArray<MWZTranslation*>* translations;
+@property NSDictionary* data;
 
 - (instancetype)initFromDictionnary:(NSDictionary*)dic;
 

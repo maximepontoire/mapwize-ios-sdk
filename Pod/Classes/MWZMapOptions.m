@@ -5,7 +5,7 @@
 - (instancetype) init {
     self =  [super init];
     self.locationEnabled = YES;
-    self.locationEnabled = YES;
+    self.beaconsEnabled = NO;
     return self;
 }
 

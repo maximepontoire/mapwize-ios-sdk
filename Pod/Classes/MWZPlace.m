@@ -9,6 +9,7 @@
     _alias = [dic objectForKey:@"alias"];
     _venueId = [dic objectForKey:@"venueId"];
     _translations = [MWZTranslation parseTranslations:[dic objectForKey:@"translations"]];
+    _data = [dic objectForKey:@"data"];
     return self;
 }
 

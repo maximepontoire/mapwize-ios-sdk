@@ -13,6 +13,7 @@
 
 @optional
 
+- (void) mapDidLoad: (MWZMapView*) map;
 - (void) map:(MWZMapView*) map didClick:(MWZLatLon*) latlon;
 - (void) map:(MWZMapView*) map didClickOnPlace:(MWZPlace*) place;
 - (void) map:(MWZMapView*) map didClickOnVenue:(MWZVenue*) venue;

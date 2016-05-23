@@ -45,35 +45,36 @@
 - (void) setUserHeading: (NSNumber*) heading;
 - (void) unlockUserPosition;
 
-- (void) loadURL: (NSString*) url;
+- (void) loadURL: (NSString*) url completionHandler:(void(^)(NSError*)) handler ;
 
 - (void) addMarkerWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor;
 - (void) addMarkerWithPlaceId: (NSString*) placeId;
 - (void) removeMarkers;
 
-- (void) showDirectionsFrom: (MWZPosition*) from to: (MWZPosition*) to;
+- (void) showDirectionsFrom: (MWZPosition*) from to: (MWZPosition*) to completionHandler:(void(^)(NSError*)) handler;;
 - (void) stopDirections;
 
-- (void) access: (NSString*) accessKey;
+- (void) access: (NSString*) accessKey completionHandler:(void(^)(BOOL)) handler;
+- (void) setPreferredLanguage: (NSString*) language;
 
 - (void) setStyle: (MWZPlaceStyle*) style forPlaceById: (NSString*) placeId;
-
 - (void) setBottomMargin: (NSNumber*) margin;
 - (void) setTopMargin: (NSNumber*) margin;
 
-- (void) getPlaceWithId: (NSString*) placeId completionHandler:(void(^)(MWZPlace*)) handler;
-- (void) getPlaceWithAlias: (NSString*) placeAlias inVenue: (NSString*) venueId completionHandler:(void(^)(MWZPlace*)) handler;
-- (void) getPlaceWithName: (NSString*) placeName inVenue: (NSString*) venueId completionHandler:(void(^)(MWZPlace*)) handler;
 
-- (void) getVenueWithId: (NSString*) venueId completionHandler:(void(^)(MWZVenue*)) handler;
-- (void) getVenueWithName: (NSString*) venueName completionHandler:(void(^)(MWZVenue*)) handler;
-- (void) getVenueWithAlias: (NSString*) venueAlias completionHandler:(void(^)(MWZVenue*)) handler;
+- (void) getPlaceWithId: (NSString*) placeId completionHandler:(void(^)(MWZPlace*, NSError*)) handler;
+- (void) getPlaceWithAlias: (NSString*) placeAlias inVenue: (NSString*) venueId completionHandler:(void(^)(MWZPlace*, NSError*)) handler;
+- (void) getPlaceWithName: (NSString*) placeName inVenue: (NSString*) venueId completionHandler:(void(^)(MWZPlace*, NSError*)) handler;
 
-- (void) getPlaceListWithId: (NSString*) placeListId completionHandler:(void(^)(MWZPlaceList*)) handler;
-- (void) getPlaceListWithName: (NSString*) placeListId inVenue:(NSString*) venueId completionHandler:(void(^)(MWZPlaceList*)) handler;
-- (void) getPlaceListWithAlias: (NSString*) placeListId inVenue:(NSString*) venueId completionHandler:(void(^)(MWZPlaceList*)) handler;
-- (void) getPlaceListsForVenue: (NSString*) venueId completionHandler:(void(^)(NSArray*)) handler;
-- (void) getPlacesWithPlaceListId: (NSString*) placeListId completionHandler:(void(^)(NSArray*)) handler;
+- (void) getVenueWithId: (NSString*) venueId completionHandler:(void(^)(MWZVenue*, NSError*)) handler;
+- (void) getVenueWithName: (NSString*) venueName completionHandler:(void(^)(MWZVenue*, NSError*)) handler;
+- (void) getVenueWithAlias: (NSString*) venueAlias completionHandler:(void(^)(MWZVenue*, NSError*)) handler;
+
+- (void) getPlaceListWithId: (NSString*) placeListId completionHandler:(void(^)(MWZPlaceList*, NSError*)) handler;
+- (void) getPlaceListWithName: (NSString*) placeListId inVenue:(NSString*) venueId completionHandler:(void(^)(MWZPlaceList*, NSError*)) handler;
+- (void) getPlaceListWithAlias: (NSString*) placeListId inVenue:(NSString*) venueId completionHandler:(void(^)(MWZPlaceList*, NSError*)) handler;
+- (void) getPlaceListsForVenue: (NSString*) venueId completionHandler:(void(^)(NSArray*, NSError*)) handler;
+- (void) getPlacesWithPlaceListId: (NSString*) placeListId completionHandler:(void(^)(NSArray*, NSError*)) handler;
 
 - (void) refresh;
 

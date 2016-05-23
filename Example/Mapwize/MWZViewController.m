@@ -28,7 +28,6 @@
     //Defines the map options
     MWZMapOptions* options = [[MWZMapOptions alloc] init];
     options.apiKey = @"1f04d780dc30b774c0c10f53e3c7d4ea"; // PASTE YOU API KEY HERE !!! This is a demo key. It is not allowed to use it for production. The key might change at any time without notice.
-    
     //Sets the delegate to receive events
     _myMapView.delegate = self;
     
@@ -52,6 +51,10 @@
 #pragma mark - <MWZMapDelegate>
 
 //Listering to delegate events
+- (void) mapDidLoad: (MWZMapView*) map {
+    NSLog(@"mapDidLoad");
+}
+
 - (void) map:(MWZMapView*) map didClick:(MWZLatLon*) latlon {
     NSLog(@"didClick %@", latlon);
 }
