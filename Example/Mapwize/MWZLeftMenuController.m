@@ -195,6 +195,7 @@
 
 - (void) getPlaceWithName {
     [_mapController getPlaceWithName:@"Bakery" inVenue: @"56c2ea3402275a0b00fb00ac" completionHandler:^(MWZPlace* place){
+        NSLog(@"%@", place.translations);
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get place by name"
                                                         message:[NSString stringWithFormat:@"%@", place]
                                                        delegate:nil

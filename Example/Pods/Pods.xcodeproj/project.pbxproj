@@ -110,6 +110,8 @@
 		8F72AE5B1C86DF720040FE82 /* MWZMeasurement.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F72AE571C86DF720040FE82 /* MWZMeasurement.h */; };
 		8F72AE5C1C86DF720040FE82 /* MWZMeasurement.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F72AE581C86DF720040FE82 /* MWZMeasurement.m */; };
 		8F7F97795035B6E2CAA10D10FB1F9E11 /* MWZMapView.h in Headers */ = {isa = PBXBuildFile; fileRef = 97A92230A509D979BC614534E8BBB551 /* MWZMapView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8FBF7C491CF2EF84005B73A3 /* MWZTranslation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FBF7C471CF2ED9A005B73A3 /* MWZTranslation.m */; };
+		8FBF7C4A1CF2EF87005B73A3 /* MWZTranslation.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FBF7C461CF2ED9A005B73A3 /* MWZTranslation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8FC3B7311CD75A3600998F3A /* MWZPlaceList.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FC3B72F1CD75A3600998F3A /* MWZPlaceList.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8FC3B7321CD75A3600998F3A /* MWZPlaceList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC3B7301CD75A3600998F3A /* MWZPlaceList.m */; };
 		8FE3CB3D1C92D3A10021FE99 /* MWZPlaceStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FE3CB3B1C92D3A10021FE99 /* MWZPlaceStyle.h */; };
@@ -350,6 +352,8 @@
 		8F63B0FF272D1EB750D82F3EADA2D2CA /* EXPExpect.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EXPExpect.h; path = Expecta/EXPExpect.h; sourceTree = "<group>"; };
 		8F72AE571C86DF720040FE82 /* MWZMeasurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZMeasurement.h; sourceTree = "<group>"; };
 		8F72AE581C86DF720040FE82 /* MWZMeasurement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZMeasurement.m; sourceTree = "<group>"; };
+		8FBF7C461CF2ED9A005B73A3 /* MWZTranslation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZTranslation.h; sourceTree = "<group>"; };
+		8FBF7C471CF2ED9A005B73A3 /* MWZTranslation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZTranslation.m; sourceTree = "<group>"; };
 		8FC3B72F1CD75A3600998F3A /* MWZPlaceList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZPlaceList.h; sourceTree = "<group>"; };
 		8FC3B7301CD75A3600998F3A /* MWZPlaceList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZPlaceList.m; sourceTree = "<group>"; };
 		8FE3CB3B1C92D3A10021FE99 /* MWZPlaceStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZPlaceStyle.h; sourceTree = "<group>"; };
@@ -872,6 +876,8 @@
 				727A580317847D8DC79795823480D0D1 /* MWZVenue.m */,
 				8FC3B72F1CD75A3600998F3A /* MWZPlaceList.h */,
 				8FC3B7301CD75A3600998F3A /* MWZPlaceList.m */,
+				8FBF7C461CF2ED9A005B73A3 /* MWZTranslation.h */,
+				8FBF7C471CF2ED9A005B73A3 /* MWZTranslation.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -929,6 +935,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FBF7C4A1CF2EF87005B73A3 /* MWZTranslation.h in Headers */,
 				50B536213110358A8183FC8177E69DC4 /* Mapwize-umbrella.h in Headers */,
 				8FE3CB3F1C92D3E30021FE99 /* MWZPlaceStyle.h in Headers */,
 				3EAC9438A1032440F185B3D108BCEB62 /* MWZLatLon.h in Headers */,
@@ -1302,6 +1309,7 @@
 				2B0248FA3E942C357B6A5CDEE4C6C46C /* MWZMapOptions.m in Sources */,
 				908F38A5DBE7098FDCF641BB3045DDDD /* MWZMapView.m in Sources */,
 				E9A44D471D6EDBC23E99584242045823 /* MWZPlace.m in Sources */,
+				8FBF7C491CF2EF84005B73A3 /* MWZTranslation.m in Sources */,
 				34C8038D2DF79940CD35649AEC2C18CF /* MWZPosition.m in Sources */,
 				8F72AE5C1C86DF720040FE82 /* MWZMeasurement.m in Sources */,
 				FDD4CD8A942EDBB1FF25F0ABBC5E0F31 /* MWZVenue.m in Sources */,
