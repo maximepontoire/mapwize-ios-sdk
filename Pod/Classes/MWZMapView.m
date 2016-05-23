@@ -26,7 +26,7 @@
     _isWebviewLoaded = NO;
     _jsQueue = [[NSMutableArray alloc] init];
     callbackMemory = [[NSMutableDictionary alloc] init];
-
+    
     
     
     /*
@@ -37,12 +37,14 @@
     
     WKWebViewConfiguration* configuration = [[WKWebViewConfiguration alloc] init];
     [configuration setUserContentController: userContentController];
+#if DEBUG
     [self setBackgroundColor:[UIColor greenColor]];
-    _webview = [[WKWebView alloc] initWithFrame:[self frame] configuration:configuration];
+#endif
+    _webview = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height) configuration:configuration];
     _webview.navigationDelegate = self;
     _webview.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self addSubview:_webview];
-
+    
     [_webview loadRequest:[NSURLRequest requestWithURL: [NSURL URLWithString:[NSString stringWithFormat:@"%@/sdk/mapwize-ios-sdk/%@/map.html", SERVER_URL, SDK_VERSION]]]];
     _webview.scrollView.bounces = NO;
     [self executeJS:[NSString stringWithFormat:@"Mapwize.config.SERVER = '%@'; Mapwize.config.SDK_NAME = '%@'; Mapwize.config.SDK_VERSION = '%@'; Mapwize.config.CLIENT_APP_NAME = '%@'; ",
@@ -77,7 +79,7 @@
      * Set up the map with the options
      */
     [self executeJS:[NSString stringWithFormat:@"var map = Mapwize.map('map',%@);",optionsString]];
-
+    
     /*
      * Register the event handlers
      */
@@ -95,7 +97,7 @@
     [self executeJS:@"map.on('directionsStart', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, info:'Directions have been loaded'});});"];
     [self executeJS:@"map.on('directionsStop', function(e){window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, info:'Directions have stopped'});});"];
     [self executeJS:@"map.on('apiResponse', function(e){console.log(e.response);window.webkit.messageHandlers.MWZMapEvent.postMessage({type:e.type, returnedType: e.returnedType, hash:e.hash, response:e.response});});"];
-
+    
     /*
      * Configures Location manager (authorizations need to be requested outside the SDK)
      */
@@ -114,7 +116,7 @@
     if (_isWebviewLoaded) {
         [_webview evaluateJavaScript:js completionHandler:^(id result, NSError *error) {
             if (error != nil) {
-                if (error.code != 5 && self.delegate != nil) {
+                if (error.code != 5 && [self.delegate respondsToSelector:@selector(map:didFailWithError:)]) {
                     NSError* err = [[NSError alloc] initWithDomain:@"MWZErrorDomain" code:1936 userInfo:nil];
                     [self.delegate map:self didFailWithError:err];
                 }
@@ -136,7 +138,7 @@
         [_jsQueue removeObjectAtIndex:0];
         [_webview evaluateJavaScript:js completionHandler:^(id result, NSError *error) {
             if (error != nil) {
-                if (error.code != 5 && self.delegate != nil) {
+                if (error.code != 5 && [self.delegate respondsToSelector:@selector(map:didFailWithError:)]) {
                     NSError* err = [[NSError alloc] initWithDomain:@"MWZErrorDomain" code:1936 userInfo:nil];
                     [self.delegate map:self didFailWithError:err];
                 }
@@ -147,17 +149,20 @@
     
     _isWebviewLoaded = YES;
     
+    if ([self.delegate respondsToSelector:@selector(map:webViewDidFinishLoad:)]) {
+        [self.delegate map:self webViewDidFinishLoad:_webView];
+    }
 }
 
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error{
-    if (self.delegate != nil) {
+    if ([self.delegate respondsToSelector:@selector(map:didFailWithError:)]) {
         [self.delegate map:self didFailWithError:error];
     }
 }
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
-    if (self.delegate != nil) {
+    if ([self.delegate respondsToSelector:@selector(map:didFailWithError:)]) {
         [self.delegate map:self didFailWithError:error];
     }
 }
@@ -167,16 +172,16 @@
  * Handle the events sent by the js sdk
  */
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
-
+    
     NSDictionary* body = message.body;
     if ([body[@"type"] isEqualToString:@"zoomend"]) {
         _zoom = body[@"zoom"];
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didChangeZoom:)]) {
             [self.delegate map:self didChangeZoom:_zoom];
         }
     }
     else if ([body[@"type"] isEqualToString:@"click"]) {
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didClick:)]) {
             NSDictionary* latlng = body[@"latlng"];
             NSNumber* lat = latlng[@"lat"];
             NSNumber* lng = latlng[@"lng"];
@@ -184,7 +189,7 @@
         }
     }
     else if ([body[@"type"] isEqualToString:@"contextmenu"]) {
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didClickLong:)]) {
             NSDictionary* latlng = body[@"latlng"];
             NSNumber* lat = latlng[@"lat"];
             NSNumber* lng = latlng[@"lng"];
@@ -193,29 +198,29 @@
     }
     else if ([body[@"type"] isEqualToString:@"floorsChange"]) {
         _floors = body[@"floors"];
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didChangeFloors:)]) {
             [self.delegate map:self didChangeFloors:_floors];
         }
     }
     else if ([body[@"type"] isEqualToString:@"floorChange"]) {
         _floor = body[@"floor"];
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didChangeFloor:)]) {
             [self.delegate map:self didChangeFloor:_floor];
         }
     }
     else if ([body[@"type"] isEqualToString:@"placeClick"]) {
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didClickOnPlace:)]) {
             [self.delegate map:self didClickOnPlace:[[MWZPlace alloc] initFromDictionnary:body[@"place"]]];
         }
     }
     else if ([body[@"type"] isEqualToString:@"venueClick"]) {
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didClickOnVenue:)]) {
             [self.delegate map:self didClickOnVenue:[[MWZVenue alloc] initFromDictionnary:body[@"venue"]]];
         }
     }
     else if ([body[@"type"] isEqualToString:@"markerClick"]) {
         MWZPosition* position = [[MWZPosition alloc] initWithLatitude:body[@"lat"] longitude:body[@"lon"] floor:body[@"floor"]];
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didClickOnMarker:)]) {
             [self.delegate map:self didClickOnMarker:position];
         }
     }
@@ -224,7 +229,9 @@
         NSNumber* lat = latlng[@"lat"];
         NSNumber* lng = latlng[@"lng"];
         _center = [[MWZLatLon alloc] initWithLatitude:lat longitude:lng];
-        [self.delegate map:self didMove:_center];
+        if ([self.delegate respondsToSelector:@selector(map:didMove:)]) {
+            [self.delegate map:self didMove:_center];
+        }
     }
     else if ([body[@"type"] isEqualToString:@"userPositionChange"]) {
         NSObject* s = body[@"userPosition"];
@@ -235,24 +242,24 @@
         else {
             _userPosition = nil;
         }
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didChangeUserPosition:)]) {
             [self.delegate map:self didChangeUserPosition:_userPosition];
         }
     }
     else if ([body[@"type"] isEqualToString:@"followUserModeChange"]) {
         _followUserModeON = [body[@"followUserMode"] boolValue];;
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didChangeFollowUserMode:)]) {
             [self.delegate map:self didChangeFollowUserMode:_followUserModeON];
         }
     }
     else if ([body[@"type"] isEqualToString:@"directionsStart"]) {
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didStartDirections:)]) {
             NSString* info = body[@"info"];
             [self.delegate map:self didStartDirections:info];
         }
     }
     else if ([body[@"type"] isEqualToString:@"directionsStop"]) {
-        if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(map:didStopDirections:)]) {
             NSString* info = body[@"info"];
             [self.delegate map:self didStopDirections:info];
         }
@@ -480,7 +487,7 @@
 
 - (void) unlockUserPosition {
     [self executeJS:[NSString stringWithFormat:@"map.unlockUserPosition()"]];
-
+    
 }
 
 /* URL */
@@ -587,7 +594,7 @@
     void(^_handler)(MWZVenue*);
     _handler = [handler copy];
     [callbackMemory setValue:_handler forKey:hash];
-
+    
     [self executeJS:[NSString stringWithFormat:@"Mapwize.api.getVenue('%@', function(err, venue){map.fire('apiResponse', {returnedType:'venue', hash:'%@', response:venue});});", venueId, hash ]];
 }
 
