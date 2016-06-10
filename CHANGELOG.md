@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 1.6.0
+
+- Added completionHandlers to all methods which can fail
+- Added support for multilingual venues
+- General improvements and bugfix
+
 ## Version 1.5.0
 
 - Added locationEnabled and beaconsEnables in MapOptions
