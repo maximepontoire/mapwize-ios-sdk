@@ -185,7 +185,7 @@
             [_locationManager startUpdatingLocation];
         }
 
-        if ([self.delegate respondsToSelector:@selector(mapDidLoad)]) {
+        if ([self.delegate respondsToSelector:@selector(mapDidLoad:)]) {
             [self.delegate mapDidLoad: self];
         }
     }
