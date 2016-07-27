@@ -8,6 +8,7 @@
 @property MWZLatLonBounds* maxBounds;
 @property MWZLatLon* center;
 @property NSNumber* zoom;
+@property NSNumber* minZoom;
 @property NSNumber* floor;
 @property BOOL locationEnabled;
 @property BOOL beaconsEnabled;

@@ -38,10 +38,15 @@ This will load the map in the view with the provided options.
 Options are defined using the class MWZMapOptions. The following options are available:
 
 - apiKey : [NSString] must be provided for the map to load. It can be obtained from the Mapwize administration interface. If you don't have any, contact us.
-- maxBounds : [MWZLatLonBounds] region users are allowed to navigate in.
-- center: [MWZLatLon] coordiantes of the center of the map at start-up.
-- zoom : [NSNumber] integer between 0 and 21.
-- floor : [NSNumber] integer represneting the desired floor of the building.
+- maxBounds : [MWZLatLonBounds] region users are allowed to navigate in (default: entire world).
+- center: [MWZLatLon] coordiantes of the center of the map at start-up (default: 0,0).
+- zoom : [NSNumber] integer between 0 and 21 (default 0).
+- minZoom: [NSNumber] optional minimum zoom allowed by the map, usefull to limit the visible area.
+- floor : [NSNumber] integer representing the desired floor of the building (default 0).
+- locationEnabled : [BOOL] boolean defining if the GPS should be started and the user position displayed (default: true).
+- beaconsEnabled : [BOOL] boolean defining if the iBeacon scanner should be turned on (default: false).
+- accessKey: [NSString] optional accessKey to be used during map load to be sure that access is granted to desired buildings at first map display.
+- language: [NSString] optional preferred language for the map. Used to display all venues supporting that language.
 
 ### Moving the map
 Once the map loaded, you can use the following functions on the map instance:
@@ -90,6 +95,11 @@ If you are not setting the user position manually, you need to request the Locat
     }
 
 Don't forget to add kCLAuthorizationStatusAuthorizedWhenInUse or kCLAuthorizationStatusAuthorizedAlways string in the info.plist.
+
+If you set locationEnabled=false in the map options, you can control the location using the functions
+
+	- (void) startLocationWithBeacons:(BOOL) useBeacons;
+	- (void) stopLocation;
 
 ### User heading
 
@@ -143,6 +153,7 @@ You can listen for events emitted by the map using the MWZMapDelegate. To do so,
 
 then implement the following methods
 
+	- (void) mapDidLoad: (MWZMapView\*) map;
 	- (void) map:(MWZMapView\*) map didClick:(MWZLatLon*) latlon;
 	- (void) map:(MWZMapView\*) map didClickOnPlace:(MWZPlace*) place;
 	- (void) map:(MWZMapView\*) map didClickOnVenue:(MWZVenue*) venue;

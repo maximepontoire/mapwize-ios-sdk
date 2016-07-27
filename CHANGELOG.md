@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 1.7.1
+
+- Improved location service
+- Introduced startLocationWithBeacons: and stopLocation methods in MWZMapView
+- Removed webViewDidFinishLoad from MWZMapDelegate. mapDidLoad: callback is now fired when the map is fully loaded
+
 ## Version 1.6.0
 
 - Added completionHandlers to all methods which can fail

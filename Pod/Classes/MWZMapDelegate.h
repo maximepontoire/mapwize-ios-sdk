@@ -29,14 +29,6 @@
 - (void) map:(MWZMapView*) map didStopDirections: (NSString*) infos;
 - (void) map:(MWZMapView*) map didFailWithError: (NSError *)error;
 
-/*!
- * @brief Invoked when a main frame load completes.
- * @param map The MapView invoking the delegate method.
- * @param webView The webView has finished loading.
- */
-- (void) map:(MWZMapView *) map webViewDidFinishLoad:(WKWebView *)webView;
-
-
 @end
 
 #endif

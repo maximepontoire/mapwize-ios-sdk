@@ -28,6 +28,9 @@
     //Defines the map options
     MWZMapOptions* options = [[MWZMapOptions alloc] init];
     options.apiKey = @"1f04d780dc30b774c0c10f53e3c7d4ea"; // PASTE YOU API KEY HERE !!! This is a demo key. It is not allowed to use it for production. The key might change at any time without notice.
+    options.locationEnabled = true;
+    options.accessKey = @"demo";
+    options.beaconsEnabled = true;
     //Sets the delegate to receive events
     _myMapView.delegate = self;
     
@@ -53,6 +56,7 @@
 //Listering to delegate events
 - (void) mapDidLoad: (MWZMapView*) map {
     NSLog(@"mapDidLoad");
+    [self.activityView stopAnimating];
 }
 
 - (void) map:(MWZMapView*) map didClick:(MWZLatLon*) latlon {
@@ -109,12 +113,6 @@
 
 - (void )map:(MWZMapView*) map didStopDirections: (NSString*) infos {
     NSLog(@"didStopDirections %@", infos);
-}
-
-
-- (void )map:(MWZMapView*) map webViewDidFinishLoad:(WKWebView *)webView {
-    NSLog(@"webViewDidFinishLoad %@", webView);
-    [self.activityView stopAnimating];
 }
 
 #pragma mark - Memory managment

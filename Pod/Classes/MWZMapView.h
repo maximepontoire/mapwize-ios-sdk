@@ -44,6 +44,8 @@
 - (void) newUserPositionMeasurement: (MWZMeasurement*) measurement;
 - (void) setUserHeading: (NSNumber*) heading;
 - (void) unlockUserPosition;
+- (void) startLocationWithBeacons:(BOOL) useBeacons;
+- (void) stopLocation;
 
 - (void) loadURL: (NSString*) url completionHandler:(void(^)(NSError*)) handler ;
 

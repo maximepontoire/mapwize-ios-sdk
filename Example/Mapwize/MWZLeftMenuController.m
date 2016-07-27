@@ -9,7 +9,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _menuItems = @[@"accessKey", @"setPreferredLanguageFR", @"setPreferredLanguageEN", @"setZoom", @"centerOnCoordinates", @"centerOnCoordinatesWithFloor", @"setFloor", @"centerOnVenue", @"centerOnPlace", @"centerOnUser", @"loadUrl", @"addMarker", @"addMarkerOnPlace", @"removeMarkers", @"setFollowUserModeOn", @"setFollowUserModeOff", @"setUserPosition", @"setUserPositionWithFloor", @"unlockUserPosition", @"removeUserPosition", @"showDirections", @"showDirectionsToAList", @"stopDirections",@"getZoom", @"getFloor", @"getUserPosition", @"getCenter", @"setStyle", @"fitBounds", @"setBottomMargin", @"setTopMargin", @"resetMargin", @"setUserHeading", @"removeHeading", @"getPlaceWithName", @"getPlaceWithAlias", @"getPlaceWithId", @"getVenueWithName", @"getVenueWithAlias", @"getVenueWithId", @"getPlaceListWithId", @"getPlaceListWithName", @"getPlaceListWithAlias", @"getPlaceListsForVenue", @"getPlacesWithPlaceListId", @"refresh"];
+    _menuItems = @[@"setPreferredLanguageFR", @"setPreferredLanguageEN", @"setZoom", @"centerOnCoordinates", @"centerOnCoordinatesWithFloor", @"setFloor", @"centerOnVenue", @"centerOnPlace", @"centerOnUser", @"loadUrl", @"addMarker", @"addMarkerOnPlace", @"removeMarkers", @"setFollowUserModeOn", @"setFollowUserModeOff", @"setUserPosition", @"setUserPositionWithFloor", @"unlockUserPosition", @"startUserLocation", @"stopUserLocation", @"removeUserPosition", @"showDirections", @"showDirectionsToAList", @"stopDirections",@"getZoom", @"getFloor", @"getUserPosition", @"getCenter", @"setStyle", @"fitBounds", @"setBottomMargin", @"setTopMargin", @"resetMargin", @"setUserHeading", @"removeHeading", @"getPlaceWithName", @"getPlaceWithAlias", @"getPlaceWithId", @"getVenueWithName", @"getVenueWithAlias", @"getVenueWithId", @"getPlaceListWithId", @"getPlaceListWithName", @"getPlaceListWithAlias", @"getPlaceListsForVenue", @"getPlacesWithPlaceListId", @"refresh"];
     
     UINavigationController *navController =(UINavigationController*)self.revealViewController.frontViewController;
     MWZViewController *mainViewController = [navController childViewControllers].firstObject;
@@ -50,16 +50,6 @@
 /*
  Tests methods
 */
-- (void) accessKey {
-    [_mapController access: @"demo" completionHandler:^(BOOL isValid) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Access"
-                                                        message:[NSString stringWithFormat:@"%@", (isValid?@"Valid":@"Not valid")]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-    }];
-}
 - (void) setPreferredLanguageFR {
     [_mapController setPreferredLanguage:@"fr"];
 }
@@ -126,6 +116,14 @@
 - (void) unlockUserPosition {
     [_mapController unlockUserPosition];
 }
+- (void) startUserLocation {
+    [_mapController startLocationWithBeacons:YES];
+}
+
+- (void) stopUserLocation {
+    [_mapController stopLocation];
+}
+
 - (void) showDirections {
     MWZPosition* from = [[MWZPosition alloc] initWithPlaceId:@"56c3426202275a0b00fb00b9"];
     MWZPosition* to = [[MWZPosition alloc] initWithPlaceId:@"56c3504102275a0b00fb00fa"];

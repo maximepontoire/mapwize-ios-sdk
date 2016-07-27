@@ -5,8 +5,12 @@
 #import "MWZMapDelegate.h"
 #import "MWZMapOptions.h"
 #import "MWZMapView.h"
+#import "MWZMeasurement.h"
 #import "MWZPlace.h"
+#import "MWZPlaceList.h"
+#import "MWZPlaceStyle.h"
 #import "MWZPosition.h"
+#import "MWZTranslation.h"
 #import "MWZVenue.h"
 
 FOUNDATION_EXPORT double MapwizeVersionNumber;
