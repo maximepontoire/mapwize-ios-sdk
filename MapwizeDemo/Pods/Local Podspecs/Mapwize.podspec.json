@@ -1,0 +1,38 @@
+{
+  "name": "Mapwize",
+  "version": "0.0.1",
+  "summary": "Probably the best mapping platform over the world.",
+  "description": "Probably the best mapping platform over the world.",
+  "homepage": "http://www.mapwize.io",
+  "license": "MIT",
+  "authors": {
+    "Etienne Mercier": "etienne@mapwize.io"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "requires_arc": true,
+  "source": {
+    "path": "."
+  },
+  "source_files": [
+    "Mapwize",
+    "Mapwize/Classes/**/*.{h,m}"
+  ],
+  "public_header_files": "Mapwize/Classes/**/*.h",
+  "resource_bundles": {
+    "Mapwize": [
+      "Mapwize/Resources/**/*"
+    ]
+  },
+  "frameworks": [
+    "UIKit",
+    "WebKit",
+    "CoreLocation"
+  ],
+  "dependencies": {
+    "AFNetworking": [
+
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+PODS:
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
+    - AFNetworking/NSURLSession
+  - Mapwize (0.0.1):
+    - AFNetworking
+
+DEPENDENCIES:
+  - Mapwize (from `../Mapwize`)
+
+EXTERNAL SOURCES:
+  Mapwize:
+    :path: "../Mapwize"
+
+SPEC CHECKSUMS:
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  Mapwize: 46643cfb032821b847ff552d5fc3d8724baf1857
+
+PODFILE CHECKSUM: 39490b0f5c7dfcd33c4775921e37d30c905292ee
+
+COCOAPODS: 1.1.1

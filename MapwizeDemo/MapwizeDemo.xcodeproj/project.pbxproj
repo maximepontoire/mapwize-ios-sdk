@@ -1,0 +1,421 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8F49E32E1E70162700A7B722 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F49E32D1E70162700A7B722 /* SWRevealViewController.m */; };
+		8FC83C4F1E670210007AD364 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC83C4E1E670210007AD364 /* main.m */; };
+		8FC83C581E670210007AD364 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FC83C561E670210007AD364 /* Main.storyboard */; };
+		8FC83C5A1E670210007AD364 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FC83C591E670210007AD364 /* Assets.xcassets */; };
+		8FC83C5D1E670210007AD364 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FC83C5B1E670210007AD364 /* LaunchScreen.storyboard */; };
+		8FC83D521E671498007AD364 /* MWZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC83D481E671497007AD364 /* MWZViewController.m */; };
+		8FC83D531E671498007AD364 /* MWZAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC83D491E671497007AD364 /* MWZAppDelegate.m */; };
+		8FC83D541E671498007AD364 /* MWZLeftMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC83D4B1E671497007AD364 /* MWZLeftMenuController.m */; };
+		C49D7F8D29C05AF5AFA69776 /* Pods_MapwizeDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7A8C44686CA5B630721F031 /* Pods_MapwizeDemo.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8FC83C871E670304007AD364 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0A593F2C57F6B98A3A6430F6 /* Pods-MapwizeDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapwizeDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MapwizeDemo/Pods-MapwizeDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		5A0CB1432EA04DC5B97E99C1 /* Pods-MapwizeDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapwizeDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-MapwizeDemo/Pods-MapwizeDemo.release.xcconfig"; sourceTree = "<group>"; };
+		8F49E32C1E70162700A7B722 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		8F49E32D1E70162700A7B722 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		8FC83C4A1E670210007AD364 /* MapwizeDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapwizeDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8FC83C4E1E670210007AD364 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		8FC83C571E670210007AD364 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8FC83C591E670210007AD364 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8FC83C5C1E670210007AD364 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8FC83C5E1E670210007AD364 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8FC83D481E671497007AD364 /* MWZViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZViewController.m; sourceTree = "<group>"; };
+		8FC83D491E671497007AD364 /* MWZAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZAppDelegate.m; sourceTree = "<group>"; };
+		8FC83D4A1E671497007AD364 /* MWZLeftMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZLeftMenuController.h; sourceTree = "<group>"; };
+		8FC83D4B1E671497007AD364 /* MWZLeftMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZLeftMenuController.m; sourceTree = "<group>"; };
+		8FC83D4E1E671498007AD364 /* MWZViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZViewController.h; sourceTree = "<group>"; };
+		8FC83D511E671498007AD364 /* MWZAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZAppDelegate.h; sourceTree = "<group>"; };
+		D7A8C44686CA5B630721F031 /* Pods_MapwizeDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MapwizeDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8FC83C471E670210007AD364 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C49D7F8D29C05AF5AFA69776 /* Pods_MapwizeDemo.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2A271D63383280831EBDBFB6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D7A8C44686CA5B630721F031 /* Pods_MapwizeDemo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		70E9699BC0618CE490F75DB4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0A593F2C57F6B98A3A6430F6 /* Pods-MapwizeDemo.debug.xcconfig */,
+				5A0CB1432EA04DC5B97E99C1 /* Pods-MapwizeDemo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		8FC83C411E670210007AD364 = {
+			isa = PBXGroup;
+			children = (
+				8FC83C4C1E670210007AD364 /* MapwizeDemo */,
+				8FC83C4B1E670210007AD364 /* Products */,
+				70E9699BC0618CE490F75DB4 /* Pods */,
+				2A271D63383280831EBDBFB6 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		8FC83C4B1E670210007AD364 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8FC83C4A1E670210007AD364 /* MapwizeDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8FC83C4C1E670210007AD364 /* MapwizeDemo */ = {
+			isa = PBXGroup;
+			children = (
+				8F49E32C1E70162700A7B722 /* SWRevealViewController.h */,
+				8F49E32D1E70162700A7B722 /* SWRevealViewController.m */,
+				8FC83D491E671497007AD364 /* MWZAppDelegate.m */,
+				8FC83D4A1E671497007AD364 /* MWZLeftMenuController.h */,
+				8FC83D4B1E671497007AD364 /* MWZLeftMenuController.m */,
+				8FC83D4E1E671498007AD364 /* MWZViewController.h */,
+				8FC83D481E671497007AD364 /* MWZViewController.m */,
+				8FC83D511E671498007AD364 /* MWZAppDelegate.h */,
+				8FC83C561E670210007AD364 /* Main.storyboard */,
+				8FC83C591E670210007AD364 /* Assets.xcassets */,
+				8FC83C5B1E670210007AD364 /* LaunchScreen.storyboard */,
+				8FC83C5E1E670210007AD364 /* Info.plist */,
+				8FC83C4D1E670210007AD364 /* Supporting Files */,
+			);
+			path = MapwizeDemo;
+			sourceTree = "<group>";
+		};
+		8FC83C4D1E670210007AD364 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8FC83C4E1E670210007AD364 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8FC83C491E670210007AD364 /* MapwizeDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8FC83C611E670210007AD364 /* Build configuration list for PBXNativeTarget "MapwizeDemo" */;
+			buildPhases = (
+				3001527A32E3EA7EC4FB56C3 /* [CP] Check Pods Manifest.lock */,
+				8FC83C461E670210007AD364 /* Sources */,
+				8FC83C471E670210007AD364 /* Frameworks */,
+				8FC83C481E670210007AD364 /* Resources */,
+				8FC83C871E670304007AD364 /* Embed Frameworks */,
+				2FC6D60AACC109288D02622B /* [CP] Embed Pods Frameworks */,
+				B1140557A0FA969595744EF9 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MapwizeDemo;
+			productName = MapwizeDemo;
+			productReference = 8FC83C4A1E670210007AD364 /* MapwizeDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8FC83C421E670210007AD364 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = mapwize;
+				TargetAttributes = {
+					8FC83C491E670210007AD364 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = GGHGAE294R;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 8FC83C451E670210007AD364 /* Build configuration list for PBXProject "MapwizeDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8FC83C411E670210007AD364;
+			productRefGroup = 8FC83C4B1E670210007AD364 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8FC83C491E670210007AD364 /* MapwizeDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8FC83C481E670210007AD364 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8FC83C5D1E670210007AD364 /* LaunchScreen.storyboard in Resources */,
+				8FC83C5A1E670210007AD364 /* Assets.xcassets in Resources */,
+				8FC83C581E670210007AD364 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2FC6D60AACC109288D02622B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MapwizeDemo/Pods-MapwizeDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3001527A32E3EA7EC4FB56C3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B1140557A0FA969595744EF9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MapwizeDemo/Pods-MapwizeDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8FC83C461E670210007AD364 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8FC83D541E671498007AD364 /* MWZLeftMenuController.m in Sources */,
+				8FC83C4F1E670210007AD364 /* main.m in Sources */,
+				8FC83D521E671498007AD364 /* MWZViewController.m in Sources */,
+				8FC83D531E671498007AD364 /* MWZAppDelegate.m in Sources */,
+				8F49E32E1E70162700A7B722 /* SWRevealViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		8FC83C561E670210007AD364 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8FC83C571E670210007AD364 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		8FC83C5B1E670210007AD364 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8FC83C5C1E670210007AD364 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8FC83C5F1E670210007AD364 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		8FC83C601E670210007AD364 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8FC83C621E670210007AD364 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A593F2C57F6B98A3A6430F6 /* Pods-MapwizeDemo.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = GGHGAE294R;
+				INFOPLIST_FILE = MapwizeDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mapwize.MapwizeDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		8FC83C631E670210007AD364 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A0CB1432EA04DC5B97E99C1 /* Pods-MapwizeDemo.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = GGHGAE294R;
+				INFOPLIST_FILE = MapwizeDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mapwize.MapwizeDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8FC83C451E670210007AD364 /* Build configuration list for PBXProject "MapwizeDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8FC83C5F1E670210007AD364 /* Debug */,
+				8FC83C601E670210007AD364 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8FC83C611E670210007AD364 /* Build configuration list for PBXNativeTarget "MapwizeDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8FC83C621E670210007AD364 /* Debug */,
+				8FC83C631E670210007AD364 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8FC83C421E670210007AD364 /* Project object */;
+}
