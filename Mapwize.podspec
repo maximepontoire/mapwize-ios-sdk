@@ -25,10 +25,10 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "8.0"
   s.requires_arc = true
 
-  s.source_files  = "Mapwize", "Mapwize/Classes/**/*.{h,m}"
-  s.public_header_files = "Mapwize/Classes/**/*.h"
+  s.source_files  = "Mapwize", "Mapwize/Mapwize/Classes/**/*.{h,m}"
+  s.public_header_files = "Mapwize/Mapwize/Classes/**/*.h"
   s.resource_bundles = {
-    'Mapwize' => ['Mapwize/Resources/**/*']
+    'Mapwize' => ['Mapwize/Mapwize/Resources/**/*']
   }
 
   s.frameworks = 'UIKit', 'WebKit', 'CoreLocation'
