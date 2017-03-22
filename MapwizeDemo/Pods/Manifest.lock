@@ -14,20 +14,20 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - Mapwize (0.0.1):
+  - Mapwize (2.1.1):
     - AFNetworking
 
 DEPENDENCIES:
-  - Mapwize (from `../Mapwize`)
+  - Mapwize (from `..`)
 
 EXTERNAL SOURCES:
   Mapwize:
-    :path: "../Mapwize"
+    :path: ..
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  Mapwize: 46643cfb032821b847ff552d5fc3d8724baf1857
+  Mapwize: 3932724e153fb2894709b65c74c5513e15689470
 
-PODFILE CHECKSUM: 39490b0f5c7dfcd33c4775921e37d30c905292ee
+PODFILE CHECKSUM: f5b5a9e95d5994c0b91f93ba1576fad426c85d80
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.0

@@ -228,7 +228,11 @@ Getting an access using api give the access in the map at the same time. If the 
 Venues have properties name and alias that allow to identify them in a more human-readable manner than the ID.
 Venue names and alias are unique throughout the Mapwize platform.
 
-To get a venue object from an id, a name or an alias, you can use the following methods.
+To get a venue object from an id, a name or an alias, you can use the following methods. The first methods allows to pass a dictionnary with filter arguments that will be sent directly with the API request.
+
+- (NSURLSessionDataTask *)getVenues:(NSDictionary<NSString*,NSString*>*) options success:(void (^)(NSArray<MWZVenue*> *venues))success failure:(void (^)(NSError *error))failure;
+
+- (NSURLSessionDataTask *)getVenuesForOrganizationId:(NSString *)organizationId success:(void (^)(NSArray<MWZVenue*> *venues))success failure:(void (^)(NSError *error))failure;
 
 - (NSURLSessionDataTask *)getVenueWithId:(NSString *)requestId success:(void (^)(MWZVenue *venue))success failure:(void (^)(NSError *error))failure;
 
@@ -241,7 +245,9 @@ To get a venue object from an id, a name or an alias, you can use the following 
 Place have id, name and alias like venues.
 ID is unique throughout the mapwize platform but name and alias are unique throughout each venues
 
-To get a place object from an id, a name or an alias, you can use the following methods.
+To get a place object from an id, a name or an alias, you can use the following methods. The first methods allows to pass a dictionnary with filter arguments that will be sent directly with the API request.
+
+- (NSURLSessionDataTask *)getPlaces:(NSDictionary<NSString*,NSString*>*) options success:(void (^)(NSArray<MWZPlace*> *places))success failure:(void (^)(NSError *error))failure;
 
 - (NSURLSessionDataTask *)getPlaceWithId:(NSString *)requestId success:(void (^)(MWZPlace *place))success failure:(void (^)(NSError *error))failure;
 
@@ -256,7 +262,9 @@ To get a place object from an id, a name or an alias, you can use the following 
 
 ### Getting placeLists
 
-Placelist have the same behavior than places. You can use the following methods.
+Placelist have the same behavior than places. You can use the following methods. The first methods allows to pass a dictionnary with filter arguments that will be sent directly with the API request.
+
+- (NSURLSessionDataTask *)getPlaceLists:(NSDictionary<NSString*,NSString*>*) options success:(void (^)(NSArray<MWZPlaceList*> *placeLists))success failure:(void (^)(NSError *error))failure;
 
 - (NSURLSessionDataTask *)getPlaceListWithId:(NSString *)requestId success:(void (^)(MWZPlaceList *placeList))success failure:(void (^)(NSError *error))failure;
 

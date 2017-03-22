@@ -5,5 +5,5 @@ target 'MapwizeDemo' do
   use_frameworks!
 
   # Pods for MapwizeDemo
-  pod 'Mapwize', :path => '../Mapwize'
+  pod 'Mapwize', :path => '..'
 end

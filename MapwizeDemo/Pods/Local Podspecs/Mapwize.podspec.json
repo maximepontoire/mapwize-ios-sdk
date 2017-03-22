@@ -1,28 +1,29 @@
 {
   "name": "Mapwize",
-  "version": "0.0.1",
-  "summary": "Probably the best mapping platform over the world.",
-  "description": "Probably the best mapping platform over the world.",
-  "homepage": "http://www.mapwize.io",
+  "version": "2.1.1",
+  "summary": "Mapwize: The Indoor Mapping Platform",
+  "description": "Mapwize: The Indoor Mapping Platform.\nThis SDK allows you to display and interact with venue maps.",
+  "homepage": "https://www.mapwize.io",
   "license": "MIT",
   "authors": {
-    "Etienne Mercier": "etienne@mapwize.io"
+    "Mapwize": "contact@mapwize.io"
+  },
+  "source": {
+    "git": "https://github.com/Mapwize/mapwize-ios-sdk.git",
+    "tag": "2.1.1"
   },
   "platforms": {
     "ios": "8.0"
   },
   "requires_arc": true,
-  "source": {
-    "path": "."
-  },
   "source_files": [
     "Mapwize",
-    "Mapwize/Classes/**/*.{h,m}"
+    "Mapwize/Mapwize/Classes/**/*.{h,m}"
   ],
-  "public_header_files": "Mapwize/Classes/**/*.h",
+  "public_header_files": "Mapwize/Mapwize/Classes/**/*.h",
   "resource_bundles": {
     "Mapwize": [
-      "Mapwize/Resources/**/*"
+      "Mapwize/Mapwize/Resources/**/*"
     ]
   },
   "frameworks": [

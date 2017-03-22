@@ -19,6 +19,10 @@
 /*
  Venues request related methods
 */
+- (NSURLSessionDataTask *)getVenues:(NSDictionary<NSString*,NSString*>*) options success:(void (^)(NSArray<MWZVenue*> *venues))success failure:(void (^)(NSError *error))failure;
+
+- (NSURLSessionDataTask *)getVenuesForOrganizationId:(NSString *)organizationId success:(void (^)(NSArray<MWZVenue*> *venues))success failure:(void (^)(NSError *error))failure;
+
 - (NSURLSessionDataTask *)getVenueWithId:(NSString *)requestId success:(void (^)(MWZVenue *venue))success failure:(void (^)(NSError *error))failure;
 
 - (NSURLSessionDataTask *)getVenueWithName:(NSString *)name success:(void (^)(MWZVenue *venue))success failure:(void (^)(NSError *error))failure;
@@ -28,6 +32,8 @@
 /*
  Places request related methods
 */
+- (NSURLSessionDataTask *)getPlaces:(NSDictionary<NSString*,NSString*>*) options success:(void (^)(NSArray<MWZPlace*> *places))success failure:(void (^)(NSError *error))failure;
+
 - (NSURLSessionDataTask *)getPlaceWithId:(NSString *)requestId success:(void (^)(MWZPlace *place))success failure:(void (^)(NSError *error))failure;
 
 - (NSURLSessionDataTask *)getPlaceWithName:(NSString *)name inVenue:(MWZVenue*) venue success:(void (^)(MWZPlace *place))success failure:(void (^)(NSError *error))failure;
@@ -40,6 +46,8 @@
  Places request related methods
 */
 - (NSURLSessionDataTask *)getPlacesForPlaceList:(MWZPlaceList *)placeList success:(void (^)(NSArray<MWZPlace*>* places))success failure:(void (^)(NSError *error))failure;
+
+- (NSURLSessionDataTask *)getPlaceLists:(NSDictionary<NSString*,NSString*>*) options success:(void (^)(NSArray<MWZPlaceList*> *placeLists))success failure:(void (^)(NSError *error))failure;
 
 - (NSURLSessionDataTask *)getPlaceListWithId:(NSString *)requestId success:(void (^)(MWZPlaceList *placeList))success failure:(void (^)(NSError *error))failure;
 

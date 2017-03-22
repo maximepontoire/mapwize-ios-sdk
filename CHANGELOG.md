@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version 2.1.1
+
+- Added API methods to get venues, places and placeLists
+- Added geometry and other parameters to MWZVenue
+
 ## Version 2.1.0
 
 - [MWZMapView showdirection] is deprecated. Use [MWZApi getDirections] and [MWZMapView startDirections] methods instead.

@@ -33,6 +33,44 @@ static NSString *const kSearchUrl = @"/api/v1/search?api_key=%@";
     
 }
 
+- (NSURLSessionDataTask *)getVenues:(NSDictionary<NSString*,NSString*>*) options success:(void (^)(NSArray<MWZVenue*> *venues))success failure:(void (^)(NSError *error))failure {
+    NSMutableDictionary* params;
+    if (options != nil) {
+        params = [NSMutableDictionary dictionaryWithDictionary:options];
+    }
+    else {
+        params = [[NSMutableDictionary alloc] init];
+    }
+    if (_apiKey != nil) {
+        [params setObject:_apiKey forKey:@"api_key"];
+    }
+    
+    return [self GET:kVenuesUrl parameters:params progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSArray* responseArray = (NSArray*) responseObject;
+        NSMutableArray<MWZVenue*>* vs = [[NSMutableArray alloc] init];
+        for (NSDictionary* venueDictionary in responseArray) {
+            MWZVenue* venue = [[MWZVenue alloc] initFromDictionary:venueDictionary];
+            [vs addObject:venue];
+        }
+        success(vs);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        failure(error);
+    }];
+    
+}
+
+- (NSURLSessionDataTask *)getVenuesForOrganizationId:(NSString *)organizationId success:(void (^)(NSArray<MWZVenue*> *venues))success failure:(void (^)(NSError *error))failure {
+    NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
+    if (organizationId != nil) {
+        [dic setObject:organizationId forKey:@"organizationId"];
+    }
+    return [self getVenues:dic success:success failure:failure];
+}
+
 - (NSURLSessionDataTask *)getVenueWithId:(NSString *)requestId
                                  success:(void (^)(MWZVenue *venue))success
                                  failure:(void (^)(NSError *error))failure {
@@ -103,6 +141,36 @@ static NSString *const kSearchUrl = @"/api/v1/search?api_key=%@";
                                    failure:(void (^)(NSError *error))failure {
     
     return [self getVenueWithParam:@"alias" value:alias success:success failure:failure];
+    
+}
+
+- (NSURLSessionDataTask *)getPlaces:(NSDictionary<NSString*,NSString*>*) options success:(void (^)(NSArray<MWZPlace*> *places))success failure:(void (^)(NSError *error))failure {
+    NSMutableDictionary* params;
+    if (options != nil) {
+        params = [NSMutableDictionary dictionaryWithDictionary:options];
+    }
+    else {
+        params = [[NSMutableDictionary alloc] init];
+    }
+    if (_apiKey != nil) {
+        [params setObject:_apiKey forKey:@"api_key"];
+    }
+
+    return [self GET:kPlacesUrl parameters:params progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSArray* responseArray = (NSArray*) responseObject;
+        NSMutableArray<MWZPlace*>* ps = [[NSMutableArray alloc] init];
+        for (NSDictionary* placeDictionary in responseArray) {
+            MWZPlace* place = [[MWZPlace alloc] initFromDictionary:placeDictionary];
+            [ps addObject:place];
+        }
+        success(ps);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        failure(error);
+    }];
     
 }
 
@@ -213,6 +281,37 @@ static NSString *const kSearchUrl = @"/api/v1/search?api_key=%@";
     }];
     
 }
+
+- (NSURLSessionDataTask *)getPlaceLists:(NSDictionary<NSString*,NSString*>*) options success:(void (^)(NSArray<MWZPlaceList*> *placeLists))success failure:(void (^)(NSError *error))failure {
+    NSMutableDictionary* params;
+    if (options != nil) {
+        params = [NSMutableDictionary dictionaryWithDictionary:options];
+    }
+    else {
+        params = [[NSMutableDictionary alloc] init];
+    }
+    if (_apiKey != nil) {
+        [params setObject:_apiKey forKey:@"api_key"];
+    }
+    
+    return [self GET:kPlaceListsUrl parameters:params progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSArray* responseArray = (NSArray*) responseObject;
+        NSMutableArray<MWZPlaceList*>* pls = [[NSMutableArray alloc] init];
+        for (NSDictionary* placeListDictionary in responseArray) {
+            MWZPlaceList* placeList = [[MWZPlaceList alloc] initFromDictionary:placeListDictionary];
+            [pls addObject:placeList];
+        }
+        success(pls);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        failure(error);
+    }];
+    
+}
+
 
 - (NSURLSessionDataTask *)getPlacesForPlaceList:(MWZPlaceList *)placeList
                                         success:(void (^)(NSArray<MWZPlace*>* places))success
