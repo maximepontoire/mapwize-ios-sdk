@@ -20,7 +20,11 @@
     return self;
 }
 
-- (NSString *)description {
+- (MWZBounds*) getBounds {
+    return [_geometry getBounds];
+}
+
+-(NSString *)description {
     return [NSString stringWithFormat: @"MWZVenue: Identifier=%@ Name=%@ Alias=%@", _identifier, _name, _alias];
 }
 

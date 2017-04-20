@@ -37,6 +37,10 @@
     return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 
+- (MWZBounds*) getBounds {
+    return [_geometry getBounds];
+}
+
 - (NSString *)description {
     return [NSString stringWithFormat: @"MWZPlace: Identifier=%@ Name=%@ Alias=%@ VenueId=%@", _identifier, _name, _alias, _venueId];
 }

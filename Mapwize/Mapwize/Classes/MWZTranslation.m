@@ -5,14 +5,14 @@
 - (instancetype)initFromDictionary:(NSDictionary*)dic {
     self = [super init];
     _title = [dic objectForKey:@"title"];
-    _subtitle = [dic objectForKey:@"subtitle"];
+    _subTitle = [dic objectForKey:@"subTitle"];
     _details = [dic objectForKey:@"details"];
     _language = [dic objectForKey:@"language"];
     return self;
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat: @"MWZTranslation: Language=%@ Title=%@ Subtitle=%@ Details=%@", _language, _title, _subtitle, _details];
+    return [NSString stringWithFormat: @"MWZTranslation: Language=%@ Title=%@ Subtitle=%@ Details=%@", _language, _title, _subTitle, _details];
 }
 
 + (NSArray<MWZTranslation*>*) parseTranslations:(NSArray*) translationJSON {

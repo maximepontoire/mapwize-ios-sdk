@@ -6,6 +6,7 @@
 #import "MWZDirectionPoint.h"
 #import "MWZDirection.h"
 #import "MWZSearchParams.h"
+#import "MWZUniverse.h"
 
 @interface MWZApiManager : MWZSessionManager
 
@@ -15,6 +16,11 @@
  Access request related method
 */
 - (NSURLSessionDataTask *)getAccessWithAccessKey:(NSString *)accessKey success:(void (^)(void))success failure:(void (^)(NSError *error))failure;
+
+/*
+ Universes request related method
+*/
+- (NSURLSessionDataTask *)getUniversesForOrganizationId:(NSString *)organizationId success:(void (^)(NSArray<MWZUniverse*> *universes))success failure:(void (^)(NSError *error))failure;
 
 /*
  Venues request related methods

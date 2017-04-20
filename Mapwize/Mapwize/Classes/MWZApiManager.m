@@ -3,6 +3,7 @@
 static NSString *const kAccessUrl = @"/api/v1/access/%@";
 static NSString *const kVenueUrl = @"/api/v1/venues/%@";
 static NSString *const kVenuesUrl = @"/api/v1/venues";
+static NSString *const kUniversesUrl = @"/api/v1/universes";
 static NSString *const kPlaceUrl = @"/api/v1/places/%@";
 static NSString *const kPlacesUrl = @"/api/v1/places";
 static NSString *const kPlacesForPlaceListUrl = @"/api/v1/placeLists/%@/places";
@@ -32,6 +33,37 @@ static NSString *const kSearchUrl = @"/api/v1/search?api_key=%@";
     }];
     
 }
+
+- (NSURLSessionDataTask *)getUniversesForOrganizationId:(NSString *)organizationId success:(void (^)(NSArray<MWZUniverse*> *universes))success failure:(void (^)(NSError *error))failure {
+    if (organizationId == nil || [organizationId isEqualToString:@""]) {
+        failure([NSError errorWithDomain:@"An organizationId must be provided" code:401 userInfo:nil]);
+        return nil;
+    }
+    else {
+        NSMutableDictionary* params;
+        params = [[NSMutableDictionary alloc] init];
+        if (_apiKey != nil) {
+            [params setObject:_apiKey forKey:@"api_key"];
+        }
+        [params setObject:organizationId forKey:@"organizationId"];
+        return [self GET:kUniversesUrl parameters:params progress:^(NSProgress * _Nonnull downloadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
+            NSArray* responseArray = (NSArray*) responseObject;
+            NSMutableArray<MWZUniverse*>* us = [[NSMutableArray alloc] init];
+            for (NSDictionary* universeDictionary in responseArray) {
+                MWZUniverse* universe = [[MWZUniverse alloc] initFromDictionary:universeDictionary];
+                [us addObject:universe];
+            }
+            success(us);
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            failure(error);
+        }];
+    }
+}
+
 
 - (NSURLSessionDataTask *)getVenues:(NSDictionary<NSString*,NSString*>*) options success:(void (^)(NSArray<MWZVenue*> *venues))success failure:(void (^)(NSError *error))failure {
     NSMutableDictionary* params;

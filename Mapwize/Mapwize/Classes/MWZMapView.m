@@ -5,7 +5,7 @@
 #import "MWZParser.h"
 
 #define SERVER_URL @"https://www.mapwize.io"
-#define IOS_SDK_VERSION @"2.1.1"
+#define IOS_SDK_VERSION @"2.1.2"
 #define IOS_SDK_NAME @"IOS SDK"
 
 @implementation MWZMapView {
@@ -278,6 +278,10 @@
 /* Universe */
 - (void) setUniverseForVenue: (MWZVenue*) venue withUniverseId:(NSString*) universeId {
     [self executeJS:[NSString stringWithFormat:@"map.setUniverseForVenue('%@', '%@');", universeId, venue.identifier]];
+}
+
+- (void) setUniverseForVenue: (MWZVenue*) venue withUniverse:(MWZUniverse*) universe {
+    [self setUniverseForVenue:venue withUniverseId:universe.identifier];
 }
 
 - (NSString*) getUniverseForVenue: (NSString*) venueId {

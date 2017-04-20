@@ -32,6 +32,30 @@
     return _coordinates;
 }
 
+- (MWZBounds*) getBounds {
+    double latMin = 400;
+    double latMax = -400;
+    double lonMin = 400;
+    double lonMax = -400;
+    for (MWZCoordinate* c in _coordinates) {
+        if (c.latitude < latMin) {
+            latMin = c.latitude;
+        }
+        if (c.latitude > latMax) {
+            latMax = c.latitude;
+        }
+        if (c.longitude < lonMin) {
+            lonMin = c.longitude;
+        }
+        if (c.longitude > lonMax) {
+            lonMax = c.longitude;
+        }
+    }
+    MWZCoordinate* sw = [[MWZCoordinate alloc] initWithLatitude:latMin longitude:lonMin floor:nil];
+    MWZCoordinate* ne = [[MWZCoordinate alloc] initWithLatitude:latMax longitude:lonMax floor:nil];
+    return [[MWZBounds alloc] initWithSouthWest:sw northEast:ne];
+}
+
 - (NSDictionary*) toDictionary {
     NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
     [dic setObject:_type forKey:@"type"];

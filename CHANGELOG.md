@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 2.1.2
+
+- Fixed bug with translation subTitle
+- Added API call to retrieve universes for an organization, MWZMapView.setUniverseForVenue can now take a MWZUniverse 
+- Added getBounds method for geometries
+
 ## Version 2.1.1
 
 - Added API methods to get venues, places and placeLists

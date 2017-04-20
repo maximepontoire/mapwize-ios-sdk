@@ -17,6 +17,25 @@
     _apiManager = [MWZApiManager sharedManager];
     _okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                        handler:^(UIAlertAction * action) {}];
+    
+    [_apiManager getAccessWithAccessKey:@"euraall" success:^{
+        [_apiManager getUniversesForOrganizationId:@"573ef6dd8aa2f00b002d4e39" success:^(NSArray<MWZUniverse *> *universes) {
+            
+            [_apiManager getVenueWithId:@"56b20714c3fa800b00d8f0b5" success:^(MWZVenue *venue) {
+                [_mapController setUniverseForVenue:venue withUniverse:universes[1]];
+            } failure:^(NSError *error) {
+                NSLog(@"ERROR RETRIEVING VENUE");
+            }];
+            
+        } failure:^(NSError *error) {
+            NSLog(@"ERROR RETRIEVING UNIVERSE");
+        }];
+    } failure:^(NSError *error) {
+        NSLog(@"ERROR RETRIEVING ACCESS");
+    }];
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {

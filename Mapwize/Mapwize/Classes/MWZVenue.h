@@ -19,4 +19,6 @@
 
 - (instancetype)initFromDictionary:(NSDictionary*)dic;
 
+- (MWZBounds*) getBounds;
+
 @end

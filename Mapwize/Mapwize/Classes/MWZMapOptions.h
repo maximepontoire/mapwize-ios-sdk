@@ -6,6 +6,7 @@
 
 @property(nonatomic, strong) NSString* apiKey;
 @property(nonatomic, strong) MWZBounds* maxBounds;
+@property(nonatomic, strong) MWZBounds* bounds;
 @property(nonatomic, strong) MWZCoordinate* center;
 @property(nonatomic, strong) NSNumber* zoom;
 @property(nonatomic, strong) NSNumber* minZoom;

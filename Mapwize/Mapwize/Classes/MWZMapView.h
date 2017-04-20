@@ -12,7 +12,7 @@
 #import "MWZPlaceList.h"
 #import "MWZDirectionOptions.h"
 #import "MWZDirection.h"
-
+#import "MWZUniverse.h"
 
 @interface MWZMapView : UIView  <WKNavigationDelegate, WKScriptMessageHandler, CLLocationManagerDelegate>
 
@@ -43,6 +43,7 @@
 - (void) setFollowUserMode: (BOOL) follow;
 
 - (void) setUniverseForVenue: (MWZVenue*) venue withUniverseId:(NSString*) universeId;
+- (void) setUniverseForVenue: (MWZVenue*) venue withUniverse:(MWZUniverse*) universeId;
 - (NSString*) getUniverseForVenue: (NSString*) venueId;
 
 - (MWZUserPosition*) getUserPosition;

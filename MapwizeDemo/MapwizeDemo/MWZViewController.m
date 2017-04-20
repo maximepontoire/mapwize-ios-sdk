@@ -24,24 +24,28 @@
         [_locationManager requestWhenInUseAuthorization];
     }
 
-    
-    //Defines the map options
-    MWZMapOptions* options = [[MWZMapOptions alloc] init];
-    options.apiKey = @"1f04d780dc30b774c0c10f53e3c7d4ea"; // PASTE YOU API KEY HERE !!! This is a demo key. It is not allowed to use it for production. The key might change at any time without notice.
-    options.locationEnabled = true;
-    options.accessKey = @"demo";
-    options.beaconsEnabled = true;
-    //Sets the delegate to receive events
-    _myMapView.delegate = self;
-    
-    //Loads the map
-    [_myMapView loadMapWithOptions: options];
-    
-    
-    MWZBounds* bounds = [[MWZBounds alloc] initWithSouthWest:[[MWZCoordinate alloc] initWithLatitude:49.742851692813445652 longitude:4.5997658371925345122 floor:nil] northEast:[[MWZCoordinate alloc] initWithLatitude:49.742313935073504183 longitude:4.5989323407411575317 floor:nil]];
-    //Fits bounds on demo building
-    [_myMapView fitBounds:bounds];
+    MWZApiManager* manager = [MWZApiManager sharedManager];
+    [manager getVenues:nil success:^(NSArray<MWZVenue *> *venues) {
+        //Defines the map options
+        MWZMapOptions* options = [[MWZMapOptions alloc] init];
+        options.apiKey = @"1f04d780dc30b774c0c10f53e3c7d4ea"; // PASTE YOU API KEY HERE !!! This is a demo key. It is not allowed to use it for production. The key might change at any time without notice.
+        options.locationEnabled = true;
+        options.accessKey = @"demo";
+        options.beaconsEnabled = true;
+        //Sets the delegate to receive events
+        _myMapView.delegate = self;
+        
+        //Loads the map
+        [_myMapView loadMapWithOptions: options];
+        
+        
+        [_myMapView fitBounds:[venues[0] getBounds]];
 
+    } failure:^(NSError *error) {
+        
+    }];
+    
+    
     //Update view and show menu
     SWRevealViewController *revealViewController = self.revealViewController;
     if ( revealViewController )
@@ -50,6 +54,7 @@
         [self.navigationButton setAction: @selector( revealToggle: )];
         [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     }
+    
     
 }
 

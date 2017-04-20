@@ -27,6 +27,10 @@
     return _coordinate;
 }
 
+- (MWZBounds*) getBounds {
+    return [[MWZBounds alloc] initWithSouthWest:_coordinate northEast:_coordinate];
+}
+
 - (NSDictionary*) toDictionary {
     NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
     [dic setObject:_type forKey:@"type"];

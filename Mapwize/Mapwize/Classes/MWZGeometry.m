@@ -18,4 +18,8 @@
     return nil;
 }
 
+- (MWZBounds*) getBounds {
+    return nil;
+}
+
 @end

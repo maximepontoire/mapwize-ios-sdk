@@ -13,6 +13,8 @@
 
 - (MWZCoordinate*) getCoordinates;
 
+- (MWZBounds*) getBounds;
+
 - (NSDictionary*) toDictionary;
 
 @end

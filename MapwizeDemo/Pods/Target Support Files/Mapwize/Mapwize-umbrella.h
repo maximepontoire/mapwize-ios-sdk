@@ -34,6 +34,7 @@
 #import "MWZSessionManager.h"
 #import "MWZStyle.h"
 #import "MWZTranslation.h"
+#import "MWZUniverse.h"
 #import "MWZUserPosition.h"
 #import "MWZVenue.h"
 

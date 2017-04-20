@@ -30,6 +30,8 @@
 
 - (instancetype)initFromDictionary:(NSDictionary*)dic;
 
+- (MWZBounds*) getBounds;
+
 - (NSDictionary*) toDirectionDictionary;
 - (NSString*) toDirectionStringJSON;
 

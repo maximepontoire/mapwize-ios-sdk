@@ -17,6 +17,9 @@
     if (_maxBounds != nil) {
         [optionsDic setObject:[_maxBounds toArray] forKey:@"maxBounds"];
     }
+    if (_bounds != nil) {
+        [optionsDic setObject:[_bounds toArray] forKey:@"bounds"];
+    }
     if (_center != nil) {
         [optionsDic setObject:[_center toArray] forKey:@"center"];
     }
