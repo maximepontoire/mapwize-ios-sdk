@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 2.1.3
+
+- Fixed bug to make sure that the callback for MWZMapView loadURL is always called
+
 ## Version 2.1.2
 
 - Fixed bug with translation subTitle

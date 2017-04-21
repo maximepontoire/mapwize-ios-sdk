@@ -104,6 +104,15 @@
             [alertController addAction:_okAction];
             [self presentViewController:alertController animated:YES completion:nil];
         }
+        else {
+            UIAlertController *alertController = [UIAlertController
+                                                  alertControllerWithTitle:@"Load url"
+                                                  message:[NSString stringWithFormat:@"Success"]
+                                                  preferredStyle:UIAlertControllerStyleAlert];
+            
+            [alertController addAction:_okAction];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
     }];
 }
 - (void) addMarker {

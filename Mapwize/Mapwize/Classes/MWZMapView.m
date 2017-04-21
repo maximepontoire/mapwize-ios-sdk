@@ -5,7 +5,7 @@
 #import "MWZParser.h"
 
 #define SERVER_URL @"https://www.mapwize.io"
-#define IOS_SDK_VERSION @"2.1.2"
+#define IOS_SDK_VERSION @"2.1.3"
 #define IOS_SDK_NAME @"IOS SDK"
 
 @implementation MWZMapView {
@@ -256,7 +256,7 @@
             if (_handler!= nil) {
                 NSString* err = body[@"error"];
                 NSError* error = nil;
-                if (err != nil && ![@"" isEqualToString:err]) {
+                if (err != nil && ![@"0" isEqualToString:err]) {
                     error = [[NSError alloc] initWithDomain:@"MWZResponseError" code:0 userInfo:nil];
                 }
                 _handler(error);
@@ -438,7 +438,7 @@
     void(^_handler)(NSError*);
     _handler = [handler copy];
     [callbackMemory setValue:_handler forKey:hash];
-    [self executeJS:[NSString stringWithFormat:@"map.loadUrl('%@', function(err){if (err) {map.fire('apiResponse', {returnedType:'loadUrl', hash:'%@', response:{}, error:0});}})", url, hash ]];
+    [self executeJS:[NSString stringWithFormat:@"map.loadUrl('%@', function(err, result){map.fire('apiResponse', {returnedType:'loadUrl', hash:'%@', response:result, error:err?'1':'0'});})", url, hash ]];
 }
 
 /* Markers */
