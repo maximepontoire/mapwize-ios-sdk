@@ -13,6 +13,7 @@
 @property(nonatomic, strong) NSNumber* floor;
 @property(nonatomic) BOOL locationEnabled;
 @property(nonatomic) BOOL beaconsEnabled;
+@property(nonatomic) BOOL showUserPositionControl;
 @property(nonatomic, strong) NSString* accessKey;
 @property(nonatomic, strong) NSString* language;
 

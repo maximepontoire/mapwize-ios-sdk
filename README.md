@@ -54,6 +54,7 @@ Options are defined using the class MWZMapOptions. The following options are ava
 - beaconsEnabled : [BOOL] boolean defining if the iBeacon scanner should be turned on (default: false).
 - accessKey: [NSString] optional accessKey to be used during map load to be sure that access is granted to desired buildings at first map display.
 - language: [NSString] optional preferred language for the map. Used to display all venues supporting that language.
+- showUserPositionControl [BOOL] display the user position button at the bottom right of the map (default: true).
 
 ### Moving the map
 Once the map loaded, you can use the following functions on the map instance:
@@ -177,6 +178,13 @@ didFailWithError will be triggered in case of unavailable internet connection or
 The display style of places can be changed dynamically within the SDK. To do so, you can use
 
 - (void) setStyle: (MWZStyle*) style forPlaceById: (NSString*) placeId;
+
+### Universes
+
+You can change the universe of a venue with the following methods.
+
+- (void) setUniverseForVenue: (MWZVenue*) venue withUniverseId:(NSString*) universeId;
+- (void) setUniverseForVenue: (MWZVenue*) venue withUniverse:(MWZUniverse*) universeId;
 
 ### Setting top and bottom margins
 

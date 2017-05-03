@@ -6,6 +6,7 @@
     self =  [super init];
     self.locationEnabled = YES;
     self.beaconsEnabled = NO;
+    self.showUserPositionControl = YES;
     return self;
 }
 
@@ -39,6 +40,7 @@
         [optionsDic setObject:_minZoom forKey:@"minZoom"];
     }
     [optionsDic setObject:@0 forKey:@"useBrowserLocation"];
+    [optionsDic setObject:[NSNumber numberWithBool:_showUserPositionControl] forKey:@"showUserPositionControl"];
     [optionsDic setObject:@0 forKey:@"zoomControl"];
     
     return optionsDic;

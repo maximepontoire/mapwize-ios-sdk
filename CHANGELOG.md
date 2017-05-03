@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version 2.1.4
+
+- Added documentation for setUniverseForVenue methods
+- Added map option to hide user position button
+
 ## Version 2.1.3
 
 - Fixed bug to make sure that the callback for MWZMapView loadURL is always called
