@@ -150,7 +150,7 @@ static NSString *const kSearchUrl = @"/api/v1/search?api_key=%@";
             success(v);
         }
         else {
-            success(nil);
+            failure([NSError errorWithDomain:@"MapwizeApi" code:404 userInfo:nil]);
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -254,7 +254,7 @@ static NSString *const kSearchUrl = @"/api/v1/search?api_key=%@";
             success(p);
         }
         else {
-            success(nil);
+            failure([NSError errorWithDomain:@"MapwizeApi" code:404 userInfo:nil]);
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -421,7 +421,7 @@ static NSString *const kSearchUrl = @"/api/v1/search?api_key=%@";
             success(pl);
         }
         else {
-            success(nil);
+            failure([NSError errorWithDomain:@"MapwizeApi" code:404 userInfo:nil]);
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

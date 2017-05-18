@@ -25,26 +25,36 @@
     }
 
     MWZApiManager* manager = [MWZApiManager sharedManager];
-    [manager getVenues:nil success:^(NSArray<MWZVenue *> *venues) {
-        //Defines the map options
-        MWZMapOptions* options = [[MWZMapOptions alloc] init];
-        options.apiKey = @"1f04d780dc30b774c0c10f53e3c7d4ea"; // PASTE YOU API KEY HERE !!! This is a demo key. It is not allowed to use it for production. The key might change at any time without notice.
-        options.locationEnabled = true;
-        options.accessKey = @"demo";
-        options.beaconsEnabled = true;
-        //Sets the delegate to receive events
-        _myMapView.delegate = self;
-        
-        //Loads the map
-        [_myMapView loadMapWithOptions: options];
-        
-        
-        [_myMapView fitBounds:[venues[0] getBounds]];
+    [manager getAccessWithAccessKey:@"demo" success:^{
+        [manager getVenueWithId:@"56c2ea3402275a0b00fb00ac" success:^(MWZVenue *venue) {
+            NSDictionary* data = venue.data;
+            NSNumber* minZoom = data[@"minZoom"];
+            NSDictionary* maxBoundsDic = data[@"maxBounds"];
+            NSDictionary* swDic = maxBoundsDic[@"southWest"];
+            NSDictionary* neDic = maxBoundsDic[@"northEast"];
+            MWZCoordinate* sw = [[MWZCoordinate alloc] initWithLatitude:[swDic[@"latitude"] doubleValue] longitude:[swDic[@"longitude"] doubleValue] floor:nil];
+            MWZCoordinate* ne = [[MWZCoordinate alloc] initWithLatitude:[neDic[@"latitude"] doubleValue] longitude:[neDic[@"longitude"] doubleValue] floor:nil];
+            MWZBounds* maxBounds = [[MWZBounds alloc] initWithSouthWest:sw northEast:ne];
+            MWZMapOptions* options = [[MWZMapOptions alloc] init];
+            options.apiKey = @"1f04d780dc30b774c0c10f53e3c7d4ea"; // PASTE YOU API KEY HERE !!! This is a demo key. It is not allowed to use it for production. The key might change at any time without notice.
+            options.locationEnabled = true;
+            options.maxBounds = maxBounds;
+            options.accessKey = @"demo";
+            options.beaconsEnabled = true;
+            options.minZoom = minZoom;
+            //Sets the delegate to receive events
+            _myMapView.delegate = self;
+            
+            //Loads the map
+            [_myMapView loadMapWithOptions: options];
+            
+        } failure:^(NSError *error) {
+            NSLog(@"GetVenue error: %@", error);
+        }];
 
     } failure:^(NSError *error) {
-        
+        NSLog(@"Access error: %@", error);
     }];
-    
     
     //Update view and show menu
     SWRevealViewController *revealViewController = self.revealViewController;

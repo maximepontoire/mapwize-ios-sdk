@@ -18,23 +18,6 @@
     _okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                        handler:^(UIAlertAction * action) {}];
     
-    [_apiManager getAccessWithAccessKey:@"euraall" success:^{
-        [_apiManager getUniversesForOrganizationId:@"573ef6dd8aa2f00b002d4e39" success:^(NSArray<MWZUniverse *> *universes) {
-            
-            [_apiManager getVenueWithId:@"56b20714c3fa800b00d8f0b5" success:^(MWZVenue *venue) {
-                [_mapController setUniverseForVenue:venue withUniverse:universes[1]];
-            } failure:^(NSError *error) {
-                NSLog(@"ERROR RETRIEVING VENUE");
-            }];
-            
-        } failure:^(NSError *error) {
-            NSLog(@"ERROR RETRIEVING UNIVERSE");
-        }];
-    } failure:^(NSError *error) {
-        NSLog(@"ERROR RETRIEVING ACCESS");
-    }];
-    
-    
     
 }
 
@@ -76,10 +59,12 @@
     [_mapController setZoom:@12];
 }
 - (void) centerOnCoordinates {
-    [_mapController centerOnCoordinates:@49.74252973220731 longitude:@4.599119424819946 floor:nil zoom:@18];
+    MWZCoordinate* coordinate = [[MWZCoordinate alloc] initWithLatitude:49.74252973220731 longitude:4.599119424819946 floor:nil];
+    [_mapController centerOnCoordinates:coordinate withZoom:@18];
 }
 - (void) centerOnCoordinatesWithFloor {
-    [_mapController centerOnCoordinates:@49.74252973220731 longitude:@4.599119424819946 floor:@2 zoom:@18];
+    MWZCoordinate* coordinate = [[MWZCoordinate alloc] initWithLatitude:49.74252973220731 longitude:4.599119424819946 floor:@2];
+    [_mapController centerOnCoordinates:coordinate withZoom:@18];
 }
 - (void) setFloor {
     [_mapController setFloor:@2];
@@ -116,7 +101,8 @@
     }];
 }
 - (void) addMarker {
-    [_mapController addMarkerWithLatitude:@49.74278626088478 longitude:@4.598293304443359 floor:nil];
+    MWZCoordinate* coordinate = [[MWZCoordinate alloc] initWithLatitude:49.74278626088478 longitude:4.598293304443359 floor:nil];
+    [_mapController addMarkerWithCoordinate:coordinate];
 }
 - (void) addMarkerOnPlace {
     [_mapController addMarkerWithPlaceId:@"56c3426202275a0b00fb00b9"];
@@ -131,10 +117,12 @@
     [_mapController setFollowUserMode:FALSE];
 }
 - (void) setUserPosition {
-    [_mapController setUserPositionWithLatitude:@49.74278626088478 longitude:@4.598293304443359 floor:nil];
+    MWZUserPosition* userPosition = [[MWZUserPosition alloc] initWithLatitude:49.74278626088478 longitude:4.598293304443359 floor:nil accuracy:@3];
+    [_mapController setUserPosition:userPosition];
 }
 - (void) setUserPositionWithFloor {
-    [_mapController setUserPositionWithLatitude:@49.74278626088478 longitude:@4.598293304443359 floor:@2];
+    MWZUserPosition* userPosition = [[MWZUserPosition alloc] initWithLatitude:49.74278626088478 longitude:4.598293304443359 floor:@2 accuracy:@3];
+    [_mapController setUserPosition:userPosition];
 }
 - (void) removeUserPosition {
     [_mapController removeUserPosition];

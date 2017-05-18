@@ -5,7 +5,7 @@
 #import "MWZParser.h"
 
 #define SERVER_URL @"https://www.mapwize.io"
-#define IOS_SDK_VERSION @"2.1.4"
+#define IOS_SDK_VERSION @"2.2.0"
 #define IOS_SDK_NAME @"IOS SDK"
 
 @implementation MWZMapView {
@@ -293,21 +293,25 @@
     [self executeJS:[NSString stringWithFormat:@"map.fitBounds(new L.LatLngBounds(new L.LatLng(%f, %f), new L.LatLng(%f, %f)));", bounds.southWest.coordinate.latitude, bounds.southWest.coordinate.longitude, bounds.northEast.coordinate.latitude, bounds.northEast.coordinate.longitude]];
 }
 
-- (void) centerOnCoordinates: (NSNumber*) lat longitude: (NSNumber*) lon floor: (NSNumber*) floor zoom: (NSNumber*) zoom {
-    if (floor == nil && zoom == nil) {
-        [self executeJS:[NSString stringWithFormat:@"map.centerOnCoordinates(%@,%@)", lat, lon]];
+- (void) centerOnCoordinates: (MWZCoordinate*) coordinate withZoom:(NSNumber*) zoom {
+    if (coordinate.floor == nil && zoom == nil) {
+        [self executeJS:[NSString stringWithFormat:@"map.centerOnCoordinates(%f,%f)", coordinate.latitude, coordinate.longitude]];
     }
-    else if (floor == nil) {
-        [self executeJS:[NSString stringWithFormat:@"map.centerOnCoordinates(%@,%@, null, %@)", lat, lon, zoom]];
+    else if (coordinate.floor == nil) {
+        [self executeJS:[NSString stringWithFormat:@"map.centerOnCoordinates(%f,%f, null, %@)", coordinate.latitude, coordinate.longitude, zoom]];
     }
     else if (zoom == nil) {
-        [self executeJS:[NSString stringWithFormat:@"map.centerOnCoordinates(%@,%@,%@,null)", lat, lon, floor]];
+        [self executeJS:[NSString stringWithFormat:@"map.centerOnCoordinates(%f,%f,%@,null)", coordinate.latitude, coordinate.longitude, coordinate.floor]];
     }
     else {
-        [self executeJS:[NSString stringWithFormat:@"map.centerOnCoordinates(%@,%@,%@,%@)", lat, lon, floor, zoom ]];
+        [self executeJS:[NSString stringWithFormat:@"map.centerOnCoordinates(%f,%f,%@,%@)", coordinate.latitude, coordinate.longitude, coordinate.floor, zoom ]];
     }
 }
 
+- (void) centerOnCoordinates: (NSNumber*) latitude longitude: (NSNumber*) longitude floor: (NSNumber*) floor zoom: (NSNumber*) zoom {
+    MWZCoordinate* coord = [[MWZCoordinate alloc] initWithLatitude:[latitude doubleValue] longitude:[longitude doubleValue] floor:floor];
+    [self centerOnCoordinates:coord withZoom:zoom];
+}
 
 - (NSNumber*) getFloor {
     return _floor;
@@ -379,52 +383,30 @@
 }
 
 - (void) setUserPositionWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor {
-    NSMutableDictionary* positionDic = [[NSMutableDictionary alloc] init];
-    if (latitude != nil) {
-        [positionDic setObject:latitude forKey:@"latitude"];
+    MWZUserPosition* up = [[MWZUserPosition alloc] initWithLatitude:[latitude doubleValue] longitude:[longitude doubleValue] floor:floor accuracy:@0];
+    [self setUserPosition:up];}
+
+- (void) setUserPosition:(MWZUserPosition*) userPosition {
+    if (userPosition == nil) {
+        [self executeJS:[NSString stringWithFormat:@"Mapwize.Location.setUserPosition(null)" ]];
     }
-    if (longitude != nil) {
-        [positionDic setObject:longitude forKey:@"longitude"];
-    }
-    if (floor != nil) {
-        [positionDic setObject:floor forKey:@"floor"];
-    }
-    
-    if (positionDic.count > 0) {
-        [positionDic setObject:@0 forKey:@"accuracy"];
+    else {
+        NSMutableDictionary* positionDic = [[NSMutableDictionary alloc] init];
+        [positionDic setObject:@(userPosition.latitude) forKey:@"latitude"];
+        [positionDic setObject:@(userPosition.longitude) forKey:@"longitude"];
+        if (userPosition.floor != nil) {
+            [positionDic setObject:userPosition.floor forKey:@"floor"];
+        }
+        [positionDic setObject:userPosition.accuracy forKey:@"accuracy"];
         NSData *userPositionJSON = [NSJSONSerialization dataWithJSONObject:positionDic options:(NSJSONWritingOptions) 0 error:nil];
         NSString* userPositionString = [[NSString alloc] initWithData:userPositionJSON encoding:NSUTF8StringEncoding];
         [self executeJS:[NSString stringWithFormat:@"Mapwize.Location.setUserPosition(%@)", userPositionString ]];
     }
-    else {
-        [self executeJS:[NSString stringWithFormat:@"Mapwize.Location.setUserPosition(null)" ]];
-    }
-    
 }
 
 - (void) setUserPositionWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor accuracy:(NSNumber*) accuracy {
-    NSMutableDictionary* positionDic = [[NSMutableDictionary alloc] init];
-    if (latitude != nil) {
-        [positionDic setObject:latitude forKey:@"latitude"];
-    }
-    if (longitude != nil) {
-        [positionDic setObject:longitude forKey:@"longitude"];
-    }
-    if (floor != nil) {
-        [positionDic setObject:floor forKey:@"floor"];
-    }
-    if (accuracy != nil) {
-        [positionDic setObject:accuracy forKey:@"accuracy"];
-    }
-    if (positionDic.count > 0) {
-        [positionDic setObject:@0 forKey:@"accuracy"];
-        NSData *userPositionJSON = [NSJSONSerialization dataWithJSONObject:positionDic options:(NSJSONWritingOptions) 0 error:nil];
-        NSString* userPositionString = [[NSString alloc] initWithData:userPositionJSON encoding:NSUTF8StringEncoding];
-        [self executeJS:[NSString stringWithFormat:@"Mapwize.Location.setUserPosition(%@)", userPositionString ]];
-    }
-    else {
-        [self executeJS:[NSString stringWithFormat:@"Mapwize.Location.setUserPosition(null)" ]];
-    }
+    MWZUserPosition* up = [[MWZUserPosition alloc] initWithLatitude:[latitude doubleValue] longitude:[longitude doubleValue] floor:floor accuracy:accuracy];
+    [self setUserPosition:up];
 }
 
 - (void) unlockUserPosition {
@@ -443,15 +425,16 @@
 
 /* Markers */
 - (void) addMarkerWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor {
+    MWZCoordinate* coord = [[MWZCoordinate alloc] initWithLatitude:[latitude doubleValue] longitude:[longitude doubleValue] floor:floor];
+    [self addMarkerWithCoordinate:coord];
+}
+
+- (void) addMarkerWithCoordinate: (MWZCoordinate*) coordinate {
     NSMutableDictionary* positionDic = [[NSMutableDictionary alloc] init];
-    if (latitude != nil) {
-        [positionDic setObject:latitude forKey:@"lat"];
-    }
-    if (longitude != nil) {
-        [positionDic setObject:longitude forKey:@"lon"];
-    }
-    if (floor != nil) {
-        [positionDic setObject:floor forKey:@"floor"];
+    [positionDic setObject:@(coordinate.latitude) forKey:@"latitude"];
+    [positionDic setObject:@(coordinate.longitude) forKey:@"longitude"];
+    if (coordinate.floor != nil) {
+        [positionDic setObject:coordinate.floor forKey:@"floor"];
     }
     NSData *positionJSON = [NSJSONSerialization dataWithJSONObject:positionDic options:(NSJSONWritingOptions) 0 error:nil];
     NSString* positionString = [[NSString alloc] initWithData:positionJSON encoding:NSUTF8StringEncoding];
@@ -472,6 +455,107 @@
 - (void) removeMarkers {
     [self executeJS:[NSString stringWithFormat:@"map.removeMarkers()"]];
 }
+
+/* Promote places */
+- (void) setPromotedPlaces:(NSArray<MWZPlace*>*) places {
+    if (places == nil) {
+        [self setPromotedPlacesWithIds:nil];
+    }
+    else {
+        NSMutableArray<NSString*>* arr = [[NSMutableArray alloc] init];
+        for (MWZPlace* place in places) {
+            [arr addObject:place.identifier];
+        }
+        [self setPromotedPlacesWithIds:arr];
+    }
+}
+
+- (void) setPromotedPlacesWithIds:(NSArray<NSString*>*) placeIds {
+    if (placeIds == nil) {
+        [self executeJS:[NSString stringWithFormat:@"map.setPromotePlaces(null);"]];
+    }
+    else {
+        NSData *data = [NSJSONSerialization dataWithJSONObject:placeIds options:NSJSONWritingPrettyPrinted error:nil];
+        NSString* json = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        [self executeJS:[NSString stringWithFormat:@"map.setPromotePlaces(%@);", json]];
+    }
+}
+
+- (void) addPromotedPlace:(MWZPlace*) place {
+    [self addPromotedPlaceWithId:place.identifier];
+}
+
+- (void) addPromotedPlaceWithId:(NSString*) placeId {
+    [self executeJS:[NSString stringWithFormat:@"map.addPromotePlace('%@');", placeId]];
+}
+
+- (void) addPromotedPlaces:(NSArray<MWZPlace*>*) places {
+    NSMutableArray<NSString*>* arr = [[NSMutableArray alloc] init];
+    for (MWZPlace* place in places) {
+        [arr addObject:place.identifier];
+    }
+    [self addPromotedPlacesWithIds:arr];
+}
+
+- (void) addPromotedPlacesWithIds:(NSArray<NSString*>*) placeIds {
+    NSData *data = [NSJSONSerialization dataWithJSONObject:placeIds options:NSJSONWritingPrettyPrinted error:nil];
+    NSString* json = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    [self executeJS:[NSString stringWithFormat:@"map.addPromotePlaces(%@);", json]];
+}
+
+- (void) removePromotedPlace:(MWZPlace*) place {
+    [self removePromotedPlaceWithId:place.identifier];
+}
+
+- (void) removePromotedPlaceWithId:(NSString*) placeId {
+    [self executeJS:[NSString stringWithFormat:@"map.removePromotePlace('%@');", placeId]];
+}
+
+
+
+
+/* Ignore places */
+- (void) addIgnoredPlace:(MWZPlace*) place {
+    [self addIgnoredPlaceWithId:place.identifier];
+}
+
+- (void) addIgnoredPlaceWithId:(NSString*) placeId {
+    [self executeJS:[NSString stringWithFormat:@"map.addIgnorePlace('%@');", placeId]];
+}
+
+- (void) removeIgnoredPlace:(MWZPlace*) place {
+    [self removeIgnoredPlaceWithId:place.identifier];
+}
+
+- (void) removeIgnoredPlaceWithId:(NSString*) placeId {
+    [self executeJS:[NSString stringWithFormat:@"map.removeIgnorePlace('%@');", placeId]];
+}
+
+- (void) setIgnoredPlaces:(NSArray<MWZPlace*>*) places {
+    if (places == nil) {
+        [self setIgnoredPlacesWithIds:nil];
+    }
+    else {
+        NSMutableArray<NSString*>* arr = [[NSMutableArray alloc] init];
+        for (MWZPlace* place in places) {
+            [arr addObject:place.identifier];
+        }
+        [self setIgnoredPlacesWithIds:arr];
+    }
+
+}
+
+- (void) setIgnoredPlacesWithIds:(NSArray<NSString*>*) placeIds {
+    if (placeIds == nil) {
+        [self executeJS:[NSString stringWithFormat:@"map.setIgnorePlaces(null);"]];
+    }
+    else {
+        NSData *data = [NSJSONSerialization dataWithJSONObject:placeIds options:NSJSONWritingPrettyPrinted error:nil];
+        NSString* json = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        [self executeJS:[NSString stringWithFormat:@"map.setIgnorePlaces(%@);", json]];
+    }
+}
+
 
 /* Directions */
 - (void) startDirections: (MWZDirection*) direction {
@@ -550,7 +634,7 @@
 #pragma mark Location Manager Delegate
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
     CLLocation* location = [locations objectAtIndex:0];
-    MWZMeasurement* m = [[MWZMeasurement alloc] initWithLatitude:@(location.coordinate.latitude) longitude:@(location.coordinate.longitude) floor:nil accuracy:@(location.horizontalAccuracy) valitidy:nil source:@"gps"];
+    MWZMeasurement* m = [[MWZMeasurement alloc] initWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude floor:nil accuracy:@(location.horizontalAccuracy) valitidy:nil source:@"gps"];
     [self newUserPositionMeasurement:m];
 }
 

@@ -45,6 +45,7 @@ This will load the map in the view with the provided options.
 Options are defined using the class MWZMapOptions. The following options are available:
 
 - apiKey : [NSString] must be provided for the map to load. It can be obtained from the Mapwize administration interface. If you don't have any, contact us.
+- bounds : [MWZBounds] region that will be display after initialization.
 - maxBounds : [MWZBounds] region users are allowed to navigate in (default: entire world).
 - center: [MWZCoordinate] coordiantes of the center of the map at start-up (default: 0,0).
 - zoom : [NSNumber] integer between 0 and 21 (default 0).
@@ -60,7 +61,8 @@ Options are defined using the class MWZMapOptions. The following options are ava
 Once the map loaded, you can use the following functions on the map instance:
 
 - (void) fitBounds:(MWZBounds*) bounds; - moves the map so the specified bound is completely visible.
-- (void) centerOnCoordinates: (NSNumber*) lat longitude: (NSNumber*) lon floor: (NSNumber*) floor zoom: (NSNumber*) zoom;
+- (void) centerOnCoordinates: (MWZCoordinate*) coordinate withZoom:(NSNumber*) zoom;
+Depracated: - (void) centerOnCoordinates: (NSNumber*) latitude longitude: (NSNumber*) longitude floor: (NSNumber*) floor zoom: (NSNumber*) zoom;
 - (void) setFloor: (NSNumber*) floor;
 - (void) setZoom: (NSNumber*) zoom;
 - (void) centerOnVenue: (MWZVenue*) venue;
@@ -85,10 +87,12 @@ The followUserMode defines if the map should move when the user is moving.
 You can get/set the user position using the following methods. For a complete guide on the user position measurement principle, please refer to the [Mapwize.js documentation](https://github.com/Mapwize/mapwize.js-dist/blob/master/doc/doc.md).
 
 - (MWZUserPosition*) getUserPosition;
-- (void) setUserPositionWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor;
-- (void) setUserPositionWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor accuracy:(NSNumber*) accuracy;
+- (void) setUserPosition:(MWZUserPosition*) userPosition;
+Deprecated: - (void) setUserPositionWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor;
+Deprecated: - (void) setUserPositionWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor accuracy:(NSNumber*) accuracy;
 - (void) newUserPositionMeasurement: (MWZMeasurement*) measurement;
 - (void) unlockUserPosition;
+- (void) removeUserPosition;
 
 
 If you are not setting the user position manually, you need to request the Location Authorization. This can be done with the code:
@@ -129,9 +133,32 @@ You can load Mapwize URLs using the following command. For a complete documentat
 
 You can add markers on top of the map.
 
-- (void) addMarkerWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor;
+- (void) addMarkerWithCoordinate: (MWZCoordinate*) coordinate;
+Deprecated: - (void) addMarkerWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor;
 - (void) addMarkerWithPlaceId: (NSString*) placeId;
 - (void) removeMarkers;
+
+### Controlling places display
+
+You can promote places to increase their display priority.
+
+- (void) setPromotePlaces:(NSArray<MWZPlace*>*) places;
+- (void) setPromotePlacesWithIds:(NSArray<NSString*>*) placeIds;
+- (void) addPromotePlace:(MWZPlace*) place;
+- (void) addPromotePlaceWithId:(NSString*) placeId;
+- (void) addPromotePlaces:(NSArray<MWZPlace*>*) places;
+- (void) addPromotePlacesWithIds:(NSArray<NSString*>*) placeIds;
+- (void) removePromotePlace:(MWZPlace*) place;
+
+You can ignore place to make them not visible
+
+- (void) addIgnorePlace:(MWZPlace*) place;
+- (void) addIgnorePlaceWithId:(NSString*) placeId;
+- (void) removeIgnorePlace:(MWZPlace*) place;
+- (void) removeIgnorePlaceWithId:(NSString*) placeId;
+- (void) setIgnorePlaces:(NSArray<MWZPlace*>*) places;
+- (void) setIgnorePlacesWithIds:(NSArray<NSString*>*) placeIds;
+
 
 ### Showing directions
 

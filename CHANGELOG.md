@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## Version 2.2.0
+
+- Deprecated methods using latitude, longitude and floor to be replaced by methods using MWZCoordinate or MWZUserPosition
+- Changed MWZMeasurement to use double for latitude and longitude instead of NSNumber
+- Added a set of methods to promote places (make them displayed with highest priority)
+- Added a set of methods to ignore places (hide them)
+
 ## Version 2.1.4
 
 - Added documentation for setUniverseForVenue methods

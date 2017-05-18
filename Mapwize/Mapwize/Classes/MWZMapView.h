@@ -32,7 +32,9 @@
 
 - (MWZCoordinate*) getCenter;
 
-- (void) centerOnCoordinates: (NSNumber*) lat longitude: (NSNumber*) lon floor: (NSNumber*) floor zoom: (NSNumber*) zoom;
+- (void) centerOnCoordinates: (MWZCoordinate*) coordinate withZoom:(NSNumber*) zoom;
+- (void) centerOnCoordinates: (NSNumber*) lat longitude: (NSNumber*) lon floor: (NSNumber*) floor zoom: (NSNumber*) zoom
+__attribute__((deprecated("Use centerOnCoordinate:withZoom instead")));
 - (void) centerOnVenue: (MWZVenue*) venue;
 - (void) centerOnVenueById: (NSString*) venueId;
 - (void) centerOnPlace: (MWZPlace*) place;
@@ -48,8 +50,11 @@
 
 - (MWZUserPosition*) getUserPosition;
 - (void) removeUserPosition;
-- (void) setUserPositionWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor;
-- (void) setUserPositionWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor accuracy:(NSNumber*) accuracy;
+- (void) setUserPosition:(MWZUserPosition*) userPosition;
+- (void) setUserPositionWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor
+__attribute__((deprecated("Use setUserPosition:(MWZUserPosition*) instead")));
+- (void) setUserPositionWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor accuracy:(NSNumber*) accuracy
+__attribute__((deprecated("Use setUserPosition:(MWZUserPosition*) instead")));
 - (void) newUserPositionMeasurement: (MWZMeasurement*) measurement;
 - (void) setUserHeading: (NSNumber*) heading;
 - (void) unlockUserPosition;
@@ -59,7 +64,25 @@
 
 - (void) loadURL: (NSString*) url completionHandler:(void(^)(NSError*)) handler ;
 
-- (void) addMarkerWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor;
+- (void) addPromotedPlace:(MWZPlace*) place;
+- (void) addPromotedPlaceWithId:(NSString*) placeId;
+- (void) addPromotedPlaces:(NSArray<MWZPlace*>*) places;
+- (void) addPromotedPlacesWithIds:(NSArray<NSString*>*) placeIds;
+- (void) setPromotedPlaces:(NSArray<MWZPlace*>*) places;
+- (void) setPromotedPlacesWithIds:(NSArray<NSString*>*) placeIds;
+- (void) removePromotedPlace:(MWZPlace*) place;
+- (void) removePromotedPlaceWithId:(NSString*) placeId;
+
+- (void) addIgnoredPlace:(MWZPlace*) place;
+- (void) addIgnoredPlaceWithId:(NSString*) placeId;
+- (void) setIgnoredPlaces:(NSArray<MWZPlace*>*) places;
+- (void) setIgnoredPlacesWithIds:(NSArray<NSString*>*) placeIds;
+- (void) removeIgnoredPlace:(MWZPlace*) place;
+- (void) removeIgnoredPlaceWithId:(NSString*) placeId;
+
+- (void) addMarkerWithCoordinate: (MWZCoordinate*) coordinate;
+- (void) addMarkerWithLatitude: (NSNumber*) latitude longitude:(NSNumber*) longitude floor:(NSNumber*) floor
+__attribute__((deprecated("Use addMarkerWithCoordinate:(MWZCoordinate*) instead")));
 - (void) addMarkerWithPlaceId: (NSString*) placeId;
 - (void) removeMarkers;
 

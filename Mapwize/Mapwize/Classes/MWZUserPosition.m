@@ -7,7 +7,18 @@
     _accuracy = [dic objectForKey:@"accuracy"];
     return self;
 }
-    
+
+- (instancetype) initWithMWZCoordinate:(MWZCoordinate*) coordinate accuracy:(NSNumber*) accuracy {
+    self = [super initWithLatitude:coordinate.latitude longitude:coordinate.longitude floor:coordinate.floor];
+    _accuracy = accuracy;
+    return self;
+}
+
+- (instancetype) initWithLatitude:(double)latitude longitude:(double)longitude floor:(NSNumber *)floor accuracy:(NSNumber*) accuracy {
+    self = [super initWithLatitude:latitude longitude:longitude floor:floor];
+    _accuracy = accuracy;
+    return self;
+}
     
 - (NSString *)description {
     if (self.floor != nil) {

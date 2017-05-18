@@ -2,7 +2,7 @@
 
 @implementation MWZMeasurement
 
-- (instancetype) initWithLatitude: (NSNumber*) latitude longitude: (NSNumber*) longitude floor:(NSNumber*) floor accuracy: (NSNumber*) accuracy valitidy: (NSNumber*) validity source: (NSString*) source {
+- (instancetype) initWithLatitude: (double) latitude longitude: (double) longitude floor:(NSNumber*) floor accuracy: (NSNumber*) accuracy valitidy: (NSNumber*) validity source: (NSString*) source {
     self = [super init];
     _latitude = latitude;
     _longitude = longitude;
@@ -15,8 +15,8 @@
 
 - (instancetype)initFromDictionary:(NSDictionary*)dic {
     self = [super init];
-    _latitude = [dic objectForKey:@"latitude"];
-    _longitude = [dic objectForKey:@"longitude"];
+    _latitude = [[dic objectForKey:@"latitude"] doubleValue];
+    _longitude = [[dic objectForKey:@"longitude"] doubleValue];
     _floor = [dic objectForKey:@"floor"];
     _accuracy = [dic objectForKey:@"accuracy"];
     _validUntil = [dic objectForKey:@"validUntil"];
@@ -27,12 +27,8 @@
 
 - (NSString*) toStringJSON {
     NSMutableDictionary* userPositionDic = [[NSMutableDictionary alloc] init];
-    if (_latitude != nil) {
-        [userPositionDic setObject:_latitude forKey:@"latitude"];
-    }
-    if (_longitude != nil) {
-        [userPositionDic setObject:_longitude forKey:@"longitude"];
-    }
+    [userPositionDic setObject:@(_latitude) forKey:@"latitude"];
+    [userPositionDic setObject:@(_longitude) forKey:@"longitude"];
     if (_floor != nil) {
         [userPositionDic setObject:_floor forKey:@"floor"];
     }
@@ -53,7 +49,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat: @"MWZMeasurement: Latitude=%@ Longitude=%@ Floor=%@ Accuracy=%@ Validity=%@ Source=%@", _latitude, _longitude, _floor, _accuracy, _validity, _source];
+    return [NSString stringWithFormat: @"MWZMeasurement: Latitude=%f Longitude=%f Floor=%@ Accuracy=%@ Validity=%@ Source=%@", _latitude, _longitude, _floor, _accuracy, _validity, _source];
 }
 
 @end
