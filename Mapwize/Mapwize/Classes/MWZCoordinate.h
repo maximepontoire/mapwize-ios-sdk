@@ -24,6 +24,7 @@
 - (NSDictionary*) toDictionary;
 
 - (NSArray*) toArray;
+- (NSArray*) toLatLongArray;
 
 - (NSDictionary*) toDirectionDictionary;
 

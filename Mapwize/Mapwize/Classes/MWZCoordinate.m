@@ -41,9 +41,8 @@
 
 - (NSDictionary*) toDictionary {
     NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
-    NSMutableArray* coords = [[NSMutableArray alloc] init];
-    [coords addObject:[NSNumber numberWithDouble:_coordinate.latitude]];
-    [coords addObject:[NSNumber numberWithDouble:_coordinate.longitude]];
+    [dic setObject:[NSNumber numberWithDouble:_coordinate.latitude] forKey:@"latitude"];
+    [dic setObject:[NSNumber numberWithDouble:_coordinate.longitude] forKey:@"longitude"];
     if (_floor != nil) {
         [dic setObject:_floor forKey:@"floor"];
     }
@@ -51,6 +50,13 @@
 }
 
 - (NSArray*) toArray {
+    NSMutableArray* coords = [[NSMutableArray alloc] init];
+    [coords addObject:[NSNumber numberWithDouble:_coordinate.longitude]];
+    [coords addObject:[NSNumber numberWithDouble:_coordinate.latitude]];
+    return coords;
+}
+
+- (NSArray*) toLatLongArray {
     NSMutableArray* coords = [[NSMutableArray alloc] init];
     [coords addObject:[NSNumber numberWithDouble:_coordinate.latitude]];
     [coords addObject:[NSNumber numberWithDouble:_coordinate.longitude]];

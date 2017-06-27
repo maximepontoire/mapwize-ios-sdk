@@ -32,8 +32,8 @@
 
 - (NSArray*) toArray {
     NSMutableArray* arr = [[NSMutableArray alloc] init];
-    [arr addObject:[_southWest toArray]];
-    [arr addObject:[_northEast toArray]];
+    [arr addObject:[_southWest toLatLongArray]];
+    [arr addObject:[_northEast toLatLongArray]];
     return arr;
 }
 

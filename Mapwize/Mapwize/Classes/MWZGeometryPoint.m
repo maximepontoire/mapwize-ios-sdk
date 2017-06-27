@@ -34,7 +34,7 @@
 - (NSDictionary*) toDictionary {
     NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
     [dic setObject:_type forKey:@"type"];
-    [dic setObject:[_coordinate toDictionary] forKey:@"coordinates"];
+    [dic setObject:[_coordinate toArray] forKey:@"coordinates"];
     return dic;
 }
 

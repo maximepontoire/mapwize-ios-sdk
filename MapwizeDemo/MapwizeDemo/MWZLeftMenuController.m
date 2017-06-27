@@ -9,7 +9,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _menuItems = @[@"setPreferredLanguageFR", @"setPreferredLanguageEN", @"setZoom", @"centerOnCoordinates", @"centerOnCoordinatesWithFloor", @"setFloor", @"centerOnVenue", @"centerOnPlace", @"centerOnUser", @"loadUrl", @"addMarker", @"addMarkerOnPlace", @"removeMarkers", @"setFollowUserModeOn", @"setFollowUserModeOff", @"setUserPosition", @"setUserPositionWithFloor", @"unlockUserPosition", @"startUserLocation", @"stopUserLocation", @"removeUserPosition", @"showDirections", @"showDirectionsWithWaypoints", @"showDirectionsToAList", @"stopDirections",@"getZoom", @"getFloor", @"getUserPosition", @"getCenter", @"setStyle", @"fitBounds", @"setBottomMargin", @"setTopMargin", @"resetMargin", @"setUserHeading", @"removeHeading", @"getPlaceWithName", @"getPlaceWithAlias", @"getPlaceWithId", @"getVenueWithName", @"getVenueWithAlias", @"getVenueWithId", @"getPlaceListWithId", @"getPlaceListWithName", @"getPlaceListWithAlias", @"getPlaceListsForVenue", @"getPlacesWithPlaceListId", @"refresh", @"getPlaces"];
+    _menuItems = @[@"setPreferredLanguageFR", @"setPreferredLanguageEN", @"setZoom", @"centerOnCoordinates", @"centerOnCoordinatesWithFloor", @"setFloor", @"centerOnVenue", @"centerOnPlace", @"centerOnUser", @"loadUrl", @"addMarker", @"addMarkerOnPlace", @"removeMarkers", @"setFollowUserModeOn", @"setFollowUserModeOff", @"setUserPosition", @"setUserPositionWithFloor", @"unlockUserPosition", @"startUserLocation", @"stopUserLocation", @"removeUserPosition", @"showDirections", @"showDirectionsWithWaypoints", @"showDirectionsToAList", @"stopDirections",@"getZoom", @"getFloor", @"getUserPosition", @"getCenter", @"setStyle", @"fitBounds", @"setBottomMargin", @"setTopMargin", @"resetMargin", @"setUserHeading", @"removeHeading", @"getPlaceWithName", @"getPlaceWithAlias", @"getPlaceWithId", @"getVenueWithName", @"getVenueWithAlias", @"getVenueWithId", @"getPlaceListWithId", @"getPlaceListWithName", @"getPlaceListWithAlias", @"getPlaceListsForVenue", @"getPlacesWithPlaceListId", @"refresh", @"getPlaces",@"setPromotePlaces"];
     
     UINavigationController *navController =(UINavigationController*)self.revealViewController.frontViewController;
     MWZViewController *mainViewController = [navController childViewControllers].firstObject;
@@ -568,6 +568,10 @@
 
 - (void) refresh {
     [_mapController refresh];
+}
+
+- (void) setPromotePlaces {
+    [_mapController setPromotedPlacesWithIds:@[@"56c346fc02275a0b00fb00c9",@"582324008557460c00235dbf"]];
 }
 
 #pragma mark location manager delagate

@@ -26,4 +26,19 @@
     return [[NSArray alloc] initWithArray:translations];
 }
 
+- (NSDictionary*) toDictionary {
+    NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
+    
+    if (_title != nil)
+        [dic setObject:_title forKey:@"title"];
+    if (_subTitle != nil)
+        [dic setObject:_subTitle forKey:@"subTitle"];
+    if (_details != nil)
+        [dic setObject:_details forKey:@"details"];
+    if (_language != nil)
+        [dic setObject:_language forKey:@"language"];
+
+    return dic;
+}
+
 @end

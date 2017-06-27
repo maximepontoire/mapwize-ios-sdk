@@ -11,5 +11,6 @@
 
 + (NSArray<MWZTranslation*>*) parseTranslations:(NSArray*) translationJSON;
 
+- (NSDictionary*) toDictionary;
 
 @end

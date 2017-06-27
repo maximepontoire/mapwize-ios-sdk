@@ -524,6 +524,52 @@ static NSString *const kSearchUrl = @"/api/v1/search?api_key=%@";
     }];
     
 }
+
+- (NSURLSessionDataTask *)getDirectionsFrom:(id<MWZDirectionPoint>) from oneOfTo:(NSArray<id<MWZDirectionPoint>>*) to by: (NSArray<id<MWZDirectionPoint>>*) waypoints withOptions:(MWZDirectionOptions*) options success:(void (^)(MWZDirection *direction))success failure:(void (^)(NSError *error))failure {
+    NSString* requestUrl;
+    if (_apiKey != nil) {
+        requestUrl = [NSString stringWithFormat:kDirectionsUrl, _apiKey];
+    }
+    else {
+        requestUrl = [NSString stringWithFormat:kDirectionsUrl, @""];
+    }
+    
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    [params setObject:[options toDictionary] forKey:@"options"];
+    
+    if (from != nil) {
+        [params setObject:[from toDirectionDictionary] forKey:@"from"];
+    }
+    
+    if (to != nil) {
+        NSMutableArray* toArray = [[NSMutableArray alloc] init];
+        for (id<MWZDirectionPoint> point in to) {
+            NSDictionary* dic = [point toDirectionDictionary];
+            [toArray addObject:dic];
+        }
+        [params setObject:toArray forKey:@"to"];
+    }
+    
+    if (waypoints != nil) {
+        NSMutableArray* waypointsArray = [[NSMutableArray alloc] init];
+        for (id<MWZDirectionPoint> point in waypoints) {
+            NSDictionary* dic = [point toDirectionDictionary];
+            [waypointsArray addObject:dic];
+        }
+        [params setObject:waypointsArray forKey:@"waypoints"];
+    }
+    
+    return [self POST:requestUrl parameters:params progress:^(NSProgress * _Nonnull downloadProgress) {
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSDictionary* responseDictionary = (NSDictionary*) responseObject;
+        MWZDirection* direction = [[MWZDirection alloc] initFromDictionary:responseDictionary];
+        success(direction);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        failure(error);
+    }];
+}
     
 - (NSURLSessionDataTask *)search:(MWZSearchParams*) params
                          success:(void (^)(NSArray<id>*)) success

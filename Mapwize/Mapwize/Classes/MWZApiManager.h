@@ -68,6 +68,8 @@
 */
 - (NSURLSessionDataTask *)getDirectionsFrom:(id<MWZDirectionPoint>) from to:(id<MWZDirectionPoint>) to by: (NSArray<id<MWZDirectionPoint>>*) waypoints withOptions:(MWZDirectionOptions*) options success:(void (^)(MWZDirection *direction))success failure:(void (^)(NSError *error))failure;
 
+- (NSURLSessionDataTask *)getDirectionsFrom:(id<MWZDirectionPoint>) from oneOfTo:(NSArray<id<MWZDirectionPoint>>*) to by: (NSArray<id<MWZDirectionPoint>>*) waypoints withOptions:(MWZDirectionOptions*) options success:(void (^)(MWZDirection *direction))success failure:(void (^)(NSError *error))failure;
+
 /*
  Search request related method
 */

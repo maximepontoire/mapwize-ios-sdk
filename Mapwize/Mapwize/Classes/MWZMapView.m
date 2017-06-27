@@ -5,7 +5,7 @@
 #import "MWZParser.h"
 
 #define SERVER_URL @"https://www.mapwize.io"
-#define IOS_SDK_VERSION @"2.2.0"
+#define IOS_SDK_VERSION @"2.3.0"
 #define IOS_SDK_NAME @"IOS SDK"
 
 @implementation MWZMapView {
@@ -31,7 +31,6 @@
     callbackMemory = [[NSMutableDictionary alloc] init];
     _universesByVenues = [[NSMutableDictionary alloc] init];
 
-    
     /*
      * Loads the webview
      */
@@ -51,9 +50,8 @@
     NSBundle* mapwizeBundle = [NSBundle bundleWithURL:bundleURL];
     
     NSString* mapPath = [mapwizeBundle pathForResource:@"mwzmap" ofType:@"html"];
-    NSString* mapContents = [NSString stringWithContentsOfFile:mapPath encoding:NSUTF8StringEncoding error:NULL];
     
-    [_webview loadHTMLString:mapContents baseURL:[NSURL URLWithString:SERVER_URL]];
+    [_webview loadFileURL:[NSURL URLWithString:[NSString stringWithFormat:@"file://%@",mapPath]] allowingReadAccessToURL:[NSURL URLWithString:@"file://"]];
     
     
     _webview.scrollView.bounces = NO;
@@ -511,7 +509,15 @@
     [self executeJS:[NSString stringWithFormat:@"map.removePromotePlace('%@');", placeId]];
 }
 
-
+- (void) setExternalPlaces: (NSArray<MWZPlace*>*) externalPlaces {
+    NSMutableArray* array = [[NSMutableArray alloc] init];
+    for (MWZPlace* p in externalPlaces) {
+        [array addObject:[p toDictionary]];
+    }
+    NSData *data = [NSJSONSerialization dataWithJSONObject:array options:NSJSONWritingPrettyPrinted error:nil];
+    NSString* json = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    [self executeJS:[NSString stringWithFormat:@"map.setExternalPlaces(%@);", json]];
+}
 
 
 /* Ignore places */

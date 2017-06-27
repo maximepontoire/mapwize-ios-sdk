@@ -45,6 +45,7 @@ This will load the map in the view with the provided options.
 Options are defined using the class MWZMapOptions. The following options are available:
 
 - apiKey : [NSString] must be provided for the map to load. It can be obtained from the Mapwize administration interface. If you don't have any, contact us.
+- mainColor : [NSString] if provided, this color will be use to replace mapwize color in UI component as floor controller or direction.
 - bounds : [MWZBounds] region that will be display after initialization.
 - maxBounds : [MWZBounds] region users are allowed to navigate in (default: entire world).
 - center: [MWZCoordinate] coordiantes of the center of the map at start-up (default: 0,0).
@@ -56,6 +57,9 @@ Options are defined using the class MWZMapOptions. The following options are ava
 - accessKey: [NSString] optional accessKey to be used during map load to be sure that access is granted to desired buildings at first map display.
 - language: [NSString] optional preferred language for the map. Used to display all venues supporting that language.
 - showUserPositionControl [BOOL] display the user position button at the bottom right of the map (default: true).
+- displayFloorControl [BOOL] display the floor controller at the bottom right of the map (default: true).
+- displayMarkerOptions [MWZCustomMarkerOptions] use a custom marker icon instead of default mapwize marker icon. iconUrl, iconAnchor and iconSize must be defined
+
 
 ### Moving the map
 Once the map loaded, you can use the following functions on the map instance:
@@ -138,6 +142,8 @@ Deprecated: - (void) addMarkerWithLatitude: (NSNumber*) latitude longitude:(NSNu
 - (void) addMarkerWithPlaceId: (NSString*) placeId;
 - (void) removeMarkers;
 
+You can replace de default mapwize marker icon with your own marker icon using map options. See map options for details.
+
 ### Controlling places display
 
 You can promote places to increase their display priority.
@@ -159,6 +165,18 @@ You can ignore place to make them not visible
 - (void) setIgnorePlaces:(NSArray<MWZPlace*>*) places;
 - (void) setIgnorePlacesWithIds:(NSArray<NSString*>*) placeIds;
 
+You can add places from your own data using this method. In order to make it works, you have to create a Mapwize formatted place object from your data and pass all the places as argument
+
+- (void) setExternalPlaces: (NSArray<MWZPlace*>*) externalPlaces;
+
+The minimum attribute that should be specified to work propertly are the following :
+
+MWZPlace.geometry
+MWZPlace.venueId
+MWZPlace.floor
+MWZPlace.translations
+
+In order to use promote and ignore methods, you have to specify an uniq id (MWZPlace.identifier)
 
 ### Showing directions
 
@@ -314,6 +332,22 @@ Placelist have the same behavior than places. You can use the following methods.
 To request a direction from one place to another, possibly with intermediate waypoints, the following method can be used:
 
 - (NSURLSessionDataTask *)getDirectionsFrom:(id<MWZDirectionPoint>) from to:(id<MWZDirectionPoint>) to by: (NSArray<id<MWZDirectionPoint>>*) waypoints withOptions:(MWZDirectionOptions*) options success:(void (^)(MWZDirection *direction))success failure:(void (^)(NSError *error))failure;
+
+from : The starting point for the direction. Can be a MWZPlace, MWZCoordinate or MWZUserPosition.
+to : The destination point. Can be MWZPlace, MWZPlaceList, MWZCoordinate or MWZUserPosition
+waypoint : An array of intermediate direction point. Can contains MWZPlace, MWZCoordinate or MWZUserPosition
+
+- (NSURLSessionDataTask *)getDirectionsFrom:(id<MWZDirectionPoint>) from oneOfTo:(NSArray<id<MWZDirectionPoint>>*) to by: (NSArray<id<MWZDirectionPoint>>*) waypoints withOptions:(MWZDirectionOptions*) options success:(void (^)(MWZDirection *direction))success failure:(void (^)(NSError *error))failure;
+
+When using this method, the direction engine will use the nearest point of 'oneOfTo' parameter as destination.
+from : The starting point for the direction. Can be a MWZPlace, MWZCoordinate or MWZUserPosition.
+oneOfTo : An array of destination point. Can contains MWZPlace, MWZCoordinate or MWZUserPosition
+waypoint : An array of intermediate direction point. Can contains MWZPlace, MWZCoordinate or MWZUserPosition
+
+Direction options :
+
+- isAccessible : [BOOL] Boolean defining if the direction should avoid inaccessible way for someone with reduced mobility.
+- waypointOptimize : [BOOL] Boolean defining if the direction engine should optimize waypoint order to return the shortest way. 
 
 ### Search engine
 

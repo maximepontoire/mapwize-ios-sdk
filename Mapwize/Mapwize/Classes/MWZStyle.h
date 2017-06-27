@@ -12,7 +12,7 @@
 @property(nonatomic, strong) NSString* labelBackgroundColor;
 @property(nonatomic, strong) NSNumber* labelBackgroundOpacity;
 
-- (instancetype) initWithDictionary:(NSDictionary*) dictionary;
+- (instancetype)initFromDictionary:(NSDictionary*)dic;
 
 - (NSDictionary*) toDictionary;
 

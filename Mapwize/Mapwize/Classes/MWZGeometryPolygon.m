@@ -61,9 +61,11 @@
     [dic setObject:_type forKey:@"type"];
     NSMutableArray* coords = [[NSMutableArray alloc] init];
     for (MWZCoordinate* coord in _coordinates) {
-        [coords addObject:[coord toDictionary]];
+        [coords addObject:[coord toArray]];
     }
-    [dic setObject:coords forKey:@"coordinates"];
+    NSMutableArray* allCoord = [[NSMutableArray alloc] init];
+    [allCoord addObject:coords];
+    [dic setObject:allCoord forKey:@"coordinates"];
     return dic;
 }
 

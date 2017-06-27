@@ -20,6 +20,30 @@
     return self;
 }
 
+- (NSDictionary*) toDictionary {
+    NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
+    if (_identifier != nil)
+        [dic setObject:_identifier forKey:@"_id"];
+    if (_name != nil)
+        [dic setObject:_name forKey:@"name"];
+    if (_alias != nil)
+        [dic setObject:_alias forKey:@"alias"];
+    [dic setObject:[NSNumber numberWithBool:_isPublished] forKey:@"isPublished"];
+    if (_geometry != nil)
+        [dic setObject:[_geometry toDictionary] forKey:@"geometry"];
+    if (_marker != nil)
+        [dic setObject:[_marker toDictionary] forKey:@"marker"];
+    if (_data != nil)
+        [dic setObject:_data forKey:@"data"];
+    if (_defaultLanguage != nil)
+        [dic setObject:_defaultLanguage forKey:@"defaultLanguage"];
+    if (_supportedLanguages != nil)
+        [dic setObject:_supportedLanguages forKey:@"supportedLanguages"];
+    
+    return dic;
+
+}
+
 - (MWZBounds*) getBounds {
     return [_geometry getBounds];
 }

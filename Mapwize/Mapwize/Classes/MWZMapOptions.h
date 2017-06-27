@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "MWZBounds.h"
 #import "MWZCoordinate.h"
+#import "MWZCustomMarkerOptions.h"
 
 @interface MWZMapOptions : NSObject
 
@@ -16,6 +17,9 @@
 @property(nonatomic) BOOL showUserPositionControl;
 @property(nonatomic, strong) NSString* accessKey;
 @property(nonatomic, strong) NSString* language;
+@property(nonatomic) BOOL displayFloorControl;
+@property(nonatomic, strong) MWZCustomMarkerOptions* displayMarkerOptions;
+@property(nonatomic, strong) NSString* mainColor;
 
 - (instancetype) init;
 

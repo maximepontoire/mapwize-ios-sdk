@@ -2,7 +2,9 @@
 
 @implementation MWZStyle
 
-- (instancetype) initWithDictionary:(NSDictionary*) dictionary {
+BOOL markerDisplayDefined = false;
+
+- (instancetype)initFromDictionary:(NSDictionary*)dictionary {
     self = [super init];
     _markerUrl = [dictionary objectForKey:@"markerUrl"];
     _markerDisplay = [[dictionary objectForKey:@"markerDisplay"] boolValue];
@@ -21,7 +23,9 @@
     if (_markerUrl != nil) {
         [dic setObject:_markerUrl forKey:@"markerUrl"];
     }
-    [dic setObject:[NSNumber numberWithBool:_markerDisplay] forKey:@"markerDisplay"];
+    if (markerDisplayDefined) {
+        [dic setObject:[NSNumber numberWithBool:_markerDisplay] forKey:@"markerDisplay"];
+    }
     if (_strokeColor != nil) {
         [dic setObject:_strokeColor forKey:@"strokeColor"];
     }
@@ -44,6 +48,11 @@
         [dic setObject:_labelBackgroundOpacity forKey:@"labelBackgroundOpacity"];
     }
     return dic;
+}
+
+- (void) setMarkerDisplay:(BOOL)markerDisplay {
+    _markerDisplay = markerDisplay;
+    markerDisplayDefined = true;
 }
 
 - (NSString*) toJSONString {
