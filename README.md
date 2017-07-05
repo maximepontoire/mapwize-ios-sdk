@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/cocoapods/l/Mapwize.svg?style=flat)](http://cocoapods.org/pods/Mapwize)
 [![Platform](https://img.shields.io/cocoapods/p/Mapwize.svg?style=flat)](http://cocoapods.org/pods/Mapwize)
 
-This is the Mapwize iOS SDK, version 2.1.x.
+This is the Mapwize iOS SDK, version 2.3.x.
 
 It allows you to display and interact with Mapwize venue maps.
 

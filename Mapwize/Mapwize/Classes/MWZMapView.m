@@ -5,7 +5,7 @@
 #import "MWZParser.h"
 
 #define SERVER_URL @"https://www.mapwize.io"
-#define IOS_SDK_VERSION @"2.3.0"
+#define IOS_SDK_VERSION @"2.3.1"
 #define IOS_SDK_NAME @"IOS SDK"
 
 @implementation MWZMapView {
@@ -45,7 +45,7 @@
     _webview.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self addSubview:_webview];
     
-    NSBundle* podBundle = [NSBundle bundleForClass: [self classForCoder]];
+    NSBundle* podBundle = [NSBundle bundleForClass: [MWZMapView classForCoder]];
     NSURL* bundleURL = [podBundle URLForResource:@"Mapwize" withExtension: @"bundle"];
     NSBundle* mapwizeBundle = [NSBundle bundleWithURL:bundleURL];
     
@@ -61,6 +61,7 @@
      * Handles the options
      */
     _options = options;
+    _zoom = options.zoom;
     NSString* optionsString = [options toJSONString];
     /*
      * Set up the map with the options

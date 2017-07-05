@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 2.3.1
+
+- Fixed bug with center map option
+- Fixed bug with bounds map option
+- Fixed bug with initial zoom not returned in getZoom
+
 ## Version 2.3.0
 
 - Added support for external places

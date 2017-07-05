@@ -14,7 +14,7 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - Mapwize (2.3.0):
+  - Mapwize (2.3.1):
     - AFNetworking
 
 DEPENDENCIES:
@@ -26,7 +26,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  Mapwize: f6d4d72182515dd773743746e75b41203299b4d0
+  Mapwize: 00d3a2ae43e1ee455b8ab7c3300badaeac604ca7
 
 PODFILE CHECKSUM: f5b5a9e95d5994c0b91f93ba1576fad426c85d80
 

@@ -23,7 +23,7 @@
         [optionsDic setObject:[_bounds toArray] forKey:@"bounds"];
     }
     if (_center != nil) {
-        [optionsDic setObject:[_center toArray] forKey:@"center"];
+        [optionsDic setObject:[_center toLatLongArray] forKey:@"center"];
     }
     if (_zoom != nil) {
         [optionsDic setObject:_zoom forKey:@"zoom"];
