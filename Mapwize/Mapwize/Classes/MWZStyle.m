@@ -9,12 +9,33 @@ BOOL markerDisplayDefined = false;
     _markerUrl = [dictionary objectForKey:@"markerUrl"];
     _markerDisplay = [[dictionary objectForKey:@"markerDisplay"] boolValue];
     _strokeColor = [dictionary objectForKey:@"strokeColor"];
+    if ([_strokeColor isEqualToString:@""]) {
+        _strokeColor = nil;
+    }
     _strokeOpacity = [dictionary objectForKey:@"strokeOpacity"];
+    if (![_strokeOpacity isKindOfClass:NSClassFromString(@"NSNumber")]) {
+        _strokeOpacity = nil;
+    }
     _strokeWidth = [dictionary objectForKey:@"strokeWidth"];
+    if (![_strokeWidth isKindOfClass:NSClassFromString(@"NSNumber")]) {
+        _strokeWidth = nil;
+    }
     _fillColor = [dictionary objectForKey:@"fillColor"];
+    if ([_fillColor isEqualToString:@""]) {
+        _fillColor = nil;
+    }
     _fillOpacity = [dictionary objectForKey:@"fillOpacity"];
+    if (![_fillOpacity isKindOfClass:NSClassFromString(@"NSNumber")]) {
+        _fillOpacity = nil;
+    }
     _labelBackgroundColor = [dictionary objectForKey:@"labelBackgroundColor"];
+    if ([_labelBackgroundColor isEqualToString:@""]) {
+        _labelBackgroundColor = nil;
+    }
     _labelBackgroundOpacity = [dictionary objectForKey:@"labelBackgroundOpacity"];
+    if (![_labelBackgroundOpacity isKindOfClass:NSClassFromString(@"NSNumber")]) {
+        _labelBackgroundOpacity = nil;
+    }
     return self;
 }
 

@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version 2.3.2
+
+- Fixed bug with malformated style
+- Fixed bug on loadMapWithOptions when the application name contains spaces
+
 ## Version 2.3.1
 
 - Fixed bug with center map option
