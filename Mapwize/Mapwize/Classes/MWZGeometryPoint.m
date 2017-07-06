@@ -2,6 +2,12 @@
 
 @implementation MWZGeometryPoint
 
+- (instancetype) init {
+    self = [super init];
+    _type = @"Point";
+    return self;
+}
+    
 - (instancetype) initWithCoordinate:(MWZCoordinate*) coordinate {
     self = [super init];
     _type = @"Point";

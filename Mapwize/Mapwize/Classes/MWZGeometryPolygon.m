@@ -2,6 +2,13 @@
 
 @implementation MWZGeometryPolygon
 
+- (instancetype) init {
+    self = [super init];
+    _type = @"Polygon";
+    return self;
+}
+    
+    
 - (instancetype) initWithCoordinates:(NSArray*) coordinates {
     self = [super init];
     _type = @"Polygon";

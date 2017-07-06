@@ -5,6 +5,8 @@
 @property (nonatomic, retain) NSString* type;
 @property (nonatomic, retain) MWZCoordinate* coordinate;
 
+- (instancetype) init;
+    
 - (instancetype) initWithCoordinate:(MWZCoordinate*) coordinate;
 
 - (instancetype) initWithDictionary:(NSDictionary*) dictionary;

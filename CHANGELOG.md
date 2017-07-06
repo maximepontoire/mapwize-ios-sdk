@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version 2.3.3
+
+- Added default init method for Geometry
+- Fixed style for direction markers
+
 ## Version 2.3.2
 
 - Fixed bug with malformated style
