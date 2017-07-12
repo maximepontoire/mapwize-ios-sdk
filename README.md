@@ -58,7 +58,7 @@ Options are defined using the class MWZMapOptions. The following options are ava
 - language: [NSString] optional preferred language for the map. Used to display all venues supporting that language.
 - showUserPositionControl [BOOL] display the user position button at the bottom right of the map (default: true).
 - displayFloorControl [BOOL] display the floor controller at the bottom right of the map (default: true).
-- displayMarkerOptions [MWZCustomMarkerOptions] use a custom marker icon instead of default mapwize marker icon. iconUrl, iconAnchor and iconSize must be defined
+- displayMarkerOptions [MWZCustomMarkerOptions] use a custom marker icon instead of default mapwize marker icon. iconUrl, iconAnchor and iconSize must be defined. IconUrl must be a HTTPS Url.
 
 
 ### Moving the map

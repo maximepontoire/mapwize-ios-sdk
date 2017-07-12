@@ -5,7 +5,7 @@
 #import "MWZParser.h"
 
 #define SERVER_URL @"https://www.mapwize.io"
-#define IOS_SDK_VERSION @"2.3.3"
+#define IOS_SDK_VERSION @"2.3.4"
 #define IOS_SDK_NAME @"IOS SDK"
 
 @implementation MWZMapView {
@@ -50,8 +50,9 @@
     NSBundle* mapwizeBundle = [NSBundle bundleWithURL:bundleURL];
     
     NSString* mapPath = [mapwizeBundle pathForResource:@"mwzmap" ofType:@"html"];
-    mapPath = [mapPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [_webview loadFileURL:[NSURL URLWithString:[NSString stringWithFormat:@"file://%@",mapPath]] allowingReadAccessToURL:[NSURL URLWithString:@"file://"]];
+    NSString* mapContents = [NSString stringWithContentsOfFile:mapPath encoding:NSUTF8StringEncoding error:NULL];
+    
+    [_webview loadHTMLString:mapContents baseURL:[NSURL URLWithString:SERVER_URL]];
     
     
     _webview.scrollView.bounces = NO;

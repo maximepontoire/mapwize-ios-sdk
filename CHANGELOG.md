@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version 2.3.4
+
+- Fixed mainColor affects userPosition
+- Fixed cookieHandler error 
+
 ## Version 2.3.3
 
 - Added default init method for Geometry

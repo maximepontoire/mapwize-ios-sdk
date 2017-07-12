@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Mapwize"
-  s.version      = "2.3.3"
+  s.version      = "2.3.4"
   s.summary      = "Mapwize: The Indoor Mapping Platform"
 
   s.description  = <<-DESC
