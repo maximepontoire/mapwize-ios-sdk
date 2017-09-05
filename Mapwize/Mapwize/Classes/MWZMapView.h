@@ -99,5 +99,6 @@ __attribute__((deprecated("Use addMarkerWithCoordinate:(MWZCoordinate*) instead"
 - (void) setTopMargin: (NSNumber*) margin;
 
 - (void) refresh;
+- (void) killMap;
 
 @end
