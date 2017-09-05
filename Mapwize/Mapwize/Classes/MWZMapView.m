@@ -671,4 +671,9 @@
     [self executeJS:[NSString stringWithFormat:@"Mapwize.Location.addRangedIBeacons('%@',%@);", region.identifier, beaconsString]];
 }
 
+
+- (void)killMap {
+    [_webview removeFromSuperview];
+    _webview = nil;
+}
 @end
